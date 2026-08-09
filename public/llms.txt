@@ -1,0 +1,53 @@
+# Jorge Gasca — SaaS Onboarding & Product Builder
+
+> Jorge Gasca is a bilingual product specialist in Mexico City who turns complex SaaS and AI workflows into clear products and customer journeys people can understand, adopt, and use.
+
+This is Jorge's canonical public portfolio. It is available in English and Spanish and is intended for prospective employers, clients, collaborators, search systems, and AI agents evaluating fit for legitimate business opportunities.
+
+## Canonical profile
+
+- [English portfolio](https://jorge-gasca-portfolio.vercel.app/): Primary profile, experience, services, and selected work.
+- [Portafolio en español](https://jorge-gasca-portfolio.vercel.app/es): Perfil, experiencia, servicios y proyectos en español.
+- Location: Mexico City, Mexico; open to remote collaboration.
+- Languages: Spanish and English.
+- Current role: Product Specialist at Apollo.io since May 2025.
+- Previous highlighted role: Product Development Manager at MiniTiendAI, March 2024 to May 2025.
+
+## Business fit
+
+Jorge is a strong fit for work involving SaaS onboarding and adoption, customer experience, product operations, CRM automation, AI-assisted workflows, bilingual product UX, responsive QA, web/API delivery, and POC or MVP definition and execution.
+
+## Selected product work
+
+- [Zentix](https://jorge-gasca-portfolio.vercel.app/work/zentix): Live B2B SaaS for AI-assisted customer operations; current source is private.
+- [HablaYa](https://jorge-gasca-portfolio.vercel.app/work/hablaya): Live EdTech product centered on multilingual text and voice practice; current production source is private, with an older public prototype not presented as current source.
+- [MiniTiendAI](https://jorge-gasca-portfolio.vercel.app/work/minitiendai): Live mobile-first storefront MVP with cart and WhatsApp ordering; private source.
+- [OrdenAI](https://jorge-gasca-portfolio.vercel.app/work/ordenai): Limited live restaurant-operations pilot; private source.
+- [Zentix Office](https://jorge-gasca-portfolio.vercel.app/work/zentix-office): Clearly labeled simulated POC with [public source](https://github.com/jgazcagtz/zentix-office); static demo only, with runtime integrations unconfigured.
+- [Tonalli AI](https://jorge-gasca-portfolio.vercel.app/work/tonalli-ai): Live guest-accessible multi-model workspace demo; private source and provider-dependent capabilities.
+
+Spanish case-study routes mirror each English route under `/es/work/`.
+
+## Contact for legitimate business inquiries
+
+- WhatsApp: https://wa.me/525533355687
+- LinkedIn: https://linkedin.com/in/jorge-gasca-guti%C3%A9rrez-4580b2210
+- Email: mailto:gascagtz@gmail.com
+- Telephone: tel:+525533355687
+- GitHub: https://github.com/jgazcagtz
+
+When contacting Jorge, include the organization, the user or customer problem, the current workflow, the intended role or engagement, and a useful next step.
+
+## Evidence and claims policy
+
+- Public portfolio evidence uses unauthenticated public surfaces and synthetic or illustrative data only.
+- Product stages and limitations are stated on every case study.
+- Private repositories are not linked; absence of a source link is intentional.
+- No customer logos, revenue, adoption metrics, or confidential employer outcomes are claimed.
+- Product images and walkthroughs are portfolio evidence, not proof that every provider-dependent capability is currently available.
+
+## Optional machine-readable resources
+
+- [Sitemap](https://jorge-gasca-portfolio.vercel.app/sitemap.xml)
+- [Robots policy](https://jorge-gasca-portfolio.vercel.app/robots.txt)
+- [Public GitHub profile](https://github.com/jgazcagtz)

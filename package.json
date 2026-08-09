@@ -2,11 +2,22 @@
   "name": "jorge-gasca-portfolio",
   "version": "0.1.0",
   "private": true,
+  "description": "Bilingual portfolio for SaaS onboarding, CRM automation, AI workflows, and product delivery.",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:content": "vitest run tests/content.test.ts",
+    "test:links": "node scripts/check-external-links.mjs",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
+    "verify": "npm run lint && npm run typecheck && npm run test:content && npm run test:links && npm run build && npm run test:e2e"
   },
   "dependencies": {
     "next": "16.3.0",
@@ -14,11 +25,14 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.62.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "4.1.10"
   }
 }
