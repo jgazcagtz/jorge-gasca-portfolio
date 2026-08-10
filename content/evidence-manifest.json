@@ -1,296 +1,402 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "captureDate": "2026-08-09",
   "policy": {
-    "browser": "Playwright Chromium",
+    "browser": "Playwright CLI with Chrome",
     "authentication": "none",
-    "privacy": "Only unauthenticated public surfaces and synthetic or public marketing content were captured. No accounts, tenants, customer records, prompts, analytics, provider configuration, or credentials were opened or submitted.",
+    "privacy": "Only unauthenticated public surfaces and synthetic, simulated, guest, or public marketing content were captured. No accounts, tenants, customer records, private conversations, prompts, provider configuration, analytics, or credentials were opened or submitted.",
     "approvalScope": "Approved for public portfolio publication by the portfolio owner after privacy review.",
-    "publicationBasis": "The portfolio owner explicitly directed publication of these owner-supplied or owner-authorized public product surfaces on 2026-08-09.",
-    "thirdPartyRights": "Third-party marks and interface elements are shown descriptively and remain the property of their respective owners; this approval does not transfer those rights."
+    "publicationBasis": "Owner-supplied or owner-authorized public product surfaces, reviewed on 2026-08-09.",
+    "thirdPartyRights": "Third-party marks and interface elements are shown descriptively and remain the property of their respective owners."
   },
   "assets": [
     {
       "id": "zentix-desktop",
       "product": "Zentix",
       "stage": "Live B2B SaaS · Private source",
-      "url": "https://zentixchatbot.cloud/",
-      "src": "/evidence/zentix/zentix-desktop.png",
+      "captureUrl": "https://zentixchatbot.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/zentix/zentix-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The visible phone conversation is an illustrative public example, not customer telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not customer telemetry."
     },
     {
       "id": "zentix-mobile",
       "product": "Zentix",
       "stage": "Live B2B SaaS · Private source",
-      "url": "https://zentixchatbot.cloud/",
-      "src": "/evidence/zentix/zentix-mobile.png",
+      "captureUrl": "https://zentixchatbot.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/zentix/zentix-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The visible phone conversation is an illustrative public example, not customer telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not customer telemetry."
     },
     {
       "id": "zentix-walkthrough",
       "product": "Zentix",
       "stage": "Live B2B SaaS · Private source",
-      "url": "https://zentixchatbot.cloud/",
-      "src": "/evidence/zentix/zentix-walkthrough.webm",
+      "captureUrl": "https://zentixchatbot.cloud/",
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/zentix/zentix-walkthrough.webm",
+      "poster": "/evidence/zentix/zentix-desktop.png",
+      "sources": {
+        "webm": "/evidence/zentix/zentix-walkthrough.webm",
+        "mp4": "/evidence/zentix/zentix-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "durationSeconds": 38.04,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The visible phone conversation is an illustrative public example, not customer telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not customer telemetry."
     },
     {
       "id": "hablaya-desktop",
       "product": "HablaYa",
       "stage": "Live EdTech product · Private source",
-      "url": "https://hablaya.cloud/",
-      "src": "/evidence/hablaya/hablaya-desktop.png",
+      "captureUrl": "https://hablaya.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/hablaya/hablaya-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The public hero contains an illustrative product UI, not an authenticated learner session or telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not an authenticated learner session or telemetry."
     },
     {
       "id": "hablaya-mobile",
       "product": "HablaYa",
       "stage": "Live EdTech product · Private source",
-      "url": "https://hablaya.cloud/",
-      "src": "/evidence/hablaya/hablaya-mobile.png",
+      "captureUrl": "https://hablaya.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/hablaya/hablaya-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The public hero contains an illustrative product UI, not an authenticated learner session or telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not an authenticated learner session or telemetry."
     },
     {
       "id": "hablaya-walkthrough",
       "product": "HablaYa",
       "stage": "Live EdTech product · Private source",
-      "url": "https://hablaya.cloud/",
-      "src": "/evidence/hablaya/hablaya-walkthrough.webm",
+      "captureUrl": "https://hablaya.cloud/",
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/hablaya/hablaya-walkthrough.webm",
+      "poster": "/evidence/hablaya/hablaya-desktop.png",
+      "sources": {
+        "webm": "/evidence/hablaya/hablaya-walkthrough.webm",
+        "mp4": "/evidence/hablaya/hablaya-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "durationSeconds": 26.76,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "The public hero contains an illustrative product UI, not an authenticated learner session or telemetry."
+      "caveat": "The public landing page includes illustrative product UI; it is not an authenticated learner session or telemetry."
     },
     {
       "id": "minitiendai-desktop",
       "product": "MiniTiendAI",
       "stage": "Live MVP · Private source",
-      "url": "https://minitiendai.com/store.html?demo=restaurant",
-      "src": "/evidence/minitiendai/minitiendai-desktop.png",
+      "captureUrl": "https://minitiendai.com/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-synthetic-demo",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/minitiendai/minitiendai-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "Restaurante El Sabor is bundled synthetic demo content."
+      "caveat": "The desktop and mobile covers are the current public MiniTiendAI homepage."
     },
     {
       "id": "minitiendai-mobile",
       "product": "MiniTiendAI",
       "stage": "Live MVP · Private source",
-      "url": "https://minitiendai.com/store.html?demo=restaurant",
-      "src": "/evidence/minitiendai/minitiendai-mobile.png",
+      "captureUrl": "https://minitiendai.com/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-synthetic-demo",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/minitiendai/minitiendai-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "Restaurante El Sabor is bundled synthetic demo content."
+      "caveat": "The desktop and mobile covers are the current public MiniTiendAI homepage."
     },
     {
       "id": "minitiendai-walkthrough",
       "product": "MiniTiendAI",
       "stage": "Live MVP · Private source",
-      "url": "https://minitiendai.com/store.html?demo=restaurant",
-      "src": "/evidence/minitiendai/minitiendai-walkthrough.webm",
+      "captureUrl": "https://minitiendai.com/",
+      "sourceUrls": [
+        "https://minitiendai.com/",
+        "https://minitiendai.com/store.html?demo=restaurant"
+      ],
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-synthetic-demo",
-      "viewport": { "width": 1440, "height": 900 },
-      "durationSeconds": 18.24,
+      "evidenceType": "synthetic-demo",
+      "classification": "synthetic-demo",
+      "src": "/evidence/minitiendai/minitiendai-walkthrough.webm",
+      "poster": "/evidence/minitiendai/minitiendai-desktop.png",
+      "sources": {
+        "webm": "/evidence/minitiendai/minitiendai-walkthrough.webm",
+        "mp4": "/evidence/minitiendai/minitiendai-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "durationSeconds": 24.08,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "Restaurante El Sabor is bundled synthetic demo content."
+      "caveat": "The walkthrough starts on the public homepage, then uses the bundled Restaurante El Sabor demo with synthetic products, prices, contact details, cart, and order data. It stops before opening WhatsApp."
     },
     {
       "id": "ordenai-desktop",
       "product": "OrdenAI",
       "stage": "Live pilot · Private source",
-      "url": "https://ordenai.cloud/",
-      "src": "/evidence/ordenai/ordenai-desktop.png",
+      "captureUrl": "https://ordenai.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/ordenai/ordenai-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "This is a public pilot landing page, not proof of general availability or an authenticated restaurant operation."
+      "caveat": "This is a public pilot surface, not an authenticated restaurant operation or proof of general availability."
     },
     {
       "id": "ordenai-mobile",
       "product": "OrdenAI",
       "stage": "Live pilot · Private source",
-      "url": "https://ordenai.cloud/",
-      "src": "/evidence/ordenai/ordenai-mobile.png",
+      "captureUrl": "https://ordenai.cloud/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/ordenai/ordenai-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "This is a public pilot landing page, not proof of general availability or an authenticated restaurant operation."
+      "caveat": "This is a public pilot surface, not an authenticated restaurant operation or proof of general availability."
     },
     {
       "id": "ordenai-walkthrough",
       "product": "OrdenAI",
       "stage": "Live pilot · Private source",
-      "url": "https://ordenai.cloud/",
-      "src": "/evidence/ordenai/ordenai-walkthrough.webm",
+      "captureUrl": "https://ordenai.cloud/",
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-marketing",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/ordenai/ordenai-walkthrough.webm",
+      "poster": "/evidence/ordenai/ordenai-desktop.png",
+      "sources": {
+        "webm": "/evidence/ordenai/ordenai-walkthrough.webm",
+        "mp4": "/evidence/ordenai/ordenai-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "durationSeconds": 28,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "This is a public pilot landing page, not proof of general availability or an authenticated restaurant operation."
+      "caveat": "This is a public pilot surface, not an authenticated restaurant operation or proof of general availability."
     },
     {
       "id": "zentix-office-desktop",
       "product": "Zentix Office",
       "stage": "Simulated POC · Public source",
-      "url": "https://zentix-office.vercel.app/demo/",
-      "src": "/evidence/zentix-office/zentix-office-desktop.png",
+      "captureUrl": "https://zentix-office.vercel.app/demo/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-simulation",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "simulation",
+      "classification": "simulation",
+      "src": "/evidence/zentix-office/zentix-office-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-with-simulation-label",
-      "caveat": "The simulation label must remain visible. The API health route is unconfigured and this is not operational automation."
+      "caveat": "This is a simulated POC. The simulation label must remain visible; it is not operational automation."
     },
     {
       "id": "zentix-office-mobile",
       "product": "Zentix Office",
       "stage": "Simulated POC · Public source",
-      "url": "https://zentix-office.vercel.app/demo/",
-      "src": "/evidence/zentix-office/zentix-office-mobile.png",
+      "captureUrl": "https://zentix-office.vercel.app/demo/",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-simulation",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "simulation",
+      "classification": "simulation",
+      "src": "/evidence/zentix-office/zentix-office-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-with-simulation-label",
-      "caveat": "The simulation label must remain visible. The API health route is unconfigured and this is not operational automation."
+      "caveat": "This is a simulated POC. The simulation label must remain visible; it is not operational automation."
     },
     {
       "id": "zentix-office-walkthrough",
       "product": "Zentix Office",
       "stage": "Simulated POC · Public source",
-      "url": "https://zentix-office.vercel.app/demo/",
-      "src": "/evidence/zentix-office/zentix-office-walkthrough.webm",
+      "captureUrl": "https://zentix-office.vercel.app/demo/",
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-simulation",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "simulation",
+      "classification": "simulation",
+      "src": "/evidence/zentix-office/zentix-office-walkthrough.webm",
+      "poster": "/evidence/zentix-office/zentix-office-desktop.png",
+      "sources": {
+        "webm": "/evidence/zentix-office/zentix-office-walkthrough.webm",
+        "mp4": "/evidence/zentix-office/zentix-office-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "durationSeconds": 29.24,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-with-simulation-label",
-      "caveat": "The simulation label must remain visible. The API health route is unconfigured and this is not operational automation."
+      "caveat": "This is a simulated POC. The simulation label must remain visible; it is not operational automation."
     },
     {
       "id": "tonalli-ai-desktop",
       "product": "Tonalli AI",
       "stage": "Live product demo · Private source",
-      "url": "https://tonalli.cloud/app",
-      "src": "/evidence/tonalli-ai/tonalli-ai-desktop.png",
+      "captureUrl": "https://tonalli.cloud/app",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-guest",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "guest-runtime",
+      "classification": "guest-runtime",
+      "src": "/evidence/tonalli-ai/tonalli-ai-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "No account was opened, no prompt was entered, and no model or tool request was sent."
+      "caveat": "This is the public guest demo. No account, prompt, model request, or scheduled action was submitted."
     },
     {
       "id": "tonalli-ai-mobile",
       "product": "Tonalli AI",
       "stage": "Live product demo · Private source",
-      "url": "https://tonalli.cloud/app",
-      "src": "/evidence/tonalli-ai/tonalli-ai-mobile.png",
+      "captureUrl": "https://tonalli.cloud/app",
       "kind": "image",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-guest",
-      "viewport": { "width": 390, "height": 693 },
+      "evidenceType": "guest-runtime",
+      "classification": "guest-runtime",
+      "src": "/evidence/tonalli-ai/tonalli-ai-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "No account was opened, no prompt was entered, and no model or tool request was sent."
+      "caveat": "This is the public guest demo. No account, prompt, model request, or scheduled action was submitted."
     },
     {
       "id": "tonalli-ai-walkthrough",
       "product": "Tonalli AI",
       "stage": "Live product demo · Private source",
-      "url": "https://tonalli.cloud/app",
-      "src": "/evidence/tonalli-ai/tonalli-ai-walkthrough.webm",
+      "captureUrl": "https://tonalli.cloud/app",
       "kind": "video",
-      "evidenceType": "runtime",
-      "classification": "runtime-public-guest",
-      "viewport": { "width": 1440, "height": 900 },
+      "evidenceType": "guest-runtime",
+      "classification": "guest-runtime",
+      "src": "/evidence/tonalli-ai/tonalli-ai-walkthrough.webm",
+      "poster": "/evidence/tonalli-ai/tonalli-ai-desktop.png",
+      "sources": {
+        "webm": "/evidence/tonalli-ai/tonalli-ai-walkthrough.webm",
+        "mp4": "/evidence/tonalli-ai/tonalli-ai-walkthrough.mp4"
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
       "durationSeconds": 35.48,
       "audioStreams": 0,
       "captureDate": "2026-08-09",
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
-      "caveat": "No account was opened, no prompt was entered, and no model or tool request was sent."
+      "caveat": "This is the public guest demo. No account, prompt, model request, or scheduled action was submitted."
+    },
+    {
+      "id": "minitiendai-demo-store",
+      "product": "MiniTiendAI",
+      "stage": "Live MVP · Private source",
+      "captureUrl": "https://minitiendai.com/store.html?demo=restaurant",
+      "kind": "image",
+      "evidenceType": "synthetic-demo",
+      "classification": "synthetic-demo",
+      "src": "/evidence/minitiendai/minitiendai-demo-store.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "captureDate": "2026-08-09",
+      "privacyReviewed": true,
+      "privacyApproval": "approved-for-public-portfolio",
+      "caveat": "Restaurante El Sabor, its products, prices, cart, contact details, and order data are synthetic demo content."
     }
   ]
 }

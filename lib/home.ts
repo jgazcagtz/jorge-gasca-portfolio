@@ -45,10 +45,19 @@ export type HomeCopy = {
     title: string;
     groups: Array<{ title: string; items: string[] }>;
   };
+  partner: {
+    label: string;
+    body: string;
+    cta: string;
+  };
   contact: {
     eyebrow: string;
     title: string;
     intro: string;
+    rolesTitle: string;
+    rolesBody: string;
+    projectsTitle: string;
+    projectsBody: string;
     whatsapp: string;
     email: string;
     linkedIn: string;
@@ -72,83 +81,83 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       language: "Ver en español",
     },
     hero: {
-      eyebrow: "Mexico City · Remote collaboration",
-      headline:
-        "SaaS Onboarding & Product Builder | CRM Automation, AI Workflows, Customer Experience.",
+      eyebrow: "Product Specialist · Product Builder · Sales Automation · Mexico City",
+      headline: "I turn product ideas and messy workflows into tools people can actually use.",
       summary:
-        "I turn complex SaaS and AI workflows into clear products and customer journeys people can understand, adopt, and use.",
-      availability: "Available for remote product and onboarding work",
-      languages: "Spanish · English",
-      primaryCta: "View selected work",
-      secondaryCta: "Start a WhatsApp conversation",
-      proofLabel: "Six product case studies across SaaS, AI, commerce, and learning.",
+        "I work across product discovery, UX, CRM and sales automation, AI workflows, and hands-on delivery—from the first working prototype to release and QA.",
+      availability:
+        "Open to product roles and selected sales automation, SaaS, CRM, and AI workflow projects.",
+      languages: "Spanish and English",
+      primaryCta: "See selected work",
+      secondaryCta: "Contact Jorge",
+      proofLabel: "Six products, with clear ownership, current stage, and lessons learned.",
     },
     work: {
       eyebrow: "Selected work",
-      title: "Products shaped around real adoption friction.",
+      title: "Six products, each at a different stage.",
       intro:
-        "A curated view of live products, pilots, and clearly labeled experiments. Private code stays private; the work is shown through approved product evidence and honest scope.",
+        "Some are live; one is a simulation. In each case I explain what I owned, show the product, and say what works today and what is still limited.",
       featured: "Flagship products",
       labs: "Labs",
       viewCase: "Read case study",
     },
     approach: {
       eyebrow: "How I work",
-      title: "From customer friction to a product people can use.",
+      title: "I start with where the customer gets stuck.",
       intro:
-        "I combine onboarding conversations, workflow design, hands-on delivery, and practical QA. The goal is not novelty—it is clarity, confidence, and a useful next step.",
+        "Then I map the next useful step, build what is missing, and test the complete journey on the screens people actually use.",
       steps: [
         {
-          title: "Discover friction",
-          body: "Listen for the moment a customer, teammate, or workflow loses context, trust, or momentum.",
+          title: "Find the sticking point",
+          body: "I listen to the customer, watch the workflow, and identify the moment progress stops or confidence drops.",
         },
         {
-          title: "Design the journey",
-          body: "Turn the desired outcome into a clear sequence, with the right information and decisions at each step.",
+          title: "Map the next steps",
+          body: "I turn the desired outcome into a sequence the customer and the team can both understand.",
         },
         {
-          title: "Build and integrate",
-          body: "Connect interface, automation, APIs, and operational boundaries without hiding complexity from the team.",
+          title: "Build the missing pieces",
+          body: "I connect the interface, CRM, automation, and APIs needed to make the journey work end to end.",
         },
         {
-          title: "Test and iterate",
-          body: "Verify behavior on real screens, document limitations, and improve the path using evidence instead of assumptions.",
+          title: "Test the real journey",
+          body: "I check desktop and mobile behavior, document what is still limited, and improve the flow from what I observe.",
         },
       ],
     },
     experience: {
       eyebrow: "Experience",
-      title: "Customer context, product judgment, technical follow-through.",
+      title: "Product work grounded in customer conversations.",
       intro:
-        "My work sits between the customer journey and the product surface: understanding the outcome, translating the workflow, and helping it hold up in practice.",
+        "My background spans product delivery, sales, customer enablement, support, and teaching. That mix helps me explain complex tools and improve the moments where people lose momentum.",
       items: [
         {
           period: "May 2025 — Present",
           title: "Product Specialist · Apollo.io",
-          body: "B2B SaaS onboarding across prospecting, email, sequences, CRM, data quality, integrations, deliverability, documentation, and adoption.",
+          body: "I help customers understand and adopt B2B SaaS workflows across prospecting, sequences, CRM, data quality, integrations, and deliverability.",
         },
         {
           period: "Mar 2024 — May 2025",
           title: "Product Development Manager · MiniTiendAI",
-          body: "Product development and end-to-end delivery for a small-business storefront MVP, including responsive journeys, integrations, QA, and release verification.",
+          body: "I led product development for a small-business storefront MVP, working across creation flows, responsive UX, commerce handoffs, QA, and releases.",
         },
         {
           period: "Earlier experience",
           title: "Sales, customer experience, and learning",
-          body: "Sales Specialist at CrazyCall (Mar 2020 — Jul 2022) and Sales Executive / Academic Coordinator at S-Peak (Jan 2011 — Jan 2019), focused on consultative communication, customer journeys, and training.",
+          body: "Earlier roles in sales, customer operations, and education taught me how to ask better questions, explain unfamiliar tools, and support people through change.",
         },
       ],
     },
     skills: {
-      eyebrow: "Working toolkit",
-      title: "A hybrid operator’s range.",
+      eyebrow: "Skills",
+      title: "What I bring to a team.",
       groups: [
         {
-          title: "Onboarding & adoption",
-          items: ["Journey mapping", "Enablement", "Documentation", "Customer discovery", "Workflow clarity"],
+          title: "Customer enablement",
+          items: ["Onboarding", "Journey mapping", "Enablement", "Documentation", "Customer discovery"],
         },
         {
-          title: "CRM & automation",
+          title: "Sales automation & CRM",
           items: ["Apollo.io", "HubSpot", "Salesforce", "Zapier / Make", "Webhooks"],
         },
         {
@@ -161,18 +170,28 @@ export const homeCopy: Record<Locale, HomeCopy> = {
         },
       ],
     },
+    partner: {
+      label: "Marblism partner",
+      body:
+        "As a Marblism partner, I help teams evaluate where AI employees can remove repetitive work and connect the setup to a practical sales, customer, or operations workflow.",
+      cta: "Explore Marblism",
+    },
     contact: {
       eyebrow: "Let’s talk",
-      title: "Have a complex workflow that should feel simple?",
+      title: "Looking for someone who can connect customers, product, and implementation?",
       intro:
-        "I’m open to remote SaaS onboarding, product operations, customer experience, and hands-on product delivery conversations.",
+        "I’m open to product roles and selected projects involving sales automation, SaaS, CRM, and AI workflows.",
+      rolesTitle: "Roles",
+      rolesBody: "For product, product operations, sales automation, and customer experience opportunities, reach me by email or LinkedIn.",
+      projectsTitle: "Projects",
+      projectsBody: "For a sales automation, SaaS, CRM, or AI workflow project, send a short brief by email or WhatsApp.",
       whatsapp: "Message on WhatsApp",
       email: "Send an email",
       linkedIn: "Connect on LinkedIn",
       phone: "Call",
     },
     footer: {
-      note: "Built as a bilingual, evidence-led product portfolio.",
+      note: "Jorge Gasca · Product & Sales Automation Specialist · Mexico City",
       rights: "Personal copy, branding, and product media are rights reserved.",
     },
   },
@@ -187,83 +206,83 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       language: "View in English",
     },
     hero: {
-      eyebrow: "Ciudad de México · Colaboración remota",
-      headline:
-        "Especialista en Onboarding SaaS y Creador de Productos | Automatización CRM, IA y Experiencia de Cliente.",
+      eyebrow: "Product Specialist · Creador de producto · Automatización de ventas · Ciudad de México",
+      headline: "Convierto ideas de producto y flujos complicados en herramientas que las personas pueden usar.",
       summary:
-        "Convierto flujos complejos de SaaS e IA en productos y recorridos de cliente que las personas pueden entender, adoptar y usar.",
-      availability: "Disponible para trabajo remoto de producto y onboarding",
-      languages: "Español · Inglés",
-      primaryCta: "Ver trabajo seleccionado",
-      secondaryCta: "Iniciar conversación por WhatsApp",
-      proofLabel: "Seis casos de producto en SaaS, IA, comercio y aprendizaje.",
+        "Trabajo con descubrimiento, UX, automatización de ventas y CRM, flujos con IA e implementación: desde el primer prototipo hasta el lanzamiento y el QA.",
+      availability:
+        "Estoy abierto a puestos de producto y a proyectos seleccionados de automatización de ventas, SaaS, CRM y flujos con IA.",
+      languages: "Español e inglés",
+      primaryCta: "Ver proyectos",
+      secondaryCta: "Contactar a Jorge",
+      proofLabel: "Seis productos con responsabilidades, etapa actual y aprendizajes claros.",
     },
     work: {
-      eyebrow: "Trabajo seleccionado",
-      title: "Productos diseñados desde fricciones reales de adopción.",
+      eyebrow: "Proyectos destacados",
+      title: "Seis productos, cada uno en una etapa distinta.",
       intro:
-        "Una selección de productos activos, pilotos y experimentos claramente identificados. El código privado permanece privado; el trabajo se presenta con evidencia aprobada y alcance honesto.",
+        "Algunos están en operación y uno es una simulación. En cada caso explico qué hice, muestro el producto y aclaro qué funciona hoy y qué falta por mejorar.",
       featured: "Productos principales",
       labs: "Laboratorio",
-      viewCase: "Leer caso de estudio",
+      viewCase: "Ver proyecto",
     },
     approach: {
       eyebrow: "Cómo trabajo",
-      title: "De la fricción del cliente a un producto que se puede usar.",
+      title: "Empiezo por el punto donde el cliente se atora.",
       intro:
-        "Combino conversaciones de onboarding, diseño de flujos, entrega práctica y QA. El objetivo no es la novedad: es claridad, confianza y un siguiente paso útil.",
+        "Después defino el siguiente paso útil, construyo lo que hace falta y pruebo el recorrido completo en las pantallas que las personas usan.",
       steps: [
         {
-          title: "Descubrir la fricción",
-          body: "Escucho el momento en que un cliente, un equipo o un flujo pierde contexto, confianza o impulso.",
+          title: "Encontrar el bloqueo",
+          body: "Escucho al cliente, observo el flujo y ubico el momento en que se detiene el avance o aparecen dudas.",
         },
         {
-          title: "Diseñar el recorrido",
-          body: "Convierto el resultado deseado en una secuencia clara, con la información y decisiones correctas en cada paso.",
+          title: "Ordenar los siguientes pasos",
+          body: "Convierto el resultado esperado en una secuencia clara para el cliente y para el equipo.",
         },
         {
-          title: "Construir e integrar",
-          body: "Conecto interfaz, automatización, APIs y límites operativos sin ocultar la complejidad al equipo.",
+          title: "Construir lo que falta",
+          body: "Conecto la interfaz, el CRM, las automatizaciones y las APIs necesarias para completar el recorrido.",
         },
         {
-          title: "Probar e iterar",
-          body: "Verifico el comportamiento en pantallas reales, documento límites y mejoro el recorrido con evidencia.",
+          title: "Probar el recorrido real",
+          body: "Reviso el comportamiento en desktop y móvil, documento los límites y ajusto el flujo según lo que encuentro.",
         },
       ],
     },
     experience: {
       eyebrow: "Experiencia",
-      title: "Contexto de cliente, criterio de producto y seguimiento técnico.",
+      title: "Trabajo de producto basado en conversaciones con clientes.",
       intro:
-        "Mi trabajo vive entre el recorrido del cliente y la superficie del producto: entender el resultado, traducir el flujo y ayudar a que funcione en la práctica.",
+        "Mi experiencia reúne entrega de producto, ventas, habilitación de clientes, soporte y enseñanza. Esa combinación me ayuda a explicar herramientas complejas y mejorar los momentos donde las personas pierden impulso.",
       items: [
         {
           period: "Mayo 2025 — Actualidad",
           title: "Product Specialist · Apollo.io",
-          body: "Onboarding SaaS B2B en prospección, correo, secuencias, CRM, calidad de datos, integraciones, entregabilidad, documentación y adopción.",
+          body: "Ayudo a clientes a entender y adoptar flujos SaaS B2B de prospección, secuencias, CRM, calidad de datos, integraciones y entregabilidad.",
         },
         {
           period: "Marzo 2024 — Mayo 2025",
           title: "Product Development Manager · MiniTiendAI",
-          body: "Desarrollo de producto y entrega integral de un MVP de tiendas para pequeños negocios, incluyendo recorridos responsive, integraciones, QA y verificación de releases.",
+          body: "Lideré el desarrollo de un MVP de tiendas para pequeños negocios, desde los flujos de creación y la UX responsive hasta las conexiones comerciales, el QA y los lanzamientos.",
         },
         {
           period: "Experiencia anterior",
           title: "Ventas, experiencia de cliente y aprendizaje",
-          body: "Sales Specialist en CrazyCall (marzo 2020 — julio 2022) y Sales Executive / Academic Coordinator en S-Peak (enero 2011 — enero 2019), con foco en comunicación consultiva, recorridos de cliente y capacitación.",
+          body: "Mis roles anteriores en ventas, atención a clientes y educación me enseñaron a hacer mejores preguntas, explicar herramientas nuevas y acompañar procesos de cambio.",
         },
       ],
     },
     skills: {
-      eyebrow: "Herramientas de trabajo",
-      title: "El alcance de un operador híbrido.",
+      eyebrow: "Habilidades",
+      title: "Lo que aporto a un equipo.",
       groups: [
         {
-          title: "Onboarding y adopción",
+          title: "Habilitación de clientes",
           items: ["Diseño de recorridos", "Habilitación", "Documentación", "Descubrimiento", "Claridad de flujos"],
         },
         {
-          title: "CRM y automatización",
+          title: "Automatización de ventas y CRM",
           items: ["Apollo.io", "HubSpot", "Salesforce", "Zapier / Make", "Webhooks"],
         },
         {
@@ -276,18 +295,28 @@ export const homeCopy: Record<Locale, HomeCopy> = {
         },
       ],
     },
+    partner: {
+      label: "Partner de Marblism",
+      body:
+        "Como partner de Marblism, ayudo a evaluar dónde los empleados con IA pueden reducir trabajo repetitivo y conecto la configuración con flujos prácticos de ventas, clientes u operaciones.",
+      cta: "Conocer Marblism",
+    },
     contact: {
       eyebrow: "Hablemos",
-      title: "¿Tienes un flujo complejo que debería sentirse simple?",
+      title: "¿Buscas a alguien que conecte clientes, producto e implementación?",
       intro:
-        "Estoy abierto a conversaciones remotas sobre onboarding SaaS, operaciones de producto, experiencia de cliente y entrega práctica de productos.",
+        "Estoy abierto a puestos de producto y a proyectos seleccionados de automatización de ventas, SaaS, CRM y flujos con IA.",
+      rolesTitle: "Oportunidades laborales",
+      rolesBody: "Para puestos de producto, operaciones de producto, automatización de ventas o experiencia de cliente, contáctame por correo o LinkedIn.",
+      projectsTitle: "Proyectos",
+      projectsBody: "Para un proyecto de automatización de ventas, SaaS, CRM o flujos con IA, envíame un breve contexto por correo o WhatsApp.",
       whatsapp: "Escribir por WhatsApp",
       email: "Enviar correo",
       linkedIn: "Conectar en LinkedIn",
       phone: "Llamar",
     },
     footer: {
-      note: "Creado como un portafolio bilingüe de producto basado en evidencia.",
+      note: "Jorge Gasca · Producto y Automatización de Ventas · Ciudad de México",
       rights: "El contenido personal, la marca y los medios de producto tienen derechos reservados.",
     },
   },

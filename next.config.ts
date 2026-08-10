@@ -2,11 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  experimental: {
-    globalNotFound: true,
-  },
   images: {
     formats: ["image/avif", "image/webp"],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.jgasca.io" }],
+        destination: "https://jgasca.io/:path*",
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [

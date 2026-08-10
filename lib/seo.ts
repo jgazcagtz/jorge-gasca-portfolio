@@ -1,47 +1,32 @@
 import type { Metadata } from "next";
 import type { CaseStudy } from "@/lib/case-studies";
 import { homeCopy } from "@/lib/home";
-import { absoluteUrl, localePath, SITE_URL, type Locale } from "@/lib/site";
+import { localePath, SITE_URL, type Locale } from "@/lib/site";
+
+export const CONTENT_DATE = "2026-08-09";
+export const CONTENT_DATE_ISO = `${CONTENT_DATE}T00:00:00-06:00`;
+
+export const HOME_TITLES: Record<Locale, string> = {
+  en: "Jorge Gasca | Product & Sales Automation Specialist",
+  es: "Jorge Gasca | Producto y Automatización de Ventas",
+};
+
+const AUTHOR_NAME = "Jorge Manuel Gasca Gutiérrez";
+const SITE_NAME = "Jorge Gasca";
 
 export function homeMetadata(locale: Locale): Metadata {
   const copy = homeCopy[locale].hero;
   const canonicalPath = localePath(locale);
-  const socialImage = "/media/jorge-gasca-social-card.png";
-  const keywords =
-    locale === "en"
-      ? [
-          "SaaS onboarding specialist",
-          "product builder Mexico City",
-          "CRM automation",
-          "AI workflows",
-          "customer experience",
-          "product operations",
-          "bilingual SaaS specialist",
-          "Apollo.io onboarding",
-        ]
-      : [
-          "especialista en onboarding SaaS",
-          "creador de productos Ciudad de México",
-          "automatización CRM",
-          "flujos de IA",
-          "experiencia de cliente",
-          "operaciones de producto",
-          "especialista SaaS bilingüe",
-          "onboarding Apollo.io",
-        ];
+  const title = HOME_TITLES[locale];
 
   return {
     metadataBase: new URL(SITE_URL),
-    title:
-      locale === "en"
-        ? "Jorge Gasca — SaaS Onboarding & Product Builder"
-        : "Jorge Gasca — Onboarding SaaS y Creador de Productos",
+    title,
     description: copy.summary,
-    applicationName: "Jorge Gasca Product Portfolio",
-    authors: [{ name: "Jorge Manuel Gasca Gutiérrez", url: SITE_URL }],
-    creator: "Jorge Manuel Gasca Gutiérrez",
-    publisher: "Jorge Manuel Gasca Gutiérrez",
-    keywords,
+    applicationName: "Jorge Gasca Portfolio",
+    authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+    creator: AUTHOR_NAME,
+    publisher: AUTHOR_NAME,
     alternates: {
       canonical: canonicalPath,
       languages: {
@@ -55,26 +40,14 @@ export function homeMetadata(locale: Locale): Metadata {
       locale: locale === "en" ? "en_US" : "es_MX",
       alternateLocale: locale === "en" ? ["es_MX"] : ["en_US"],
       url: canonicalPath,
-      siteName: "Jorge Gasca — Product Portfolio",
-      title: copy.headline,
+      siteName: SITE_NAME,
+      title,
       description: copy.summary,
-      images: [
-        {
-          url: socialImage,
-          width: 1200,
-          height: 630,
-          alt:
-            locale === "en"
-              ? "Jorge Gasca — SaaS onboarding and product builder"
-              : "Jorge Gasca — Onboarding SaaS y creador de productos",
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: copy.headline,
+      title,
       description: copy.summary,
-      images: [socialImage],
     },
     category: "technology",
   };
@@ -88,15 +61,14 @@ export function caseStudyMetadata(
   const englishPath = `/work/${study.slug}`;
   const spanishPath = `/es/work/${study.slug}`;
   const canonicalPath = locale === "en" ? englishPath : spanishPath;
-  const cover = study.media.find((asset) => asset.id.endsWith("desktop"));
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: copy.title,
-    description: copy.dek,
-    authors: [{ name: "Jorge Manuel Gasca Gutiérrez", url: SITE_URL }],
-    creator: "Jorge Manuel Gasca Gutiérrez",
-    keywords: [study.copy[locale].title, ...study.stack, copy.stageLabel],
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+    creator: AUTHOR_NAME,
+    publisher: AUTHOR_NAME,
     alternates: {
       canonical: canonicalPath,
       languages: {
@@ -110,25 +82,17 @@ export function caseStudyMetadata(
       locale: locale === "en" ? "en_US" : "es_MX",
       alternateLocale: locale === "en" ? ["es_MX"] : ["en_US"],
       url: canonicalPath,
-      siteName: "Jorge Gasca — Product Portfolio",
-      title: copy.title,
-      description: copy.dek,
-      images: cover
-        ? [
-            {
-              url: absoluteUrl(cover.src),
-              width: cover.viewport.width,
-              height: cover.viewport.height,
-              alt: copy.coverAlt,
-            },
-          ]
-        : undefined,
+      siteName: SITE_NAME,
+      title: copy.seoTitle,
+      description: copy.seoDescription,
+      publishedTime: CONTENT_DATE_ISO,
+      modifiedTime: CONTENT_DATE_ISO,
+      authors: [SITE_URL],
     },
     twitter: {
       card: "summary_large_image",
-      title: copy.title,
-      description: copy.dek,
-      images: cover ? [absoluteUrl(cover.src)] : undefined,
+      title: copy.seoTitle,
+      description: copy.seoDescription,
     },
   };
 }

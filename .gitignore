@@ -39,6 +39,8 @@ yarn-error.log*
 # browser and quality reports
 /playwright-report/
 /test-results/
+/.playwright-cli/
+/output/playwright/
 /.lighthouseci/
 /lighthouse-report.*
 
