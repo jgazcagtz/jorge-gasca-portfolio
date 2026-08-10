@@ -4,12 +4,15 @@ const externalBaseUrl = process.env.PLAYWRIGHT_BASE_URL;
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  outputDir: "output/playwright/test-results",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : undefined,
-  reporter: process.env.CI ? [["github"], ["list"]] : "list",
-  timeout: 45_000,
+  workers: 2,
+  reporter: process.env.CI
+    ? [["github"], ["list"]]
+    : [["list"], ["html", { outputFolder: "output/playwright/report", open: "never" }]],
+  timeout: 60_000,
   expect: { timeout: 8_000 },
   use: {
     baseURL: externalBaseUrl ?? "http://127.0.0.1:4173",
@@ -22,6 +25,16 @@ export default defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "firefox-smoke",
+      grep: /@cross-browser/,
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit-smoke",
+      grep: /@cross-browser/,
+      use: { ...devices["Desktop Safari"] },
     },
   ],
   webServer: externalBaseUrl

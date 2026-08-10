@@ -2,7 +2,7 @@
   "name": "jorge-gasca-portfolio",
   "version": "0.1.0",
   "private": true,
-  "description": "Bilingual portfolio for SaaS onboarding, CRM automation, AI workflows, and product delivery.",
+  "description": "Bilingual portfolio for product UX, sales and CRM automation, AI workflows, and hands-on product delivery.",
   "engines": {
     "node": "22.x"
   },
