@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { homeCopy } from "@/lib/home";
 import { CONTACT, localePath, type Locale } from "@/lib/site";
 
@@ -9,9 +10,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="siteFooter">
       <div className="footerInner">
         <div>
-          <a className="footerName" href={localePath(locale)}>
+          <Link className="footerName" href={localePath(locale)}>
             Jorge Gasca
-          </a>
+          </Link>
           <p>{copy.note}</p>
         </div>
         <nav aria-label={locale === "en" ? "Contact links" : "Enlaces de contacto"}>

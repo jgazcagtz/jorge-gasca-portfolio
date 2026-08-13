@@ -3,14 +3,16 @@ import type { Locale } from "@/lib/site";
 export function LocaleSwitch({
   locale,
   label,
+  href,
 }: {
   locale: Locale;
   label: string;
+  href: string;
 }) {
   return (
     <a
       className="localeSwitch"
-      href={locale === "en" ? "/es" : "/"}
+      href={href}
       hrefLang={locale === "en" ? "es" : "en"}
       data-locale-switch
     >

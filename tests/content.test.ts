@@ -49,14 +49,22 @@ function publicFile(path: string): string {
 }
 
 describe("portfolio content contract", () => {
-  it("keeps route slugs and ordering unique without coupling to card counts", () => {
+  it("keeps route slugs unique and defines the three signature projects in order", () => {
     expect(caseStudySlugs).toEqual(expect.arrayContaining([...expectedLaunchSlugs]));
     expect(new Set(caseStudySlugs).size).toBe(caseStudySlugs.length);
     expect(new Set(caseStudies.map((study) => study.sequence)).size).toBe(
       caseStudies.length,
     );
-    expect(caseStudies.some((study) => study.featured)).toBe(true);
-    expect(caseStudies.some((study) => !study.featured)).toBe(true);
+
+    const signatureProjects = caseStudies
+      .filter((study) => study.featured)
+      .sort((left, right) => left.sequence - right.sequence);
+    expect(signatureProjects.map((study) => study.slug)).toEqual([
+      "zentix",
+      "minitiendai",
+      "ordenai",
+    ]);
+    expect(caseStudies.filter((study) => !study.featured)).toHaveLength(3);
   });
 
   it("keeps public and private source policies explicit", () => {
@@ -82,6 +90,8 @@ describe("portfolio content contract", () => {
       "seoDescription",
       "stageLabel",
       "sourceLabel",
+      "role",
+      "cardResult",
       "summary",
       "ownership",
       "challenge",
@@ -102,7 +112,9 @@ describe("portfolio content contract", () => {
             copy[field].trim().length,
             `${study.slug}.${locale}.${field}`,
           ).toBeGreaterThan(
-            field === "sourceLabel" || field === "stageLabel" ? 4 : 20,
+            field === "sourceLabel" || field === "stageLabel" || field === "role"
+              ? 4
+              : 20,
           );
         }
 
@@ -165,12 +177,27 @@ describe("portfolio content contract", () => {
     const miniCase = caseStudies.find((study) => study.slug === "minitiendai");
     expect(miniCase?.copy.en.ownership).toContain("Product Development Manager");
     expect(miniCase?.copy.es.ownership).toContain("Product Development Manager");
-    expect(homeCopy.en.hero.eyebrow).toContain("Sales Automation");
+    expect(miniCase?.copy.en.role).toContain("Product Development Manager");
+    expect(miniCase?.copy.es.role).toContain("Product Development Manager");
+    expect(homeCopy.en.hero.eyebrow.toLowerCase()).toContain("sales automation");
     expect(homeCopy.es.hero.eyebrow.toLowerCase()).toContain(
       "automatización de ventas",
     );
     expect(homeCopy.en.hero.availability.toLowerCase()).not.toContain("onboarding");
     expect(homeCopy.es.hero.availability.toLowerCase()).not.toContain("onboarding");
+  });
+
+  it("uses the approved bilingual hero promise and conversion actions", () => {
+    expect(homeCopy.en.hero.headline).toBe(
+      "I make complex product systems easier to understand, use, and ship.",
+    );
+    expect(homeCopy.es.hero.headline).toBe(
+      "Convierto sistemas de producto complejos en experiencias claras, útiles y listas para operar.",
+    );
+    expect(homeCopy.en.hero.primaryCta).toBe("Explore signature work");
+    expect(homeCopy.en.hero.secondaryCta).toBe("Start a conversation");
+    expect(homeCopy.es.hero.primaryCta.trim().length).toBeGreaterThan(12);
+    expect(homeCopy.es.hero.secondaryCta.trim().length).toBeGreaterThan(12);
   });
 
   it("keeps metadata concise, localized, natural, and free of meta keywords", () => {
@@ -261,6 +288,12 @@ describe("portfolio content contract", () => {
           expect(asset.poster).toMatch(/\.png$/);
           expect(existsSync(publicFile(asset.poster))).toBe(true);
           expect(asset.durationSeconds).toBeGreaterThan(0);
+          if (study.slug === "minitiendai") {
+            expect(asset.durationSeconds).toBeLessThanOrEqual(25);
+          } else {
+            expect(asset.durationSeconds).toBeGreaterThanOrEqual(15);
+            expect(asset.durationSeconds).toBeLessThanOrEqual(22);
+          }
         }
       }
     }

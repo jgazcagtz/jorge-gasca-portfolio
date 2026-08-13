@@ -57,6 +57,8 @@ export type LocalizedCaseStudy = {
   seoDescription: string;
   stageLabel: string;
   sourceLabel: string;
+  role: string;
+  cardResult: string;
   summary: string;
   ownership: string;
   challenge: string;
@@ -189,7 +191,7 @@ export const caseStudies: CaseStudy[] = [
         en: "The conversation shown is a public example, not customer activity.",
         es: "La conversación mostrada es un ejemplo público, no actividad de clientes.",
       },
-      durationSeconds: 38.04,
+      durationSeconds: 20,
     }),
     copy: {
       en: {
@@ -199,6 +201,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca designed and built Zentix workflows for AI-assisted conversations, CRM context, and human handoff.",
         stageLabel: "Live B2B SaaS",
         sourceLabel: "Private source",
+        role: "Independent product builder",
+        cardResult:
+          "Connected web, WhatsApp, Telegram, CRM context, and human handoff in one product flow.",
         summary:
           "Zentix gives small teams one place to handle AI-assisted conversations from the web, WhatsApp, and Telegram, then carry useful context into the CRM or a human handoff.",
         ownership:
@@ -235,6 +240,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca diseñó y construyó en Zentix los flujos de conversaciones con IA, contexto de CRM y atención humana.",
         stageLabel: "SaaS B2B en vivo",
         sourceLabel: "Código privado",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Conecté web, WhatsApp, Telegram, contexto de CRM y transferencia humana en un solo flujo.",
         summary:
           "Zentix permite que equipos pequeños atiendan conversaciones con IA desde web, WhatsApp y Telegram, y pasen el contexto útil al CRM o a una persona.",
         ownership:
@@ -268,7 +276,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "hablaya",
-    featured: true,
+    featured: false,
     sequence: 2,
     stage: "live-edtech",
     sourceVisibility: "private",
@@ -298,7 +306,7 @@ export const caseStudies: CaseStudy[] = [
         en: "The visible learner interface is public example content, not learner activity.",
         es: "La interfaz visible usa contenido público de ejemplo, no actividad de estudiantes.",
       },
-      durationSeconds: 26.76,
+      durationSeconds: 20,
     }),
     copy: {
       en: {
@@ -308,6 +316,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca built a responsive language-learning journey across lessons, text and voice practice, vocabulary, and progress.",
         stageLabel: "Live EdTech product",
         sourceLabel: "Private source",
+        role: "Independent product builder",
+        cardResult:
+          "Unified lessons, voice and text practice, vocabulary, games, and progress in one responsive journey.",
         summary:
           "HablaYa brings guided lessons, text and voice practice, vocabulary, games, and progress into one responsive learning journey.",
         ownership:
@@ -344,6 +355,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca construyó un recorrido responsive para aprender idiomas con lecciones, práctica por texto y voz, vocabulario y progreso.",
         stageLabel: "Producto EdTech en vivo",
         sourceLabel: "Código privado",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Unifiqué lecciones, práctica por voz y texto, vocabulario, juegos y progreso en un recorrido responsive.",
         summary:
           "HablaYa reúne lecciones guiadas, práctica por texto y voz, vocabulario, juegos y progreso en una experiencia que funciona en distintos dispositivos.",
         ownership:
@@ -443,6 +457,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca led MiniTiendAI product development for store creation, responsive shopping, cart, and WhatsApp ordering.",
         stageLabel: "Live MVP",
         sourceLabel: "Private source",
+        role: "Product Development Manager",
+        cardResult:
+          "Shipped a responsive storefront flow that turns a catalog and cart into a WhatsApp order.",
         summary:
           "MiniTiendAI helps a small business create a shareable store or menu, organize products, and turn a cart into a WhatsApp order without setting up a large commerce platform.",
         ownership:
@@ -480,6 +497,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca lideró el desarrollo de MiniTiendAI: creación de tiendas, compra responsive, carrito y pedidos por WhatsApp.",
         stageLabel: "MVP en vivo",
         sourceLabel: "Código privado",
+        role: "Product Development Manager",
+        cardResult:
+          "Lancé un flujo responsive que convierte catálogo y carrito en un pedido por WhatsApp.",
         summary:
           "MiniTiendAI ayuda a un pequeño negocio a crear una tienda o menú compartible, ordenar sus productos y convertir el carrito en un pedido por WhatsApp sin instalar una gran plataforma de comercio.",
         ownership:
@@ -543,7 +563,7 @@ export const caseStudies: CaseStudy[] = [
         en: "This public pilot view is not an authenticated restaurant account or a claim of general availability.",
         es: "Esta vista pública del piloto no es una cuenta autenticada de restaurante ni implica disponibilidad general.",
       },
-      durationSeconds: 28,
+      durationSeconds: 20,
     }),
     copy: {
       en: {
@@ -553,6 +573,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca designed OrdenAI to connect restaurant order capture, kitchen work, inventory, and customer channels.",
         stageLabel: "Live pilot",
         sourceLabel: "Private source",
+        role: "Independent product builder",
+        cardResult:
+          "Connected customer ordering channels with kitchen, catalog, inventory, and operations views.",
         summary:
           "OrdenAI connects orders from web and messaging channels with the restaurant’s kitchen, catalog, inventory, customer records, and daily operations.",
         ownership:
@@ -589,6 +612,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca diseñó OrdenAI para conectar pedidos, cocina, inventario y canales de atención en restaurantes.",
         stageLabel: "Piloto en vivo",
         sourceLabel: "Código privado",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Conecté los canales de pedido con cocina, catálogo, inventario y vistas operativas.",
         summary:
           "OrdenAI conecta los pedidos que llegan por web y mensajería con cocina, catálogo, inventario, clientes y la operación diaria del restaurante.",
         ownership:
@@ -651,7 +677,7 @@ export const caseStudies: CaseStudy[] = [
         en: "Every activity and status shown is simulated; this is not an operational system.",
         es: "Toda la actividad y los estados son simulados; no es un sistema en operación.",
       },
-      durationSeconds: 29.24,
+      durationSeconds: 20,
     }),
     copy: {
       en: {
@@ -661,6 +687,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca built a bilingual, clearly labeled simulation for evaluating an AI-team concept before integration.",
         stageLabel: "Simulated POC",
         sourceLabel: "Public source",
+        role: "Independent product builder",
+        cardResult:
+          "Made the AI-team concept inspectable without presenting simulated activity as live telemetry.",
         summary:
           "Zentix Office is a bilingual concept site and control-room simulation for explaining how a team of AI agents might be evaluated before any real integration.",
         ownership:
@@ -697,6 +726,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca construyó una simulación bilingüe y claramente identificada para evaluar el concepto de un equipo de IA antes de integrarlo.",
         stageLabel: "POC simulado",
         sourceLabel: "Repositorio público",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Hice inspeccionable el concepto de equipo con IA sin presentar actividad simulada como telemetría real.",
         summary:
           "Zentix Office es un sitio bilingüe y una sala de control simulada para explicar cómo podría evaluarse un equipo de agentes de IA antes de conectar herramientas o datos reales.",
         ownership:
@@ -759,7 +791,7 @@ export const caseStudies: CaseStudy[] = [
         en: "The guest capture uses synthetic content and does not show an account, private prompt, or provider configuration.",
         es: "La captura de invitado usa contenido ficticio y no muestra cuentas, prompts privados ni configuración de proveedores.",
       },
-      durationSeconds: 35.48,
+      durationSeconds: 20,
     }),
     copy: {
       en: {
@@ -769,6 +801,9 @@ export const caseStudies: CaseStudy[] = [
           "How Jorge Gasca designed Tonalli AI to connect multi-model chat, tools, files, artifacts, voice, and scheduled follow-up.",
         stageLabel: "Live product demo",
         sourceLabel: "Private source",
+        role: "Independent product builder",
+        cardResult:
+          "Combined models, tools, artifacts, scheduling, and delivery visibility in one guest workspace.",
         summary:
           "Tonalli AI brings chat, tools, files, voice, messaging, generated artifacts, and scheduled prompts into one experimental workspace.",
         ownership:
@@ -805,6 +840,9 @@ export const caseStudies: CaseStudy[] = [
           "Cómo Jorge Gasca diseñó Tonalli AI para conectar chat multimodelo, herramientas, archivos, artefactos, voz y seguimiento programado.",
         stageLabel: "Demo de producto en vivo",
         sourceLabel: "Código privado",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Reuní modelos, herramientas, artefactos, programación y visibilidad de entrega en un espacio de invitado.",
         summary:
           "Tonalli AI reúne chat, herramientas, archivos, voz, mensajería, artefactos y prompts programados dentro de un espacio de trabajo experimental.",
         ownership:
@@ -845,6 +883,15 @@ export function getCaseStudy(slug: string) {
 }
 
 export function getNextCaseStudy(slug: CaseStudySlug) {
-  const currentIndex = caseStudies.findIndex((item) => item.slug === slug);
-  return caseStudies[(currentIndex + 1) % caseStudies.length];
+  const atlasOrder: CaseStudySlug[] = [
+    "zentix",
+    "minitiendai",
+    "ordenai",
+    "hablaya",
+    "zentix-office",
+    "tonalli-ai",
+  ];
+  const currentIndex = atlasOrder.indexOf(slug);
+  const nextSlug = atlasOrder[(currentIndex + 1) % atlasOrder.length];
+  return caseStudies.find((item) => item.slug === nextSlug) ?? caseStudies[0];
 }

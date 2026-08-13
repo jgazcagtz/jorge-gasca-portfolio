@@ -12,20 +12,21 @@ export const SOCIAL_CARD_SIZE = {
 } as const;
 
 const palette = {
-  paper: "#f2eee6",
-  ink: "#151515",
-  muted: "#5f5a52",
-  rule: "#c8c1b6",
-  accent: "#cf4937",
+  paper: "#f3efe6",
+  raised: "#fffdf7",
+  ink: "#0d0d12",
+  muted: "#5c5861",
+  rule: "#cfc6b7",
+  violet: "#8062ff",
 };
 
 const caseAccents: Record<CaseStudy["accent"], string> = {
-  violet: "#7657d7",
-  coral: "#d75b4a",
-  lime: "#819b35",
-  orange: "#d77332",
-  blue: "#3c70b8",
-  cyan: "#268a96",
+  violet: "#8062ff",
+  coral: "#ff6b62",
+  lime: "#b9f466",
+  orange: "#ff8a38",
+  blue: "#5b8cff",
+  cyan: "#4ce0db",
 };
 
 const publicAssetDataUri = cache(async (src: string) => {
@@ -37,23 +38,26 @@ const publicAssetDataUri = cache(async (src: string) => {
     throw new Error(`Social-card asset must stay inside public/: ${src}`);
   }
 
-  const mimeType =
-    extname(assetPath).toLowerCase() === ".webp"
-      ? "image/webp"
-      : extname(assetPath).toLowerCase() === ".jpg" ||
-          extname(assetPath).toLowerCase() === ".jpeg"
-        ? "image/jpeg"
-        : "image/png";
+  const extension = extname(assetPath).toLowerCase();
+  const mimeType = extension === ".webp"
+    ? "image/webp"
+    : extension === ".jpg" || extension === ".jpeg"
+      ? "image/jpeg"
+      : "image/png";
   const contents = await readFile(assetPath);
 
   return `data:${mimeType};base64,${contents.toString("base64")}`;
 });
 
 export async function createHomeSocialCard(locale: Locale) {
-  const portrait = await publicAssetDataUri(
-    "/media/jorge-gasca-portrait.png",
-  );
+  const portrait = await publicAssetDataUri("/media/jorge-gasca-portrait.png");
   const isEnglish = locale === "en";
+  const headline = isEnglish
+    ? "I make complex product systems easier to understand, use, and ship."
+    : "Convierto sistemas de producto complejos en experiencias claras, útiles y listas para operar.";
+  const steps = isEnglish
+    ? ["Discover", "Design", "Automate", "Verify"]
+    : ["Descubrir", "Diseñar", "Automatizar", "Verificar"];
 
   return new ImageResponse(
     (
@@ -70,94 +74,92 @@ export async function createHomeSocialCard(locale: Locale) {
       >
         <div
           style={{
-            background: palette.accent,
+            backgroundImage: `linear-gradient(${palette.rule}66 1px, transparent 1px), linear-gradient(90deg, ${palette.rule}66 1px, transparent 1px)`,
+            backgroundSize: "48px 48px",
             display: "flex",
             position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: 10,
+            inset: 0,
+            opacity: 0.38,
           }}
         />
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            width: 720,
-            padding: "64px 58px 52px 64px",
+            width: 790,
+            padding: "46px 50px 42px 56px",
+            position: "relative",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                fontSize: 18,
-                fontWeight: 700,
-                letterSpacing: 2.5,
+                fontSize: 14,
+                fontWeight: 800,
+                letterSpacing: 2.4,
                 textTransform: "uppercase",
               }}
             >
-              <span>Jorge Gasca</span>
-              <span style={{ color: palette.accent, margin: "0 14px" }}>/</span>
-              <span>{isEnglish ? "Product Specialist" : "Especialista de producto"}</span>
+              <span style={{ background: palette.ink, color: palette.paper, padding: "7px 10px" }}>
+                Human / Systems Atlas
+              </span>
+              <span style={{ marginLeft: 14 }}>2026—27</span>
             </div>
-            <div
-              style={{
-                background: palette.rule,
-                display: "flex",
-                width: "100%",
-                height: 1,
-                margin: "24px 0 38px",
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                fontSize: isEnglish ? 62 : 58,
-                fontWeight: 700,
-                letterSpacing: -2.5,
-                lineHeight: 1.04,
-                maxWidth: 590,
-              }}
-            >
-              {isEnglish
-                ? "I turn product ideas and messy workflows into tools people can actually use."
-                : "Convierto ideas de producto y flujos complicados en herramientas que las personas pueden usar."}
-            </div>
+            <span style={{ color: palette.muted, fontSize: 13, fontWeight: 700, letterSpacing: 2 }}>
+              MX / REMOTE
+            </span>
           </div>
+
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              color: palette.muted,
+              fontSize: isEnglish ? 57 : 49,
+              fontWeight: 760,
+              letterSpacing: -2.7,
+              lineHeight: 1.01,
+              marginTop: 54,
+              maxWidth: 680,
             }}
           >
-            <div style={{ display: "flex", fontSize: 22 }}>
-              {isEnglish
-                ? "Product UX · Sales automation · AI workflows"
-                : "UX de producto · Automatización de ventas · Flujos con IA"}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 16,
-                fontWeight: 700,
-                letterSpacing: 2,
-                marginTop: 16,
-                textTransform: "uppercase",
-              }}
-            >
-              {isEnglish
-                ? "Mexico City · English / Spanish"
-                : "Ciudad de México · Español / Inglés"}
-            </div>
+            {headline}
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "auto",
+              borderTop: `1px solid ${palette.ink}`,
+              paddingTop: 18,
+            }}
+          >
+            {steps.map((step, index) => (
+              <div key={step} style={{ display: "flex", alignItems: "center" }}>
+                <span
+                  style={{
+                    background: index === 3 ? palette.violet : palette.ink,
+                    borderRadius: 999,
+                    display: "flex",
+                    width: 9,
+                    height: 9,
+                  }}
+                />
+                <span style={{ fontSize: 13, fontWeight: 750, marginLeft: 7, textTransform: "uppercase" }}>
+                  {step}
+                </span>
+                {index < steps.length - 1 ? (
+                  <span style={{ background: palette.rule, display: "flex", width: 28, height: 1, margin: "0 9px" }} />
+                ) : null}
+              </div>
+            ))}
           </div>
         </div>
+
         <div
           style={{
-            backgroundColor: "#e9e9e7",
+            background: palette.raised,
             borderLeft: `1px solid ${palette.ink}`,
             display: "flex",
             flex: 1,
@@ -173,30 +175,26 @@ export async function createHomeSocialCard(locale: Locale) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "58% 44%",
+              objectPosition: "58% 42%",
             }}
           />
           <div
             style={{
-              background: palette.ink,
-              color: palette.paper,
+              background: palette.violet,
+              color: palette.ink,
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: "column",
               position: "absolute",
-              right: 0,
-              bottom: 0,
-              left: 0,
-              height: 54,
-              padding: "0 24px",
-              fontSize: 14,
-              fontWeight: 700,
-              letterSpacing: 1.8,
-              textTransform: "uppercase",
+              right: 22,
+              bottom: 22,
+              width: 290,
+              padding: "18px 20px",
             }}
           >
-            <span>Apollo.io</span>
-            <span>EN / ES</span>
+            <span style={{ fontSize: 27, fontWeight: 800 }}>Jorge Gasca</span>
+            <span style={{ fontSize: 13, fontWeight: 750, letterSpacing: 1.7, marginTop: 7, textTransform: "uppercase" }}>
+              {isEnglish ? "Product systems / Automation" : "Sistemas de producto / Automatización"}
+            </span>
           </div>
         </div>
       </div>
@@ -205,10 +203,7 @@ export async function createHomeSocialCard(locale: Locale) {
   );
 }
 
-export async function createCaseSocialCard(
-  locale: Locale,
-  study: CaseStudy,
-) {
+export async function createCaseSocialCard(locale: Locale, study: CaseStudy) {
   const copy = study.copy[locale];
   const cover = await publicAssetDataUri(study.media.desktop.src);
   const accent = caseAccents[study.accent];
@@ -223,8 +218,9 @@ export async function createCaseSocialCard(
           display: "flex",
           width: "100%",
           height: "100%",
-          padding: 44,
+          padding: 42,
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -235,34 +231,86 @@ export async function createCaseSocialCard(
             top: 0,
             left: 0,
             width: "100%",
-            height: 10,
+            height: 12,
           }}
         />
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            width: 730,
-            height: "100%",
+            justifyContent: "space-between",
+            width: 410,
+            padding: "10px 36px 8px 6px",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", alignItems: "center", fontSize: 13, fontWeight: 800, letterSpacing: 2.1, textTransform: "uppercase" }}>
+              <span>Human / Systems Atlas</span>
+              <span style={{ color: accent, margin: "0 10px" }}>/</span>
+              <span>{String(study.sequence).padStart(2, "0")}</span>
+            </div>
+            <div style={{ background: palette.rule, display: "flex", width: "100%", height: 1, margin: "24px 0 34px" }} />
+            <div
+              style={{
+                display: "flex",
+                fontSize: copy.title.length > 48 ? 42 : 50,
+                fontWeight: 800,
+                letterSpacing: -2.1,
+                lineHeight: 1.02,
+              }}
+            >
+              {copy.title}
+            </div>
+            <div
+              style={{
+                color: palette.muted,
+                display: "flex",
+                fontSize: 17,
+                lineHeight: 1.35,
+                marginTop: 24,
+              }}
+            >
+              {copy.role}
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ color: palette.muted, fontSize: 12, fontWeight: 800, letterSpacing: 1.8, textTransform: "uppercase" }}>
+              {isEnglish ? "Verified now" : "Verificado ahora"}
+            </span>
+            <span style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.35, marginTop: 10 }}>
+              {copy.cardResult}
+            </span>
+            <span style={{ fontSize: 15, fontWeight: 800, marginTop: 24 }}>Jorge Gasca</span>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: palette.ink,
+            border: `1px solid ${palette.ink}`,
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            padding: 18,
+            position: "relative",
           }}
         >
           <div
             style={{
-              background: "#ded9cf",
-              border: `1px solid ${palette.ink}`,
+              background: palette.raised,
               display: "flex",
+              flex: 1,
               alignItems: "center",
               justifyContent: "center",
-              width: "100%",
-              height: 456,
-              padding: 18,
+              overflow: "hidden",
             }}
           >
             <img
               src={cover}
               alt=""
               style={{
-                backgroundColor: "#ffffff",
                 display: "flex",
                 width: "100%",
                 height: "100%",
@@ -272,80 +320,19 @@ export async function createCaseSocialCard(
           </div>
           <div
             style={{
+              color: palette.paper,
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
-              height: 76,
-              fontSize: 15,
-              fontWeight: 700,
-              letterSpacing: 1.8,
+              justifyContent: "space-between",
+              height: 58,
+              fontSize: 12,
+              fontWeight: 800,
+              letterSpacing: 1.7,
               textTransform: "uppercase",
             }}
           >
-            <span>{isEnglish ? "Product case study" : "Caso de producto"}</span>
-            <span>{String(study.sequence).padStart(2, "0")} / 06</span>
-          </div>
-        </div>
-        <div
-          style={{
-            borderLeft: `1px solid ${palette.rule}`,
-            display: "flex",
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-            marginLeft: 42,
-            padding: "8px 4px 8px 42px",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div
-              style={{
-                color: accent,
-                display: "flex",
-                fontSize: 17,
-                fontWeight: 700,
-                letterSpacing: 1.6,
-                textTransform: "uppercase",
-              }}
-            >
-              {copy.stageLabel}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: copy.title.length > 48 ? 42 : 50,
-                fontWeight: 700,
-                letterSpacing: -1.8,
-                lineHeight: 1.06,
-                marginTop: 28,
-              }}
-            >
-              {copy.title}
-            </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div
-              style={{
-                background: accent,
-                display: "flex",
-                width: 56,
-                height: 5,
-                marginBottom: 20,
-              }}
-            />
-            <div style={{ display: "flex", fontSize: 22, fontWeight: 700 }}>
-              Jorge Gasca
-            </div>
-            <div
-              style={{
-                color: palette.muted,
-                display: "flex",
-                fontSize: 16,
-                marginTop: 8,
-              }}
-            >
-              {isEnglish ? "Product & Sales Automation Specialist · Mexico City" : "Producto y Automatización de Ventas · Ciudad de México"}
-            </div>
+            <span>{isEnglish ? "Privacy-reviewed evidence" : "Evidencia revisada por privacidad"}</span>
+            <span style={{ background: accent, color: palette.ink, padding: "6px 9px" }}>{copy.stageLabel}</span>
           </div>
         </div>
       </div>

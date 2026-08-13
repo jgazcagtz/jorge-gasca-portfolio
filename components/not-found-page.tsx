@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { SiteShell } from "@/components/site-shell";
 import type { Locale } from "@/lib/site";
 
 const copy = {
@@ -20,11 +22,13 @@ export function NotFoundPage({ locale }: { locale: Locale }) {
   const home = locale === "en" ? "/#work" : "/es#work";
 
   return (
-    <main id="main-content" className="notFoundPage">
-      <p>{text.eyebrow}</p>
-      <h1>{text.title}</h1>
-      <p>{text.body}</p>
-      <a href={home}>{text.action}<span aria-hidden="true"> →</span></a>
-    </main>
+    <SiteShell locale={locale} alternateHref={locale === "en" ? "/es" : "/"}>
+      <main id="main-content" className="notFoundPage">
+        <p>{text.eyebrow}</p>
+        <h1>{text.title}</h1>
+        <p>{text.body}</p>
+        <Link href={home}>{text.action}<span aria-hidden="true"> →</span></Link>
+      </main>
+    </SiteShell>
   );
 }

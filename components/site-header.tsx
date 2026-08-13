@@ -1,39 +1,51 @@
+import Link from "next/link";
 import { LocaleSwitch } from "@/components/locale-switch";
+import { MobileNav } from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { homeCopy } from "@/lib/home";
 import { localePath, type Locale } from "@/lib/site";
 
-export function SiteHeader({ locale }: { locale: Locale }) {
+export function SiteHeader({
+  locale,
+  alternateHref,
+}: {
+  locale: Locale;
+  alternateHref: string;
+}) {
   const copy = homeCopy[locale].nav;
   const home = localePath(locale);
+  const navLinks = [
+    { href: `${home}#work`, label: copy.work },
+    { href: `${home}#approach`, label: copy.approach },
+    { href: `${home}#experience`, label: copy.experience },
+    { href: `${home}#contact`, label: copy.contact },
+  ];
 
   return (
     <header className="siteHeader">
       <div className="headerInner">
-        <a className="wordmark" href={home} aria-label="Jorge Gasca — home">
+        <Link className="wordmark" href={home} aria-label="Jorge Gasca — home">
           <span className="wordmarkMonogram" aria-hidden="true">JG</span>
           <span className="wordmarkName">Jorge Gasca</span>
-        </a>
+        </Link>
 
         <nav className="desktopNav" aria-label={locale === "en" ? "Primary" : "Principal"}>
-          <a href={`${home}#work`}>{copy.work}</a>
-          <a href={`${home}#approach`}>{copy.approach}</a>
-          <a href={`${home}#experience`}>{copy.experience}</a>
-          <a href={`${home}#contact`}>{copy.contact}</a>
+          {navLinks.slice(0, 3).map((link) => (
+            <Link key={link.href} href={link.href}>{link.label}</Link>
+          ))}
         </nav>
 
         <div className="headerActions">
-          <LocaleSwitch locale={locale} label={copy.language} />
-          <ThemeToggle label={copy.theme} />
-          <details className="mobileNav">
-            <summary>{copy.menu}</summary>
-            <nav aria-label={locale === "en" ? "Mobile" : "Móvil"}>
-              <a href={`${home}#work`}>{copy.work}</a>
-              <a href={`${home}#approach`}>{copy.approach}</a>
-              <a href={`${home}#experience`}>{copy.experience}</a>
-              <a href={`${home}#contact`}>{copy.contact}</a>
-            </nav>
-          </details>
+          <Link className="headerContact" href={`${home}#contact`}>
+            {copy.contact}<span aria-hidden="true">↘</span>
+          </Link>
+          <LocaleSwitch locale={locale} label={copy.language} href={alternateHref} />
+          <ThemeToggle locale={locale} />
+          <MobileNav
+            label={copy.menu}
+            navigationLabel={locale === "en" ? "Mobile" : "Móvil"}
+            links={navLinks}
+          />
         </div>
       </div>
     </header>

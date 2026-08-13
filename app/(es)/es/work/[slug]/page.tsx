@@ -5,6 +5,7 @@ import {
   StructuredData,
 } from "@/app/_seo/structured-data";
 import { CaseStudyPage } from "@/components/case-study-page";
+import { SiteShell } from "@/components/site-shell";
 import { caseStudySlugs, getCaseStudy } from "@/lib/case-studies";
 import { caseStudyMetadata } from "@/lib/seo";
 
@@ -27,9 +28,9 @@ export default async function SpanishCaseStudy({ params }: Props) {
   const study = getCaseStudy(slug);
   if (!study) notFound();
   return (
-    <>
+    <SiteShell locale="es" alternateHref={`/work/${study.slug}`}>
       <StructuredData data={caseStudyStructuredData("es", study)} />
       <CaseStudyPage locale="es" study={study} />
-    </>
+    </SiteShell>
   );
 }

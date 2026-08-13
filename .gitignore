@@ -41,6 +41,7 @@ yarn-error.log*
 /test-results/
 /.playwright-cli/
 /output/playwright/
+/output/lighthouse*.json
 /.lighthouseci/
 /lighthouse-report.*
 

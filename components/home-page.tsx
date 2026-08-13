@@ -1,6 +1,13 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { HomeStructuredData } from "@/app/_seo/structured-data";
+import {
+  ActionLink,
+  EvidenceMedia,
+  MetaLabel,
+  SectionHeading,
+} from "@/components/design-primitives";
 import { RevealController } from "@/components/reveal-controller";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { homeCopy } from "@/lib/home";
@@ -15,80 +22,106 @@ import {
 import styles from "./home-page.module.css";
 
 type CardStyle = CSSProperties & {
-  "--case-transition": string;
+  "--case-accent": string;
   "--reveal-delay": string;
+};
+
+const accentColors: Record<CaseStudy["accent"], string> = {
+  violet: "var(--accent-violet)",
+  coral: "var(--accent-coral)",
+  lime: "var(--accent-lime)",
+  orange: "var(--accent-orange)",
+  blue: "var(--accent-blue)",
+  cyan: "var(--accent-cyan)",
 };
 
 const fieldLabels = {
   en: {
-    top: "PRODUCT / PARTNER",
+    top: "HUMAN / SYSTEMS",
     location: "MX / REMOTE",
-    disciplines: ["ADOPTION", "AUTOMATION", "DELIVERY"],
     availability: "Availability",
-    partnerAria: "Jorge Gasca's Marblism partner link",
+    result: "Verified result",
+    role: "Jorge’s role",
+    partnerAria: "Jorge Gasca’s Marblism partner disclosure",
+    partnerProof: "Supporting partner",
+    roleIndex: "01 / HIRING",
+    projectIndex: "02 / PROJECTS",
   },
   es: {
-    top: "PRODUCTO / PARTNER",
+    top: "HUMANO / SISTEMAS",
     location: "MX / REMOTO",
-    disciplines: ["ADOPCIÓN", "AUTOMATIZACIÓN", "ENTREGA"],
     availability: "Disponibilidad",
-    partnerAria: "Enlace de partner de Marblism de Jorge Gasca",
+    result: "Resultado verificado",
+    role: "Rol de Jorge",
+    partnerAria: "Declaración del enlace de partner de Marblism de Jorge Gasca",
+    partnerProof: "Partner de apoyo",
+    roleIndex: "01 / OPORTUNIDADES",
+    projectIndex: "02 / PROYECTOS",
   },
 } as const;
 
 function ProductCard({
   study,
   locale,
-  compact = false,
+  variant,
 }: {
   study: CaseStudy;
   locale: Locale;
-  compact?: boolean;
+  variant: "lead" | "standard" | "compact";
 }) {
   const copy = study.copy[locale];
-  const cover = study.media.desktop;
   const cardStyle: CardStyle = {
-    "--case-transition": `case-${study.slug}`,
+    "--case-accent": accentColors[study.accent],
     "--reveal-delay": `${Math.min(study.sequence - 1, 3) * 45}ms`,
   };
+  const labels = fieldLabels[locale];
 
   return (
     <article
-      className={`${styles.productCard} ${compact ? styles.productCardCompact : ""}`}
-      data-accent={study.accent}
+      className={styles.productCard}
+      data-variant={variant}
+      data-product={study.slug}
       data-reveal
       style={cardStyle}
     >
-      <a
+      <Link
         className={styles.productCardLink}
         href={localePath(locale, `/work/${study.slug}`)}
+        transitionTypes={["case-forward"]}
         aria-label={`${homeCopy[locale].work.viewCase}: ${copy.title}`}
       >
-        <span className={styles.productMedia}>
-          <Image
-            src={cover.src}
-            alt={copy.coverAlt}
-            width={cover.viewport.width}
-            height={cover.viewport.height}
-            sizes={compact ? "(max-width: 800px) 100vw, 40vw" : "(max-width: 900px) 100vw, 50vw"}
+        <div className={styles.productMedia}>
+          <EvidenceMedia
+            asset={study.media.desktop}
+            locale={locale}
+            role="card"
+            sizes={variant === "lead" ? "(max-width: 900px) 100vw, 64vw" : "(max-width: 800px) 100vw, 45vw"}
+            className={styles.productMediaVisual}
+            transitionName={`case-${study.slug}`}
           />
           <span className={styles.cardIndex} aria-hidden="true">
             {String(study.sequence).padStart(2, "0")}
           </span>
-        </span>
-        <span className={styles.productBody}>
-          <span className={styles.productMeta}>
-            <span>{copy.stageLabel}</span>
-            <span>{copy.sourceLabel}</span>
-          </span>
-          <strong className={styles.productTitle}>{copy.title}</strong>
-          <span className={styles.productSummary}>{copy.summary}</span>
+          <span className={styles.cardStage}>{copy.stageLabel}</span>
+        </div>
+
+        <div className={styles.productBody}>
+          <div className={styles.cardRole}>
+            <span>{labels.role}</span>
+            <strong>{copy.role}</strong>
+          </div>
+          <h3>{copy.title}</h3>
+          <p className={styles.productSummary}>{copy.summary}</p>
+          <div className={styles.cardResult}>
+            <span>{labels.result}</span>
+            <p>{copy.cardResult}</p>
+          </div>
           <span className={styles.textLink}>
             {homeCopy[locale].work.viewCase}
             <span aria-hidden="true">↗</span>
           </span>
-        </span>
-      </a>
+        </div>
+      </Link>
     </article>
   );
 }
@@ -96,8 +129,12 @@ function ProductCard({
 export function HomePage({ locale }: { locale: Locale }) {
   const copy = homeCopy[locale];
   const labels = fieldLabels[locale];
-  const featured = caseStudies.filter((study) => study.featured);
-  const labs = caseStudies.filter((study) => !study.featured);
+  const signature = caseStudies
+    .filter((study) => study.featured)
+    .sort((a, b) => a.sequence - b.sequence);
+  const moreWork = caseStudies
+    .filter((study) => !study.featured)
+    .sort((a, b) => a.sequence - b.sequence);
 
   return (
     <main id="main-content">
@@ -107,58 +144,23 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section className={styles.hero} aria-labelledby="hero-title">
         <div className={styles.heroCopy}>
           <div className={styles.heroIdentity}>
-            <div>
-              <p className={styles.eyebrow}>{copy.hero.eyebrow}</p>
-              <p className={styles.name}>Jorge Gasca</p>
-            </div>
-            <Image
-              className={styles.mobilePortraitCue}
-              src="/media/jorge-gasca-portrait.webp"
-              alt=""
-              width={112}
-              height={112}
-              sizes="112px"
-            />
+            <p className={styles.eyebrow}>{copy.hero.eyebrow}</p>
+            <p className={styles.name}>Jorge Gasca</p>
           </div>
           <h1 id="hero-title">{copy.hero.headline}</h1>
           <p className={styles.heroSummary}>{copy.hero.summary}</p>
           <div className={styles.heroActions}>
-            <a className={styles.primaryAction} href="#work">
-              {copy.hero.primaryCta}<span aria-hidden="true">↓</span>
-            </a>
-            <a className={styles.secondaryAction} href="#contact">
-              {copy.hero.secondaryCta}<span aria-hidden="true">↘</span>
-            </a>
+            <ActionLink href="#work" variant="primary">{copy.hero.primaryCta}</ActionLink>
+            <ActionLink href="#contact" variant="secondary">{copy.hero.secondaryCta}</ActionLink>
           </div>
           <div className={styles.heroFacts} aria-label={labels.availability}>
             <span>{copy.hero.availability}</span>
             <span>{copy.hero.languages}</span>
           </div>
-          <aside className={styles.partnerStrip} aria-label={labels.partnerAria}>
-            <span className={styles.partnerIdentity}>
-              <Image
-                src="/media/marblism-wordmark.png"
-                alt="Marblism"
-                width={1484}
-                height={432}
-                sizes="150px"
-              />
-              <span>{copy.partner.label}</span>
-            </span>
-            <p>{copy.partner.body}</p>
-            <a
-              href={MARBLISM_PARTNER_URL}
-              target="_blank"
-              rel="sponsored noreferrer"
-            >
-              {copy.partner.cta}<span aria-hidden="true">↗</span>
-            </a>
-          </aside>
         </div>
 
-        <figure className={styles.heroField}>
+        <figure className={styles.heroPortraitCard}>
           <Image
-            className={styles.heroPortrait}
             src="/media/jorge-gasca-portrait.webp"
             alt={
               locale === "en"
@@ -167,72 +169,97 @@ export function HomePage({ locale }: { locale: Locale }) {
             }
             width={1254}
             height={1254}
-            sizes="(max-width: 820px) calc(100vw - 28px), 34vw"
+            sizes="(max-width: 820px) 112px, 34vw"
             preload
           />
-          <div className={styles.heroFieldTop}>
+          <div className={styles.portraitTop}>
             <span>{labels.top}</span>
             <span>{labels.location}</span>
           </div>
-          <figcaption className={styles.heroPortraitCaption}>
-            <div className={styles.heroDisciplines} aria-hidden="true">
-              {labels.disciplines.map((item) => <span key={item}>{item}</span>)}
-            </div>
-            <p>{copy.hero.proofLabel}</p>
+          <figcaption>
+            <MetaLabel>{copy.hero.proofLabel}</MetaLabel>
           </figcaption>
         </figure>
+
+        <div className={styles.heroSystemTrace} aria-hidden="true">
+          <span>DISCOVER</span><i /><span>DESIGN</span><i /><span>AUTOMATE</span><i /><span>VERIFY</span>
+        </div>
       </section>
 
-      <section className={styles.workSection} id="work" aria-labelledby="work-title" data-reveal>
-        <div className={styles.sectionIntro}>
-          <p className={styles.eyebrow}>{copy.work.eyebrow}</p>
-          <h2 id="work-title">{copy.work.title}</h2>
-          <p>{copy.work.intro}</p>
+      <section className={styles.workSection} id="work" aria-labelledby="work-title">
+        <SectionHeading
+          eyebrow={copy.work.eyebrow}
+          title={copy.work.title}
+          body={copy.work.intro}
+          id="work-title"
+        />
+
+        <div className={styles.collectionHeader}>
+          <MetaLabel>{copy.work.featured}</MetaLabel>
+          <span aria-hidden="true">01—03</span>
         </div>
-        <p className={styles.collectionLabel}>{copy.work.featured}</p>
-        <div className={styles.productGrid}>
-          {featured.map((study) => (
-            <ProductCard key={study.slug} study={study} locale={locale} />
+        <div className={styles.signatureGrid}>
+          {signature.map((study, index) => (
+            <ProductCard
+              key={study.slug}
+              study={study}
+              locale={locale}
+              variant={index === 0 ? "lead" : "standard"}
+            />
           ))}
         </div>
-        <div className={styles.labsHeader}>
-          <p className={styles.collectionLabel}>{copy.work.labs}</p>
-          <span aria-hidden="true">05—06</span>
+
+        <div className={styles.collectionHeader}>
+          <MetaLabel>{copy.work.labs}</MetaLabel>
+          <span aria-hidden="true">04—06</span>
         </div>
-        <div className={styles.labsGrid}>
-          {labs.map((study) => (
-            <ProductCard key={study.slug} study={study} locale={locale} compact />
+        <div className={styles.moreGrid}>
+          {moreWork.map((study) => (
+            <ProductCard key={study.slug} study={study} locale={locale} variant="compact" />
           ))}
         </div>
       </section>
 
       <section className={styles.approachSection} id="approach" aria-labelledby="approach-title" data-reveal>
-        <div className={styles.sectionIntro}>
-          <p className={styles.eyebrow}>{copy.approach.eyebrow}</p>
-          <h2 id="approach-title">{copy.approach.title}</h2>
-          <p>{copy.approach.intro}</p>
-        </div>
-        <ol className={styles.approachList}>
+        <SectionHeading
+          eyebrow={copy.approach.eyebrow}
+          title={copy.approach.title}
+          body={copy.approach.intro}
+          id="approach-title"
+        />
+        <ol className={styles.approachTrace}>
           {copy.approach.steps.map((step, index) => (
-            <li key={step.title} data-reveal style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
+            <li
+              key={step.title}
+              data-phase={String(index + 1).padStart(2, "0")}
+              data-reveal
+              style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}
+            >
+              <div className={styles.traceNode} aria-hidden="true"><span /></div>
+              <div className={styles.approachCopy}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+              <ul aria-label={copy.skills.groups[index].title}>
+                {copy.skills.groups[index].items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
             </li>
           ))}
         </ol>
       </section>
 
       <section className={styles.experienceSection} id="experience" aria-labelledby="experience-title" data-reveal>
-        <div className={styles.sectionIntro}>
-          <p className={styles.eyebrow}>{copy.experience.eyebrow}</p>
-          <h2 id="experience-title">{copy.experience.title}</h2>
-          <p>{copy.experience.intro}</p>
-        </div>
+        <SectionHeading
+          eyebrow={copy.experience.eyebrow}
+          title={copy.experience.title}
+          body={copy.experience.intro}
+          id="experience-title"
+        />
         <div className={styles.timeline}>
           {copy.experience.items.map((item, index) => (
             <article key={item.title} data-reveal style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}>
-              <p>{item.period}</p>
+              <span>{item.period}</span>
               <h3>{item.title}</h3>
               <p>{item.body}</p>
             </article>
@@ -240,48 +267,51 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className={styles.skillsSection} aria-labelledby="skills-title" data-reveal>
-        <div className={styles.sectionIntro}>
-          <p className={styles.eyebrow}>{copy.skills.eyebrow}</p>
-          <h2 id="skills-title">{copy.skills.title}</h2>
+      <aside className={styles.partnerBand} aria-label={labels.partnerAria} data-reveal>
+        <div className={styles.partnerMark}>
+          <Image src="/media/marblism-wordmark.png" alt="Marblism" width={1484} height={432} sizes="150px" />
+          <MetaLabel>{labels.partnerProof}</MetaLabel>
         </div>
-        <div className={styles.skillsGrid}>
-          {copy.skills.groups.map((group, index) => (
-            <article key={group.title} data-reveal style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}>
-              <h3>{group.title}</h3>
-              <ul>
-                {group.items.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </article>
-          ))}
+        <div>
+          <h2>{copy.partner.label}</h2>
+          <p>{copy.partner.body}</p>
         </div>
-      </section>
+        <a href={MARBLISM_PARTNER_URL} target="_blank" rel="sponsored noreferrer">
+          {copy.partner.cta}<span aria-hidden="true">↗</span>
+        </a>
+      </aside>
 
       <section className={styles.contactSection} id="contact" aria-labelledby="contact-title" data-reveal>
-        <p className={styles.eyebrow}>{copy.contact.eyebrow}</p>
-        <h2 id="contact-title">{copy.contact.title}</h2>
-        <p>{copy.contact.intro}</p>
+        <SectionHeading
+          eyebrow={copy.contact.eyebrow}
+          title={copy.contact.title}
+          body={copy.contact.intro}
+          id="contact-title"
+          tone="inverse"
+        />
         <div className={styles.contactGrid}>
           <article>
-            <p className={styles.contactIndex}>01 / {locale === "en" ? "HIRING" : "EMPLEO"}</p>
+            <p>{labels.roleIndex}</p>
             <h3>{copy.contact.rolesTitle}</h3>
             <p>{copy.contact.rolesBody}</p>
-            <div className={styles.contactActions}>
-              <a className={styles.primaryAction} href={emailHref(locale, "role")}>{copy.contact.email}<span aria-hidden="true">↗</span></a>
-              <a href={CONTACT.linkedIn} target="_blank" rel="noreferrer">{copy.contact.linkedIn}<span aria-hidden="true">↗</span></a>
+            <div>
+              <ActionLink href={emailHref(locale, "role")} variant="inverse">{copy.contact.email}</ActionLink>
+              <ActionLink href={CONTACT.linkedIn} variant="secondary" external>{copy.contact.linkedIn}</ActionLink>
             </div>
           </article>
           <article>
-            <p className={styles.contactIndex}>02 / {locale === "en" ? "PROJECTS" : "PROYECTOS"}</p>
+            <p>{labels.projectIndex}</p>
             <h3>{copy.contact.projectsTitle}</h3>
             <p>{copy.contact.projectsBody}</p>
-            <div className={styles.contactActions}>
-              <a className={styles.primaryAction} href={emailHref(locale, "project")}>{copy.contact.email}<span aria-hidden="true">↗</span></a>
-              <a href={whatsappHref(locale)} target="_blank" rel="noreferrer">{copy.contact.whatsapp}<span aria-hidden="true">↗</span></a>
+            <div>
+              <ActionLink href={emailHref(locale, "project")} variant="inverse">{copy.contact.email}</ActionLink>
+              <ActionLink href={whatsappHref(locale)} variant="secondary" external>{copy.contact.whatsapp}</ActionLink>
             </div>
           </article>
         </div>
-        <a className={styles.phoneLink} href={CONTACT.phoneHref}>{copy.contact.phone} · {CONTACT.phoneDisplay}</a>
+        <a className={styles.phoneLink} href={CONTACT.phoneHref}>
+          {copy.contact.phone} · {CONTACT.phoneDisplay}<span aria-hidden="true">↗</span>
+        </a>
       </section>
     </main>
   );
