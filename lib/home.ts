@@ -81,53 +81,53 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       language: "Ver en español",
     },
     hero: {
-      eyebrow: "Product Specialist · Product Builder · Sales Automation · Mexico City",
-      headline: "I turn product ideas and messy workflows into tools people can actually use.",
+      eyebrow: "Product systems · Sales automation · Delivery / Mexico City",
+      headline: "I make complex product systems easier to understand, use, and ship.",
       summary:
-        "I work across product discovery, UX, CRM and sales automation, AI workflows, and hands-on delivery—from the first working prototype to release and QA.",
+        "I connect customer insight, product UX, CRM and AI automation, and hands-on delivery—from the first useful workflow to a verified release.",
       availability:
-        "Open to product roles and selected sales automation, SaaS, CRM, and AI workflow projects.",
+        "Open to product roles and selected client work in SaaS, CRM, sales automation, and AI systems.",
       languages: "Spanish and English",
-      primaryCta: "See selected work",
-      secondaryCta: "Contact Jorge",
-      proofLabel: "Six products, with clear ownership, current stage, and lessons learned.",
+      primaryCta: "Explore signature work",
+      secondaryCta: "Start a conversation",
+      proofLabel: "Six products. Clear ownership. Honest evidence.",
     },
     work: {
       eyebrow: "Selected work",
-      title: "Six products, each at a different stage.",
+      title: "Proof of how I think, build, and deliver.",
       intro:
-        "Some are live; one is a simulation. In each case I explain what I owned, show the product, and say what works today and what is still limited.",
-      featured: "Flagship products",
-      labs: "Labs",
+        "Three signature systems lead the story. Every case makes the problem, my role, the result, and the limits easy to scan before you go deeper.",
+      featured: "Signature work",
+      labs: "More products and experiments",
       viewCase: "Read case study",
     },
     approach: {
       eyebrow: "How I work",
-      title: "I start with where the customer gets stuck.",
+      title: "A system for turning ambiguity into something usable.",
       intro:
-        "Then I map the next useful step, build what is missing, and test the complete journey on the screens people actually use.",
+        "I move from customer signal to connected workflow, then verify the complete journey on the screens and systems people actually use.",
       steps: [
         {
-          title: "Find the sticking point",
+          title: "Discover",
           body: "I listen to the customer, watch the workflow, and identify the moment progress stops or confidence drops.",
         },
         {
-          title: "Map the next steps",
+          title: "Design",
           body: "I turn the desired outcome into a sequence the customer and the team can both understand.",
         },
         {
-          title: "Build the missing pieces",
+          title: "Automate",
           body: "I connect the interface, CRM, automation, and APIs needed to make the journey work end to end.",
         },
         {
-          title: "Test the real journey",
+          title: "Verify",
           body: "I check desktop and mobile behavior, document what is still limited, and improve the flow from what I observe.",
         },
       ],
     },
     experience: {
       eyebrow: "Experience",
-      title: "Product work grounded in customer conversations.",
+      title: "Product judgment grounded in customer conversations.",
       intro:
         "My background spans product delivery, sales, customer enablement, support, and teaching. That mix helps me explain complex tools and improve the moments where people lose momentum.",
       items: [
@@ -173,12 +173,12 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     partner: {
       label: "Marblism partner",
       body:
-        "As a Marblism partner, I help teams evaluate where AI employees can remove repetitive work and connect the setup to a practical sales, customer, or operations workflow.",
+        "As a Marblism partner, I help teams evaluate where AI employees can remove repetitive work and connect the setup to a practical sales, customer, or operations workflow. This is a sponsored partner link.",
       cta: "Explore Marblism",
     },
     contact: {
       eyebrow: "Let’s talk",
-      title: "Looking for someone who can connect customers, product, and implementation?",
+      title: "Bring me the customer problem and the operational mess.",
       intro:
         "I’m open to product roles and selected projects involving sales automation, SaaS, CRM, and AI workflows.",
       rolesTitle: "Roles",
@@ -206,53 +206,53 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       language: "View in English",
     },
     hero: {
-      eyebrow: "Product Specialist · Creador de producto · Automatización de ventas · Ciudad de México",
-      headline: "Convierto ideas de producto y flujos complicados en herramientas que las personas pueden usar.",
+      eyebrow: "Sistemas de producto · Automatización de ventas · Entrega / Ciudad de México",
+      headline: "Convierto sistemas de producto complejos en experiencias claras, útiles y listas para operar.",
       summary:
-        "Trabajo con descubrimiento, UX, automatización de ventas y CRM, flujos con IA e implementación: desde el primer prototipo hasta el lanzamiento y el QA.",
+        "Conecto conocimiento del cliente, UX de producto, CRM y automatización con IA, y entrega práctica: del primer flujo útil a una versión verificada.",
       availability:
-        "Estoy abierto a puestos de producto y a proyectos seleccionados de automatización de ventas, SaaS, CRM y flujos con IA.",
+        "Estoy abierto a puestos de producto y a proyectos seleccionados de SaaS, CRM, automatización de ventas y sistemas con IA.",
       languages: "Español e inglés",
-      primaryCta: "Ver proyectos",
-      secondaryCta: "Contactar a Jorge",
-      proofLabel: "Seis productos con responsabilidades, etapa actual y aprendizajes claros.",
+      primaryCta: "Explorar proyectos clave",
+      secondaryCta: "Iniciar una conversación",
+      proofLabel: "Seis productos. Responsabilidad clara. Evidencia honesta.",
     },
     work: {
       eyebrow: "Proyectos destacados",
-      title: "Seis productos, cada uno en una etapa distinta.",
+      title: "Evidencia de cómo pienso, construyo y entrego.",
       intro:
-        "Algunos están en operación y uno es una simulación. En cada caso explico qué hice, muestro el producto y aclaro qué funciona hoy y qué falta por mejorar.",
-      featured: "Productos principales",
-      labs: "Laboratorio",
+        "Tres sistemas clave abren la historia. Cada caso permite entender rápido el problema, mi rol, el resultado y los límites antes de profundizar.",
+      featured: "Proyectos clave",
+      labs: "Más productos y experimentos",
       viewCase: "Ver proyecto",
     },
     approach: {
       eyebrow: "Cómo trabajo",
-      title: "Empiezo por el punto donde el cliente se atora.",
+      title: "Un sistema para convertir ambigüedad en algo útil.",
       intro:
-        "Después defino el siguiente paso útil, construyo lo que hace falta y pruebo el recorrido completo en las pantallas que las personas usan.",
+        "Paso de la señal del cliente al flujo conectado y después verifico el recorrido completo en las pantallas y sistemas que las personas usan.",
       steps: [
         {
-          title: "Encontrar el bloqueo",
+          title: "Descubrir",
           body: "Escucho al cliente, observo el flujo y ubico el momento en que se detiene el avance o aparecen dudas.",
         },
         {
-          title: "Ordenar los siguientes pasos",
+          title: "Diseñar",
           body: "Convierto el resultado esperado en una secuencia clara para el cliente y para el equipo.",
         },
         {
-          title: "Construir lo que falta",
+          title: "Automatizar",
           body: "Conecto la interfaz, el CRM, las automatizaciones y las APIs necesarias para completar el recorrido.",
         },
         {
-          title: "Probar el recorrido real",
+          title: "Verificar",
           body: "Reviso el comportamiento en desktop y móvil, documento los límites y ajusto el flujo según lo que encuentro.",
         },
       ],
     },
     experience: {
       eyebrow: "Experiencia",
-      title: "Trabajo de producto basado en conversaciones con clientes.",
+      title: "Criterio de producto basado en conversaciones con clientes.",
       intro:
         "Mi experiencia reúne entrega de producto, ventas, habilitación de clientes, soporte y enseñanza. Esa combinación me ayuda a explicar herramientas complejas y mejorar los momentos donde las personas pierden impulso.",
       items: [
@@ -298,12 +298,12 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     partner: {
       label: "Partner de Marblism",
       body:
-        "Como partner de Marblism, ayudo a evaluar dónde los empleados con IA pueden reducir trabajo repetitivo y conecto la configuración con flujos prácticos de ventas, clientes u operaciones.",
+        "Como partner de Marblism, ayudo a evaluar dónde los empleados con IA pueden reducir trabajo repetitivo y conecto la configuración con flujos prácticos de ventas, clientes u operaciones. Este es un enlace patrocinado de partner.",
       cta: "Conocer Marblism",
     },
     contact: {
       eyebrow: "Hablemos",
-      title: "¿Buscas a alguien que conecte clientes, producto e implementación?",
+      title: "Tráeme el problema del cliente y el desorden operativo.",
       intro:
         "Estoy abierto a puestos de producto y a proyectos seleccionados de automatización de ventas, SaaS, CRM y flujos con IA.",
       rolesTitle: "Oportunidades laborales",

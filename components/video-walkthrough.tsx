@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 
 type VideoWalkthroughProps = {
@@ -89,7 +88,8 @@ export function VideoWalkthrough({
           aria-describedby={descriptionId}
           data-testid="walkthrough-play"
         >
-          <Image src={poster} alt="" fill sizes="(max-width: 800px) 100vw, 66vw" />
+          <span className="walkthroughPattern" aria-hidden="true" />
+          <span className="walkthroughKicker" aria-hidden="true">Product proof / Case file</span>
           <span className="playControl" aria-hidden="true">
             <span>▶</span>
           </span>

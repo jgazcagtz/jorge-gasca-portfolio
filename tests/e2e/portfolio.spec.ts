@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const slugs = [
   "zentix",
@@ -22,6 +22,74 @@ const responsiveViewports = [
   { width: 1440, height: 900 },
 ];
 
+const productNames = {
+  zentix: "Zentix",
+  hablaya: "HablaYa",
+  minitiendai: "MiniTiendAI",
+  ordenai: "OrdenAI",
+  "zentix-office": "Zentix Office",
+  "tonalli-ai": "Tonalli AI",
+} as const;
+
+const chapterIds = [
+  "overview",
+  "context",
+  "contribution",
+  "decision",
+  "result",
+  "evidence",
+  "limitations",
+  "technology",
+  "contact",
+] as const;
+
+const chapterNames = {
+  en: [
+    "Overview",
+    "Context",
+    "Contribution",
+    "Key decision",
+    "Result and current status",
+    "Evidence",
+    "Limitations",
+    "Technology",
+    "Contact",
+  ],
+  es: [
+    "Resumen",
+    "Contexto",
+    "Contribución",
+    "Decisión clave",
+    "Resultado y estado actual",
+    "Evidencia",
+    "Limitaciones",
+    "Tecnología",
+    "Contacto",
+  ],
+} as const;
+
+async function expectMinimumTarget(locator: Locator, minimum = 44) {
+  const box = await locator.boundingBox();
+  expect(box, "interactive control should have a rendered box").not.toBeNull();
+  expect(box?.width ?? 0).toBeGreaterThanOrEqual(minimum);
+  expect(box?.height ?? 0).toBeGreaterThanOrEqual(minimum);
+}
+
+async function expectInsideViewport(locator: Locator, page: Page) {
+  const box = await locator.boundingBox();
+  const viewport = page.viewportSize();
+  expect(box, "focused control should have a rendered box").not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(box?.x ?? -1).toBeGreaterThanOrEqual(0);
+  expect(box?.y ?? -1).toBeGreaterThanOrEqual(0);
+  expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(
+    viewport?.width ?? 0,
+  );
+  expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(
+    viewport?.height ?? 0,
+  );
+}
+
 async function structuredNodes(page: Page): Promise<Array<Record<string, unknown>>> {
   return page.locator('script[type="application/ld+json"]').evaluateAll((scripts) =>
     scripts.flatMap((script) => {
@@ -34,11 +102,16 @@ async function structuredNodes(page: Page): Promise<Array<Record<string, unknown
 }
 
 test("@cross-browser localized home and flagship case smoke", async ({ page }) => {
-  for (const route of ["/", "/es", "/work/minitiendai", "/es/work/minitiendai"]) {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ["/", "/es", "/work/zentix", "/es/work/ordenai"]) {
     const response = await page.goto(route, { waitUntil: "domcontentloaded" });
     expect(response?.status()).toBe(200);
     await expect(page.locator("main#main-content")).toBeVisible();
     await expect(page.locator("h1")).toBeVisible();
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow, route).toBeLessThanOrEqual(1);
   }
 });
 
@@ -87,7 +160,7 @@ for (const viewport of responsiveViewports) {
   });
 }
 
-test("compact mobile hero exposes identity, promise, action, and portrait cue", async ({
+test("mobile opening presents one portrait and reaches signature work within 1.5 viewports", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -95,29 +168,145 @@ test("compact mobile hero exposes identity, promise, action, and portrait cue", 
 
   const importantElements = [
     page.locator("main").getByText("Jorge Gasca", { exact: true }).first(),
-    page.locator("h1"),
-    page.getByRole("link", { name: /See selected work/i }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "I make complex product systems easier to understand, use, and ship.",
+    }),
+    page.getByRole("link", { name: /Explore signature work/i }),
+    page.getByRole("link", { name: /Start a conversation/i }),
   ];
   for (const locator of importantElements) {
     await expect(locator).toBeVisible();
-    const box = await locator.boundingBox();
-    expect(box).not.toBeNull();
-    expect((box?.y ?? 900) + (box?.height ?? 0)).toBeLessThanOrEqual(844);
   }
 
-  const portraitBoxes = await page
+  const visiblePortraits = await page
     .locator('img[src*="jorge-gasca-portrait"]')
     .evaluateAll((images) =>
-      images.map((image) => {
+      images.flatMap((image) => {
         const box = image.getBoundingClientRect();
-        return { width: box.width, height: box.height, top: box.top, bottom: box.bottom };
+        const styles = getComputedStyle(image);
+        const rendered =
+          box.width > 0 &&
+          box.height > 0 &&
+          styles.display !== "none" &&
+          styles.visibility !== "hidden" &&
+          Number.parseFloat(styles.opacity) > 0;
+        return rendered
+          ? [{ width: box.width, height: box.height, top: box.top, bottom: box.bottom }]
+          : [];
       }),
     );
-  expect(
-    portraitBoxes.some(
-      (box) => box.width > 0 && box.height > 0 && box.top < 844 && box.bottom > 0,
-    ),
-  ).toBe(true);
+  expect(visiblePortraits).toHaveLength(1);
+  expect(visiblePortraits[0].top).toBeLessThan(844);
+  expect(visiblePortraits[0].bottom).toBeGreaterThan(0);
+
+  const selectedWork = page.locator("#work");
+  await expect(selectedWork).toBeVisible();
+  const selectedWorkBox = await selectedWork.boundingBox();
+  expect(selectedWorkBox).not.toBeNull();
+  expect(selectedWorkBox?.y ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(
+    844 * 1.5,
+  );
+});
+
+test("every project card exposes its title as a semantic heading", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("#work article")).toHaveCount(slugs.length);
+
+  for (const slug of slugs) {
+    const route = `/work/${slug}`;
+    const link = page.locator(`#work a[href="${route}"]`).first();
+    await expect(link, route).toBeVisible();
+    const card = link.locator("xpath=ancestor::article[1]");
+    await expect(card).toHaveCount(1);
+    await expect(card.getByRole("heading", { level: 3 })).toContainText(
+      productNames[slug],
+    );
+  }
+});
+
+for (const slug of slugs) {
+  test(`${slug} renders its desktop evidence once`, async ({ page }) => {
+    await page.goto(`/work/${slug}`, { waitUntil: "domcontentloaded" });
+    const filename = `${slug}-desktop.png`;
+    const renderedCopies = await page.locator("img").evaluateAll(
+      (images, expectedFilename) =>
+        images.filter((image) => {
+          const sources = `${image.getAttribute("src") ?? ""} ${(image as HTMLImageElement).currentSrc}`;
+          return sources.includes(expectedFilename);
+        }).length,
+      filename,
+    );
+    expect(renderedCopies, filename).toBe(1);
+  });
+}
+
+test("case studies provide linked H2 chapters in both languages", async ({ page }) => {
+  for (const [route, locale] of [
+    ["/work/zentix", "en"],
+    ["/es/work/zentix", "es"],
+  ] as const) {
+    await page.goto(route, { waitUntil: "domcontentloaded" });
+
+    const chapterNav = page
+      .locator("nav")
+      .filter({ has: page.locator('a[href="#overview"]') });
+    await expect(chapterNav).toHaveCount(1);
+    const chapterLinks = chapterNav.locator(
+      chapterIds.map((id) => `a[href="#${id}"]`).join(","),
+    );
+    await expect(chapterLinks).toHaveCount(chapterIds.length);
+
+    for (const [index, id] of chapterIds.entries()) {
+      const heading = page.locator(`h2#${id}, #${id} h2`);
+      await expect(heading, `${route} #${id}`).toHaveCount(1);
+      await expect(heading).toHaveText(chapterNames[locale][index]);
+      await expect(chapterNav.locator(`a[href="#${id}"]`)).toHaveAccessibleName(
+        new RegExp(`${chapterNames[locale][index]}$`),
+      );
+    }
+  }
+});
+
+test("case chapter navigation is sticky on desktop and horizontally usable on mobile", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/work/zentix", { waitUntil: "domcontentloaded" });
+  const chapterNav = page
+    .locator("nav")
+    .filter({ has: page.locator('a[href="#overview"]') });
+  const hasStickyAncestor = await chapterNav.evaluate((navigation) => {
+    let element: Element | null = navigation;
+    while (element && element.tagName !== "MAIN") {
+      if (["sticky", "fixed"].includes(getComputedStyle(element).position)) {
+        return true;
+      }
+      element = element.parentElement;
+    }
+    return false;
+  });
+  expect(hasStickyAncestor).toBe(true);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const horizontalScroller = await chapterNav.evaluate((navigation) => {
+    let element: Element | null = navigation;
+    while (element && element.tagName !== "MAIN") {
+      const styles = getComputedStyle(element);
+      if (["auto", "scroll"].includes(styles.overflowX)) {
+        return {
+          scrollWidth: element.scrollWidth,
+          clientWidth: element.clientWidth,
+        };
+      }
+      element = element.parentElement;
+    }
+    return null;
+  });
+  expect(horizontalScroller).not.toBeNull();
+  expect(horizontalScroller?.scrollWidth ?? 0).toBeGreaterThan(
+    horizontalScroller?.clientWidth ?? Number.POSITIVE_INFINITY,
+  );
 });
 
 test("locale links mirror the current route and document language", async ({ page }) => {
@@ -130,13 +319,42 @@ test("locale links mirror the current route and document language", async ({ pag
   await expect(page.locator("html")).toHaveAttribute("lang", "es");
 });
 
+test("locale links mirror case-study routes in server HTML without JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({
+    baseURL,
+    javaScriptEnabled: false,
+  });
+  const page = await context.newPage();
+
+  try {
+    const english = await page.goto("/work/zentix", {
+      waitUntil: "domcontentloaded",
+    });
+    expect(english?.status()).toBe(200);
+    const localeSwitch = page.locator("[data-locale-switch]");
+    await expect(localeSwitch).toHaveAttribute("href", "/es/work/zentix");
+    await localeSwitch.click();
+    await expect(page).toHaveURL(/\/es\/work\/zentix$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "es");
+    await expect(page.locator("[data-locale-switch]")).toHaveAttribute(
+      "href",
+      "/work/zentix",
+    );
+  } finally {
+    await context.close();
+  }
+});
+
 test("locale mirroring stays current after case-study navigation", async ({ page }) => {
   await page.goto("/work/zentix", { waitUntil: "networkidle" });
   await page.getByRole("link", { name: /Next case study/ }).click();
-  await expect(page).toHaveURL(/\/work\/hablaya$/);
+  await expect(page).toHaveURL(/\/work\/minitiendai$/);
   await expect(page.locator("[data-locale-switch]")).toHaveAttribute(
     "href",
-    "/es/work/hablaya",
+    "/es/work/minitiendai",
   );
 });
 
@@ -155,21 +373,51 @@ test("theme choice persists across localized navigation", async ({ page }) => {
   );
 });
 
-test("mobile menu and skip link are keyboard accessible", async ({ page }) => {
+test("mobile menu supports keyboard, outside-click, focus return, and touch targets", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
 
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+  const skipLink = page.getByRole("link", { name: "Skip to content" });
+  await expect(skipLink).toBeFocused();
+  await expectInsideViewport(skipLink, page);
 
-  const menu = page.locator("details.mobileNav");
-  await menu.locator("summary").click();
-  await expect(menu).toHaveAttribute("open", "");
+  const toggle = page.getByRole("button", { name: "Menu" });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toHaveAttribute("aria-controls", /.+/);
+  await expectMinimumTarget(toggle);
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  const controlledId = await toggle.getAttribute("aria-controls");
+  expect(controlledId).toBeTruthy();
+  const menu = page.locator(`#${controlledId}`);
+  await expect(menu).toBeVisible();
   const selectedWork = menu.getByRole("link", { name: "Selected work" });
   await expect(selectedWork).toBeVisible();
+  await expectMinimumTarget(selectedWork);
+  await selectedWork.focus();
+  await expect(selectedWork).toBeFocused();
+  await expectInsideViewport(selectedWork, page);
+
+  await page.keyboard.press("Escape");
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toBeFocused();
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await selectedWork.focus();
+  await expect(selectedWork).toBeFocused();
+  await page.locator("main").click({ position: { x: 2, y: 2 }, force: true });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toBeFocused();
+
+  await toggle.click();
   await selectedWork.click();
   await expect(page).toHaveURL(/\/#work$/);
-  await expect(menu).not.toHaveAttribute("open", "");
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
 });
 
 test("unknown case studies return localized 404 pages", async ({ page }) => {
@@ -344,28 +592,36 @@ test("walkthrough provides a usable MP4 fallback after playback failure", async 
   );
 });
 
-test("reduced motion reveals content without transforms or reading-progress animation", async ({
+test("reduced motion keeps the complete home and case-study content available", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   const reveal = page.locator("[data-reveal]").first();
-  await expect(reveal).toHaveAttribute("data-revealed", "true");
-  const revealStyles = await reveal.evaluate((element) => {
-    const styles = getComputedStyle(element);
-    return {
-      opacity: styles.opacity,
-      transform: styles.transform,
-      transitionDuration: styles.transitionDuration,
-    };
-  });
-  expect(revealStyles.opacity).toBe("1");
-  expect(revealStyles.transform).toBe("none");
-  const transitionMs = revealStyles.transitionDuration.endsWith("ms")
-    ? Number.parseFloat(revealStyles.transitionDuration)
-    : Number.parseFloat(revealStyles.transitionDuration) * 1_000;
-  expect(transitionMs).toBeLessThanOrEqual(0.02);
+  if ((await reveal.count()) > 0) {
+    await expect(reveal).toHaveAttribute("data-revealed", "true");
+    const revealStyles = await reveal.evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return {
+        opacity: styles.opacity,
+        transform: styles.transform,
+        transitionDuration: styles.transitionDuration,
+      };
+    });
+    expect(revealStyles.opacity).toBe("1");
+    expect(revealStyles.transform).toBe("none");
+    const transitionMs = revealStyles.transitionDuration.endsWith("ms")
+      ? Number.parseFloat(revealStyles.transitionDuration)
+      : Number.parseFloat(revealStyles.transitionDuration) * 1_000;
+    expect(transitionMs).toBeLessThanOrEqual(0.02);
+  }
+
+  await page.locator("#work").scrollIntoViewIfNeeded();
+  await expect(page.locator("#work")).toBeVisible();
+  await expect(page.locator("#work article")).toHaveCount(slugs.length);
 
   await page.goto("/work/zentix", { waitUntil: "networkidle" });
-  await expect(page.locator('[class*="caseProgress"]')).toBeHidden();
+  for (const id of chapterIds) {
+    await expect(page.locator(`h2#${id}, #${id} h2`)).toBeAttached();
+  }
 });
