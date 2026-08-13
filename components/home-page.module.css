@@ -709,6 +709,8 @@
   min-height: 44px;
   margin-top: 28px;
   border-bottom: 1px solid currentColor;
+  background: var(--inverse-canvas);
+  color: var(--text-inverse);
   font-size: 0.72rem;
   font-weight: 720;
 }
