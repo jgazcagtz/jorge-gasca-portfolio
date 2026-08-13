@@ -110,6 +110,6 @@ test("open mobile menu in dark theme meets automated and explicit WCAG 2.2 AA ch
   expect(results.violations).toEqual([]);
   await expectSolidTextContrast(
     page,
-    '[class*="cardIndex"], [class*="cardStage"], a[data-variant="inverse"]',
+    '[class*="cardIndex"], [class*="cardStage"], a[data-variant="inverse"], a[href^="tel:"]',
   );
 });
