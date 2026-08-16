@@ -29,6 +29,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/resume",
+        destination: "/cv",
+        permanent: true,
+      },
+      {
+        source: "/es/curriculum",
+        destination: "/es/cv",
+        permanent: true,
+      },
+      {
         source: "/:path*",
         has: [{ type: "host", value: "www.jgasca.io" }],
         destination: "https://jgasca.io/:path*",
@@ -38,6 +48,12 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/cv/downloads/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, follow" },
+        ],
+      },
       {
         source: "/(.*)",
         headers: [

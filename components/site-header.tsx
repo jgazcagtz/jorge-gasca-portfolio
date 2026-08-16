@@ -18,6 +18,7 @@ export function SiteHeader({
     { href: `${home}#work`, label: copy.work },
     { href: `${home}#approach`, label: copy.approach },
     { href: `${home}#experience`, label: copy.experience },
+    { href: localePath(locale, "/cv"), label: copy.cv },
     { href: `${home}#contact`, label: copy.contact },
   ];
 
@@ -30,7 +31,7 @@ export function SiteHeader({
         </Link>
 
         <nav className="desktopNav" aria-label={locale === "en" ? "Primary" : "Principal"}>
-          {navLinks.slice(0, 3).map((link) => (
+          {navLinks.slice(0, 4).map((link) => (
             <Link key={link.href} href={link.href}>{link.label}</Link>
           ))}
         </nav>

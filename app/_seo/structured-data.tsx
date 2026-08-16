@@ -2,6 +2,15 @@ import {
   caseStudies,
   type CaseStudy,
 } from "@/lib/case-studies";
+import {
+  cvHubPath,
+  cvUiCopy,
+  cvVariantPath,
+  cvVariants,
+  getCvProjects,
+  getCvSkillGroups,
+  type CvVariant,
+} from "@/lib/cv";
 import { homeCopy } from "@/lib/home";
 import {
   CONTENT_DATE_ISO,
@@ -50,7 +59,7 @@ function personNode(locale: Locale) {
       addressCountry: "MX",
     },
     sameAs: [CONTACT.linkedIn, CONTACT.github],
-    knowsLanguage: ["Spanish", "English"],
+    knowsLanguage: ["Spanish", "English", "Portuguese"],
     knowsAbout: [
       "Sales automation",
       "SaaS onboarding",
@@ -60,6 +69,12 @@ function personNode(locale: Locale) {
       "Product quality assurance",
       "AI workflow design",
       "Web and API delivery",
+      "GTM systems",
+      "Revenue operations",
+      "Sales operations",
+      "Marketing operations",
+      "Customer enablement",
+      "Conversational AI",
     ],
     contactPoint: {
       "@type": "ContactPoint",
@@ -174,6 +189,108 @@ export function caseStudyStructuredData(
   };
 }
 
+export function cvHubStructuredData(locale: Locale) {
+  const pageUrl = absoluteUrl(cvHubPath(locale));
+  const copy = cvUiCopy[locale];
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@id": `${pageUrl}#cv-collection`,
+        "@type": "CollectionPage",
+        url: pageUrl,
+        name: locale === "en" ? "Jorge Gasca CV collection" : "Colección de CV de Jorge Gasca",
+        description: copy.hubSummary,
+        inLanguage: locale,
+        dateModified: CONTENT_DATE_ISO,
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: cvVariants.map((variant, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: variant.title[locale],
+            url: absoluteUrl(cvVariantPath(locale, variant.slug)),
+          })),
+        },
+        about: { "@id": PERSON_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+      },
+      personNode(locale),
+      {
+        "@id": WEBSITE_ID,
+        "@type": "WebSite",
+        name: "Jorge Gasca",
+        url: SITE_URL,
+        inLanguage: ["en", "es"],
+        author: { "@id": PERSON_ID },
+      },
+    ],
+  };
+}
+
+export function cvStructuredData(locale: Locale, variant: CvVariant) {
+  const pageUrl = absoluteUrl(cvVariantPath(locale, variant.slug));
+  const hubUrl = absoluteUrl(cvHubPath(locale));
+  const skillNames = getCvSkillGroups(variant).flatMap((group) => group.items);
+  const projectNames = getCvProjects(variant).map((project) => project.name);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@id": `${pageUrl}#profile`,
+        "@type": "ProfilePage",
+        url: pageUrl,
+        name: variant.seoTitle[locale],
+        description: variant.seoDescription[locale],
+        inLanguage: locale,
+        dateCreated: CONTENT_DATE_ISO,
+        dateModified: CONTENT_DATE_ISO,
+        mainEntity: { "@id": PERSON_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        about: [
+          ...skillNames.map((name) => ({ "@type": "DefinedTerm", name })),
+          ...projectNames.map((name) => ({ "@type": "SoftwareApplication", name })),
+        ],
+      },
+      {
+        "@id": `${pageUrl}#breadcrumb`,
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: locale === "en" ? "Jorge Gasca portfolio" : "Portafolio de Jorge Gasca",
+            item: absoluteUrl(localePath(locale)),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "CV",
+            item: hubUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: variant.title[locale],
+            item: pageUrl,
+          },
+        ],
+      },
+      personNode(locale),
+      {
+        "@id": WEBSITE_ID,
+        "@type": "WebSite",
+        name: "Jorge Gasca",
+        url: SITE_URL,
+        inLanguage: ["en", "es"],
+        author: { "@id": PERSON_ID },
+      },
+    ],
+  };
+}
+
 export function serializeStructuredData(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
@@ -189,4 +306,18 @@ export function StructuredData({ data }: { data: unknown }) {
 
 export function HomeStructuredData({ locale }: { locale: Locale }) {
   return <StructuredData data={homeStructuredData(locale)} />;
+}
+
+export function CvHubStructuredData({ locale }: { locale: Locale }) {
+  return <StructuredData data={cvHubStructuredData(locale)} />;
+}
+
+export function CvStructuredData({
+  locale,
+  variant,
+}: {
+  locale: Locale;
+  variant: CvVariant;
+}) {
+  return <StructuredData data={cvStructuredData(locale, variant)} />;
 }

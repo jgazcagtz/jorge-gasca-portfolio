@@ -14,10 +14,12 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:content": "vitest run tests/content.test.ts",
+    "cv:pdf": "node scripts/generate-cv-pdfs.mjs",
+    "test:cv": "node scripts/verify-cv-pdfs.mjs",
     "test:links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
-    "verify": "npm run lint && npm run typecheck && npm run test:content && npm run test:links && npm run build && npm run test:e2e"
+    "verify": "npm run lint && npm run typecheck && npm run test:content && npm run test:cv && npm run test:links && npm run build && npm run test:e2e"
   },
   "dependencies": {
     "next": "16.3.0",
@@ -32,6 +34,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.2.108",
     "typescript": "^5",
     "vitest": "4.1.10"
   }

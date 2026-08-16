@@ -14,6 +14,14 @@ const auditedRoutes = [
   "/",
   "/es",
   ...slugs.flatMap((slug) => [`/work/${slug}`, `/es/work/${slug}`]),
+  "/cv",
+  "/es/cv",
+  ...[
+    "gtm-revops",
+    "product-implementation",
+    "ai-automation",
+    "customer-solutions",
+  ].flatMap((slug) => [`/cv/${slug}`, `/es/cv/${slug}`]),
 ];
 
 const wcagTags = [

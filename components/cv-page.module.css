@@ -1,0 +1,1066 @@
+.hubMain,
+.cvMain {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-width));
+  margin-inline: auto;
+}
+
+.hubHero {
+  display: grid;
+  min-height: calc(100svh - var(--header-height));
+  grid-template-columns: minmax(0, 1.28fr) minmax(300px, 0.72fr);
+  gap: clamp(28px, 5vw, 86px);
+  align-items: center;
+  padding-block: clamp(54px, 8vw, 118px);
+}
+
+.hubHeroCopy {
+  display: grid;
+  align-content: center;
+}
+
+.hubHeroCopy h1 {
+  max-width: 980px;
+  margin: 24px 0 26px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.2rem, 7.5vw, 8.2rem);
+  font-weight: 400;
+  letter-spacing: -0.065em;
+  line-height: 0.88;
+}
+
+.hubHeroCopy > p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+}
+
+.hubActions,
+.resumeActions,
+.variantCardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hubActions {
+  margin-top: 34px;
+}
+
+.hubFacts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 52px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 680;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hubPortrait {
+  position: relative;
+  align-self: stretch;
+  min-height: 580px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--text-primary);
+  background: var(--surface-raised);
+}
+
+.hubPortrait::before {
+  position: absolute;
+  z-index: 1;
+  inset: 16px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 32%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.hubPortrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 43%;
+}
+
+.hubPortrait figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+  display: grid;
+  max-width: 360px;
+  gap: 5px;
+  padding: 18px 20px;
+  background: var(--accent-violet);
+  color: var(--ink-on-color);
+}
+
+.hubPortrait figcaption strong {
+  font-size: 1.1rem;
+}
+
+.hubPortrait figcaption span {
+  font-size: 0.72rem;
+  font-weight: 680;
+}
+
+.variantSection {
+  padding-block: clamp(72px, 9vw, 132px);
+  border-top: 1px solid var(--border);
+}
+
+.variantGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 48px;
+  border-top: 1px solid var(--border-strong);
+  border-left: 1px solid var(--border-strong);
+}
+
+.variantCard {
+  position: relative;
+  display: flex;
+  min-height: 540px;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 44px);
+  border-right: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--surface-raised) 66%, transparent);
+}
+
+.variantCard::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--cv-accent);
+  content: "";
+}
+
+.variantCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.variantCardTop > span:first-child {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  font-size: 0.7rem;
+  font-weight: 780;
+}
+
+.variantCard h2 {
+  max-width: 650px;
+  margin: 42px 0 18px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.35rem, 4vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.variantCard > p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.variantCard > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 20px;
+  margin: 30px 0 36px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--border);
+  list-style: none;
+  font-size: 0.75rem;
+  font-weight: 680;
+}
+
+.variantCard > ul li::before {
+  margin-right: 8px;
+  color: var(--cv-accent);
+  content: "●";
+}
+
+.variantCardActions {
+  margin-top: auto;
+}
+
+.variantCardActions > a:last-child {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 10px 14px;
+  border: 1px solid var(--text-primary);
+  font-size: 0.76rem;
+  font-weight: 720;
+}
+
+.sharedSection {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: clamp(72px, 8vw, 122px) max(var(--page-gutter), calc((100vw - var(--page-width)) / 2));
+  background: var(--inverse-canvas);
+  color: var(--text-inverse);
+}
+
+.sharedStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 54px;
+  border-top: 1px solid var(--inverse-border);
+  border-left: 1px solid var(--inverse-border);
+}
+
+.sharedStats > div {
+  display: grid;
+  min-height: 190px;
+  align-content: space-between;
+  padding: 24px;
+  border-right: 1px solid var(--inverse-border);
+  border-bottom: 1px solid var(--inverse-border);
+}
+
+.sharedStats strong {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3rem, 5vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.sharedStats span {
+  color: var(--text-inverse-muted);
+  font-size: 0.72rem;
+  font-weight: 680;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cvMain {
+  padding-block: 30px clamp(80px, 9vw, 132px);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 26px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.breadcrumbs a {
+  min-height: 44px;
+  align-content: center;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.resumeDocument {
+  border: 1px solid var(--border-strong);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-large);
+}
+
+.resumePage {
+  padding: clamp(28px, 4.3vw, 72px);
+}
+
+.resumePageTwo {
+  border-top: 1px solid var(--border-strong);
+}
+
+.resumeHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.3fr);
+  gap: clamp(28px, 5vw, 70px);
+  padding-bottom: clamp(34px, 5vw, 64px);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.resumeHeaderCopy {
+  display: grid;
+  align-content: start;
+}
+
+.resumeMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resumeMeta > span:last-child {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fullName {
+  margin: clamp(32px, 5vw, 62px) 0 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.resumeHeader h1 {
+  max-width: 1050px;
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.2rem, 7vw, 7.6rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.87;
+}
+
+.resumeSummary {
+  max-width: 900px;
+  margin: 28px 0 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.4vw, 1.28rem);
+}
+
+.identityLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 22px;
+  margin-top: 28px;
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  font-weight: 680;
+}
+
+.identityLine a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.resumeActions {
+  margin-top: 28px;
+}
+
+.resumePortrait {
+  position: relative;
+  min-height: 360px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--text-primary);
+  background: var(--surface);
+}
+
+.resumePortrait::after {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 72px;
+  height: 72px;
+  background: var(--cv-accent);
+  content: "";
+  mix-blend-mode: multiply;
+}
+
+.resumePortrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 43%;
+}
+
+.fitSection,
+.experienceSection,
+.skillsSection,
+.credentialsSection,
+.resumeContact {
+  margin-top: clamp(38px, 5vw, 66px);
+}
+
+.resumeSectionHeading {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.resumeSectionHeading span,
+.resumeContact > div:first-child > span {
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+}
+
+.resumeSectionHeading h2,
+.resumeContact h2 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.9rem, 3.1vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.truthNote {
+  margin: 16px 0;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.roleList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roleList li {
+  min-height: 64px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--cv-accent);
+  background: var(--canvas);
+  font-size: 0.72rem;
+  font-weight: 720;
+  line-height: 1.3;
+}
+
+.experienceList {
+  display: grid;
+}
+
+.experienceItem {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(24px, 4vw, 66px);
+  padding-block: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.experienceLead p,
+.experienceLead h3,
+.experienceLead span,
+.experienceLead small {
+  display: block;
+  margin: 0;
+}
+
+.experienceLead p {
+  color: var(--text-muted);
+  font-size: 0.69rem;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.experienceLead h3 {
+  margin-top: 7px;
+  font-size: 1rem;
+}
+
+.experienceLead span {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.experienceLead small {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  font-style: italic;
+}
+
+.experienceItem > ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.experienceItem > ul li::marker {
+  color: var(--cv-accent);
+}
+
+.projectHighlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+  border-top: 1px solid var(--border-strong);
+  border-left: 1px solid var(--border-strong);
+}
+
+.projectHighlights article {
+  display: flex;
+  min-height: 290px;
+  flex-direction: column;
+  padding: 22px;
+  border-right: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.projectHighlights article > div {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.projectHighlights h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.projectHighlights article > div span {
+  padding: 4px 6px;
+  background: var(--cv-accent);
+  color: var(--ink-on-color);
+  font-size: 0.58rem;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.projectHighlights p {
+  margin: 24px 0;
+  color: var(--text-muted);
+  font-size: 0.77rem;
+}
+
+.projectHighlights a,
+.projectHighlights small {
+  margin-top: auto;
+  font-size: 0.7rem;
+  font-weight: 720;
+}
+
+.projectHighlights a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+}
+
+.projectHighlights small {
+  color: var(--text-muted);
+}
+
+.buildInventory {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.22fr) minmax(0, 0.78fr);
+  gap: 24px;
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--canvas);
+}
+
+.buildInventory h3 {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.buildInventory ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.buildInventory li {
+  display: grid;
+  gap: 2px;
+  font-size: 0.69rem;
+}
+
+.buildInventory li span {
+  color: var(--text-muted);
+  font-size: 0.61rem;
+}
+
+.skillGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 34px;
+}
+
+.skillGrid > div {
+  padding-block: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skillGrid h3 {
+  margin: 0 0 6px;
+  color: var(--text-muted);
+  font-size: 0.64rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.skillGrid p {
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+.credentialsSection {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(230px, 0.65fr);
+  gap: 34px;
+}
+
+.credentialsSection ul {
+  display: grid;
+  gap: 6px;
+  margin: 15px 0 0;
+  padding-left: 17px;
+  color: var(--text-muted);
+  font-size: 0.73rem;
+}
+
+.resumeContact {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.3fr) minmax(0, 0.7fr);
+  gap: 34px;
+  align-items: end;
+  padding: 24px;
+  background: var(--inverse-canvas);
+  color: var(--text-inverse);
+}
+
+.resumeContact > div:first-child {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 4px 10px;
+}
+
+.resumeContact > div:first-child > span {
+  color: var(--text-inverse-muted);
+}
+
+.resumeContact p {
+  grid-column: 2;
+  margin: 4px 0 0;
+  color: var(--text-inverse-muted);
+  font-size: 0.7rem;
+}
+
+.resumeContact .identityLine {
+  justify-content: flex-end;
+  margin: 0;
+  color: var(--text-inverse-muted);
+}
+
+.backLink {
+  margin-top: 24px;
+}
+
+@media (max-width: 980px) {
+  .hubHero {
+    grid-template-columns: 1fr;
+  }
+
+  .hubPortrait {
+    min-height: 520px;
+  }
+
+  .resumeHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .resumePortrait {
+    width: min(100%, 420px);
+    min-height: 420px;
+  }
+
+  .roleList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .projectHighlights {
+    grid-template-columns: 1fr;
+  }
+
+  .projectHighlights article {
+    min-height: 230px;
+  }
+
+  .buildInventory ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .hubFacts,
+  .variantGrid,
+  .sharedStats,
+  .experienceItem,
+  .buildInventory,
+  .skillGrid,
+  .credentialsSection,
+  .resumeContact {
+    grid-template-columns: 1fr;
+  }
+
+  .variantCard {
+    min-height: 0;
+  }
+
+  .sharedStats > div {
+    min-height: 140px;
+  }
+
+  .resumePage {
+    padding: 22px;
+  }
+
+  .resumeHeader h1 {
+    font-size: clamp(2.7rem, 15vw, 5rem);
+  }
+
+  .resumePortrait {
+    width: 100%;
+    min-height: 360px;
+  }
+
+  .roleList,
+  .buildInventory ul {
+    grid-template-columns: 1fr;
+  }
+
+  .resumeContact .identityLine {
+    justify-content: flex-start;
+  }
+}
+
+@page {
+  size: Letter;
+  margin: 0.38in;
+}
+
+@media print {
+  :global(.siteHeader),
+  :global(.siteFooter),
+  :global(.skipLink),
+  .breadcrumbs,
+  .resumeActions,
+  .resumePortrait,
+  .backLink,
+  .projectHighlights a,
+  .projectHighlights small {
+    display: none !important;
+  }
+
+  .cvMain {
+    width: 100%;
+    padding: 0;
+  }
+
+  .resumeDocument {
+    border: 0;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .resumePage {
+    width: 100%;
+    min-height: 10.18in;
+    padding: 0;
+    color: #17252c;
+    break-after: page;
+  }
+
+  .resumePageTwo {
+    border: 0;
+    break-after: auto;
+  }
+
+  .resumeHeader {
+    display: block;
+    padding-bottom: 0.14in;
+    border-color: #66767a;
+  }
+
+  .resumeMeta {
+    gap: 0.08in;
+  }
+
+  .resumeMeta > span:last-child,
+  .fullName,
+  .resumeSectionHeading span,
+  .resumeContact > div:first-child > span,
+  .experienceLead p,
+  .skillGrid h3,
+  .variantCardTop,
+  .truthNote {
+    font-size: 7pt;
+  }
+
+  .fullName {
+    margin: 0.16in 0 0.035in;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .resumeHeader h1 {
+    max-width: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: -0.7pt;
+    line-height: 0.98;
+  }
+
+  .resumeSummary {
+    max-width: none;
+    margin: 0.08in 0 0;
+    color: #33474f;
+    font-size: 9.2pt;
+    line-height: 1.28;
+  }
+
+  .identityLine {
+    gap: 0.025in 0.12in;
+    margin-top: 0.075in;
+    color: #33474f;
+    font-size: 7.4pt;
+    line-height: 1.2;
+  }
+
+  .identityLine a {
+    text-decoration: none;
+  }
+
+  .fitSection,
+  .experienceSection,
+  .skillsSection,
+  .credentialsSection,
+  .resumeContact {
+    margin-top: 0.14in;
+  }
+
+  .resumeSectionHeading {
+    grid-template-columns: 0.22in 1fr;
+    gap: 0.04in;
+    padding-bottom: 0.035in;
+    border-color: #66767a;
+  }
+
+  .resumeSectionHeading h2,
+  .resumeContact h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: 0.45pt;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .truthNote {
+    margin: 0.045in 0;
+    color: #52666d;
+  }
+
+  .roleList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.035in;
+  }
+
+  .roleList li {
+    min-height: 0;
+    padding: 0.045in 0.055in;
+    border: 1px solid #b7c2bf;
+    border-top: 2px solid #17252c;
+    background: #f5f7f6;
+    font-size: 7pt;
+    line-height: 1.2;
+  }
+
+  .experienceItem {
+    grid-template-columns: 1.68in 1fr;
+    gap: 0.15in;
+    padding-block: 0.1in;
+    border-color: #c7d0cd;
+    break-inside: avoid;
+  }
+
+  .experienceLead h3 {
+    margin-top: 0.025in;
+    font-size: 9pt;
+    line-height: 1.1;
+  }
+
+  .experienceLead span {
+    margin-top: 0.01in;
+    color: #3f545b;
+    font-size: 7.4pt;
+    line-height: 1.18;
+  }
+
+  .experienceLead small {
+    margin-top: 0.02in;
+    color: #52666d;
+    font-size: 6.4pt;
+    line-height: 1.15;
+  }
+
+  .experienceItem > ul {
+    gap: 0.03in;
+    padding-left: 0.13in;
+    color: #33474f;
+    font-size: 7.45pt;
+    line-height: 1.23;
+  }
+
+  .projectHighlights {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 0.08in;
+    border-color: #66767a;
+  }
+
+  .projectHighlights article {
+    min-height: 1.42in;
+    padding: 0.09in;
+    border-color: #66767a;
+    break-inside: avoid;
+  }
+
+  .projectHighlights h3 {
+    font-size: 9pt;
+  }
+
+  .projectHighlights article > div span {
+    padding: 0.02in 0.035in;
+    background: #e7eeeb;
+    color: #17252c;
+    font-size: 5.8pt;
+  }
+
+  .projectHighlights p {
+    margin: 0.06in 0 0;
+    color: #3f545b;
+    font-size: 7.2pt;
+    line-height: 1.22;
+  }
+
+  .buildInventory {
+    grid-template-columns: 1.15in 1fr;
+    gap: 0.1in;
+    margin-top: 0.08in;
+    padding: 0.075in;
+    background: #f5f7f6;
+  }
+
+  .buildInventory h3 {
+    font-size: 6.8pt;
+  }
+
+  .buildInventory ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.04in 0.08in;
+  }
+
+  .buildInventory li {
+    font-size: 7pt;
+    line-height: 1.12;
+  }
+
+  .buildInventory li span {
+    font-size: 6pt;
+  }
+
+  .skillGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 0.18in;
+  }
+
+  .skillGrid > div {
+    padding-block: 0.052in;
+    border-color: #c7d0cd;
+    break-inside: avoid;
+  }
+
+  .skillGrid h3 {
+    margin-bottom: 0.012in;
+    color: #335148;
+    font-size: 7.2pt;
+  }
+
+  .skillGrid p {
+    font-size: 7.1pt;
+    line-height: 1.22;
+  }
+
+  .credentialsSection {
+    grid-template-columns: 1.45fr 0.55fr;
+    gap: 0.18in;
+  }
+
+  .credentialsSection ul {
+    gap: 0.015in;
+    margin-top: 0.045in;
+    padding-left: 0.12in;
+    color: #3f545b;
+    font-size: 7pt;
+    line-height: 1.18;
+  }
+
+  .resumeContact {
+    grid-template-columns: 1.35in 1fr;
+    gap: 0.1in;
+    padding: 0.08in;
+    background: #17252c;
+    color: #fff;
+    break-inside: avoid;
+  }
+
+  .resumeContact > div:first-child {
+    grid-template-columns: 0.18in 1fr;
+    gap: 0.015in 0.03in;
+  }
+
+  .resumeContact h2 {
+    color: #fff;
+    font-size: 9pt;
+  }
+
+  .resumeContact p {
+    margin-top: 0.02in;
+    color: #d6dfdc;
+    font-size: 6.4pt;
+  }
+
+  .resumeContact .identityLine {
+    justify-content: flex-end;
+    color: #fff;
+    font-size: 6.5pt;
+  }
+}
