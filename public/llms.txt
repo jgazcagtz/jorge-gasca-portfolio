@@ -6,9 +6,26 @@ Jorge Gasca is a bilingual Product Specialist, hands-on product builder, and sal
 
 - Current role: Product Specialist at Apollo.io, May 2025 to present.
 - Previous highlighted role: Product Development Manager at MiniTiendAI, March 2024 to May 2025.
-- Languages: Spanish and English.
+- Languages: Spanish (native), English (C2), and Portuguese (A2).
 - Focus: product delivery, product UX, sales and CRM automation, AI workflows, responsive QA, customer enablement, and web/API delivery.
 - Availability: product roles, plus selected sales automation, SaaS, CRM, and AI workflow projects.
+
+## Curriculum vitae
+
+Jorge publishes four role-focused CVs in English and Spanish. Every version uses the same verified employment history, complete skills inventory, credentials, languages, and product evidence. The suggested titles describe role fit and are not represented as past employment.
+
+- English CV hub: https://jgasca.io/cv
+- Spanish CV hub: https://jgasca.io/es/cv
+- GTM systems and revenue operations: https://jgasca.io/cv/gtm-revops
+- Product operations and implementation: https://jgasca.io/cv/product-implementation
+- AI automation and technical product: https://jgasca.io/cv/ai-automation
+- Customer success and solutions: https://jgasca.io/cv/customer-solutions
+- Sistemas GTM y operaciones de ingresos: https://jgasca.io/es/cv/gtm-revops
+- Operaciones de producto e implementación: https://jgasca.io/es/cv/product-implementation
+- Automatización con IA y producto técnico: https://jgasca.io/es/cv/ai-automation
+- Customer Success y soluciones: https://jgasca.io/es/cv/customer-solutions
+
+The HTML CV pages are canonical and indexable. Downloadable PDFs are provided for applications but are marked noindex to avoid duplicate search results.
 
 ## Portfolio
 

@@ -265,6 +265,11 @@ export function HomePage({ locale }: { locale: Locale }) {
             </article>
           ))}
         </div>
+        <div className={styles.experienceCta}>
+          <ActionLink href={localePath(locale, "/cv")} variant="secondary">
+            {copy.experience.cta}
+          </ActionLink>
+        </div>
       </section>
 
       <aside className={styles.partnerBand} aria-label={labels.partnerAria} data-reveal>

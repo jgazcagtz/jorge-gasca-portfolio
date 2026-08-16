@@ -10,6 +10,7 @@ A bilingual portfolio for Jorge Manuel Gasca Gutiérrez, a Product Specialist, h
 - An editorial portfolio built with Next.js App Router and TypeScript.
 - English at `/` and Spanish at `/es`.
 - Six pre-rendered case studies with Jorge’s ownership, actions, decisions, outcomes, reflections, current status, and limitations.
+- Four bilingual role-focused CVs with eight matching two-page ATS PDF downloads.
 - Privacy-reviewed desktop, mobile, and short walkthrough media from public or synthetic product views.
 - Accessible theme, navigation, media controls, metadata, structured data, sitemap, robots, and social sharing assets.
 - A restored, optimized portrait supplied by Jorge for this portfolio.
@@ -20,6 +21,7 @@ A bilingual portfolio for Jorge Manuel Gasca Gutiérrez, a Product Specialist, h
 - Product Specialist at Apollo.io since May 2025.
 - Product Development Manager at MiniTiendAI from March 2024 to May 2025.
 - Hands-on product builder focused on product UX, sales and CRM automation, AI workflows, web/API delivery, and practical QA.
+- Role-focused CVs for GTM/RevOps, product implementation, AI automation, and customer solutions at `/cv` and `/es/cv`.
 - [Marblism partner](https://marblism.com?via=zentixmarblism), helping teams evaluate where its AI employees fit a practical customer or operations workflow.
 
 ## Product evidence policy
@@ -65,10 +67,12 @@ GitHub Actions runs the same checks on pull requests and `main`. Vercel’s Git 
 
 - `app/(en)` — English root layout, homepage, and work routes.
 - `app/(es)/es` — Spanish root layout, homepage, and mirrored work routes.
+- `lib/cv.ts` — typed bilingual source for verified CV facts, role-fit variants, skills, products, credentials, and languages.
 - `components` — server-first page composition with small client pieces for scroll reveals and click-to-play video; theme and locale behavior stay lightweight.
 - `lib/case-studies.ts` — typed bilingual `CaseStudy` and `EvidenceAsset` content contracts.
 - `content/evidence-manifest.json` — auditable product-evidence inventory.
 - `tests` — content, source-visibility, route, responsive, media, and accessibility contracts.
+- `scripts/generate-cv-pdfs.mjs` — deterministic Playwright generation for the eight committed ATS PDFs and their integrity manifest.
 
 ## Content timeline
 

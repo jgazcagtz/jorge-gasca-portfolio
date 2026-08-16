@@ -5,6 +5,7 @@ export type HomeCopy = {
     work: string;
     approach: string;
     experience: string;
+    cv: string;
     contact: string;
     menu: string;
     theme: string;
@@ -39,6 +40,7 @@ export type HomeCopy = {
     title: string;
     intro: string;
     items: Array<{ period: string; title: string; body: string }>;
+    cta: string;
   };
   skills: {
     eyebrow: string;
@@ -75,6 +77,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       work: "Selected work",
       approach: "How I work",
       experience: "Experience",
+      cv: "CV",
       contact: "Contact",
       menu: "Menu",
       theme: "Change color theme",
@@ -147,6 +150,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
           body: "Earlier roles in sales, customer operations, and education taught me how to ask better questions, explain unfamiliar tools, and support people through change.",
         },
       ],
+      cta: "Explore role-focused CVs",
     },
     skills: {
       eyebrow: "Skills",
@@ -200,6 +204,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       work: "Trabajo seleccionado",
       approach: "Cómo trabajo",
       experience: "Experiencia",
+      cv: "CV",
       contact: "Contacto",
       menu: "Menú",
       theme: "Cambiar tema de color",
@@ -272,6 +277,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
           body: "Mis roles anteriores en ventas, atención a clientes y educación me enseñaron a hacer mejores preguntas, explicar herramientas nuevas y acompañar procesos de cambio.",
         },
       ],
+      cta: "Explorar CVs por tipo de puesto",
     },
     skills: {
       eyebrow: "Habilidades",

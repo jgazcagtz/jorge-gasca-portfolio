@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "contentDate": "2026-08-15",
+  "algorithm": "sha256",
+  "sourceDigest": "936f5138494b96d6650f443071c61bd041d3e2a29bdaec4f66356cbf6f6090e8",
+  "outputCount": 8,
+  "outputs": [
+    {
+      "locale": "en",
+      "variant": "gtm-revops",
+      "route": "/cv/gtm-revops",
+      "path": "public/cv/downloads/jorge-gasca-gtm-revops-en.pdf",
+      "bytes": 340697,
+      "sha256": "45475121ff8ca14631716a12e8fdfd393bf9bdb35abe92f9644071a07872f4e9",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "GTM Systems and Revenue Operations",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portuguese - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "en",
+      "variant": "product-implementation",
+      "route": "/cv/product-implementation",
+      "path": "public/cv/downloads/jorge-gasca-product-implementation-en.pdf",
+      "bytes": 340557,
+      "sha256": "a53d67338d397960cd9db1df2e540d62bd94735d2712cf87bcfcd6f724991ee3",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Product Operations and Implementation",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portuguese - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "en",
+      "variant": "ai-automation",
+      "route": "/cv/ai-automation",
+      "path": "public/cv/downloads/jorge-gasca-ai-automation-en.pdf",
+      "bytes": 343795,
+      "sha256": "af93331fef777a40fe4b8a6828533db6f7d47aec0a63f078307e9832096891b5",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "AI Automation and Technical Product",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portuguese - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "en",
+      "variant": "customer-solutions",
+      "route": "/cv/customer-solutions",
+      "path": "public/cv/downloads/jorge-gasca-customer-solutions-en.pdf",
+      "bytes": 343508,
+      "sha256": "b03e52c792cb5f440ced4efb19b486c811549ea41f16490caadb0d7892116de0",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Customer Success and Solutions",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portuguese - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "es",
+      "variant": "gtm-revops",
+      "route": "/es/cv/gtm-revops",
+      "path": "public/cv/downloads/jorge-gasca-gtm-revops-es.pdf",
+      "bytes": 358334,
+      "sha256": "3adab2e982f2cb44989691e735cbc1bb35dd67df518e47ff48849b1926b9b8da",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Sistemas GTM y Operaciones de Ingresos",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portugués - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "es",
+      "variant": "product-implementation",
+      "route": "/es/cv/product-implementation",
+      "path": "public/cv/downloads/jorge-gasca-product-implementation-es.pdf",
+      "bytes": 353296,
+      "sha256": "e550a8c951e0492efb77a493a176afe2d01436596c69b85ee870345122276c75",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Operaciones de Producto e Implementación",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portugués - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "es",
+      "variant": "ai-automation",
+      "route": "/es/cv/ai-automation",
+      "path": "public/cv/downloads/jorge-gasca-ai-automation-es.pdf",
+      "bytes": 354900,
+      "sha256": "3d0243591509b998788acd7e074edb1f9094843f03c62e40499a1470b5f0e0cb",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Automatización con IA y Producto Técnico",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portugués - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    },
+    {
+      "locale": "es",
+      "variant": "customer-solutions",
+      "route": "/es/cv/customer-solutions",
+      "path": "public/cv/downloads/jorge-gasca-customer-solutions-es.pdf",
+      "bytes": 356594,
+      "sha256": "2ab2a2205430ee3710d1c0e671116c160efb8259770053624618b1faf6198806",
+      "pages": 2,
+      "textChecks": [
+        "Jorge Manuel Gasca Gutiérrez",
+        "Customer Success y Soluciones",
+        "Apollo.io",
+        "MiniTiendAI",
+        "GTMSnap",
+        "Hermes Agent Lab",
+        "Google Cloud Generative AI Leader (2025)",
+        "Portugués - A2",
+        "gascagtz@gmail.com",
+        "jgasca.io"
+      ]
+    }
+  ]
+}

@@ -9,7 +9,24 @@ import {
   type EvidenceAsset,
 } from "../lib/case-studies";
 import { homeCopy } from "../lib/home";
-import { caseStudyMetadata, HOME_TITLES, homeMetadata } from "../lib/seo";
+import {
+  cvCredentials,
+  cvExperience,
+  cvLanguages,
+  cvProjects,
+  cvSkillGroups,
+  cvVariantSlugs,
+  cvVariants,
+  getCvProjects,
+  getCvSkillGroups,
+} from "../lib/cv";
+import {
+  caseStudyMetadata,
+  cvHubMetadata,
+  cvMetadata,
+  HOME_TITLES,
+  homeMetadata,
+} from "../lib/seo";
 import { MARBLISM_PARTNER_URL } from "../lib/site";
 
 const expectedLaunchSlugs = [
@@ -430,5 +447,135 @@ describe("portfolio content contract", () => {
     expect(llms.toLowerCase()).not.toContain("official partner");
     expect(llms.toLowerCase()).not.toContain("strong fit");
     expect(llms.toLowerCase()).not.toContain("legitimate business inquiries");
+  });
+});
+
+describe("bilingual CV content contract", () => {
+  it("publishes four distinct role variants in two locales without changing shared facts", () => {
+    expect(cvVariants.map((variant) => variant.slug)).toEqual(cvVariantSlugs);
+    expect(new Set(cvVariantSlugs).size).toBe(4);
+
+    for (const variant of cvVariants) {
+      expect(getCvSkillGroups(variant).map((group) => group.id).sort()).toEqual(
+        cvSkillGroups.map((group) => group.id).sort(),
+      );
+      expect(getCvProjects(variant).map((project) => project.id).sort()).toEqual(
+        cvProjects.map((project) => project.id).sort(),
+      );
+      expect(new Set(variant.skillOrder).size).toBe(cvSkillGroups.length);
+      expect(new Set(variant.projectOrder).size).toBe(cvProjects.length);
+
+      for (const locale of locales) {
+        expect(variant.title[locale].length).toBeGreaterThan(12);
+        expect(variant.summary[locale].length).toBeGreaterThan(100);
+        expect(variant.seoTitle[locale].length).toBeLessThanOrEqual(60);
+        expect(variant.seoDescription[locale].length).toBeGreaterThanOrEqual(100);
+        expect(variant.seoDescription[locale].length).toBeLessThanOrEqual(180);
+        expect(variant.fitRoles[locale].length).toBeGreaterThanOrEqual(7);
+        expect(cvMetadata(locale, variant).keywords).toBeUndefined();
+      }
+    }
+
+    for (const locale of locales) {
+      expect(cvHubMetadata(locale).keywords).toBeUndefined();
+      expect(new Set(cvVariants.map((variant) => variant.seoTitle[locale])).size).toBe(4);
+      expect(new Set(cvVariants.map((variant) => variant.seoDescription[locale])).size).toBe(4);
+    }
+  });
+
+  it("keeps the verified timeline and labels concurrent and grouped work explicitly", () => {
+    expect(cvExperience.map((entry) => entry.id)).toEqual([
+      "apollo",
+      "minitiendai",
+      "independent",
+      "earlier",
+    ]);
+    expect(cvExperience[0]).toMatchObject({
+      id: "apollo",
+      period: { en: "May 2025 - Present", es: "Mayo 2025 - Actualidad" },
+      organization: { en: "Apollo.io", es: "Apollo.io" },
+    });
+    expect(cvExperience[0].title.en).toContain("Product Specialist");
+    expect(cvExperience[0].bullets.en.join(" ")).toContain("50+ B2B customer teams weekly");
+    expect(cvExperience[1]).toMatchObject({
+      id: "minitiendai",
+      period: { en: "Mar 2024 - May 2025", es: "Marzo 2024 - Mayo 2025" },
+    });
+    expect(cvExperience[1].title.en).toBe("Product Development Manager");
+    expect(cvExperience[2].context.en).toBe("Concurrent independent work");
+    expect(cvExperience[3].context.en).toContain("no missing employers or dates inferred");
+  });
+
+  it("includes every requested project, skill system, credential, and language", () => {
+    expect(cvProjects.map((project) => project.id)).toEqual([
+      "zentix",
+      "hablaya",
+      "minitiendai",
+      "ordenai",
+      "zentix-office",
+      "tonalli-ai",
+      "gtmsnap",
+      "hermes-agent-lab",
+    ]);
+
+    const skills = cvSkillGroups.flatMap((group) => group.items);
+    for (const skill of [
+      "Revenue Operations",
+      "Customer Discovery",
+      "Apollo.io",
+      "HubSpot",
+      "Salesforce",
+      "GoHighLevel",
+      "n8n",
+      "Make",
+      "Zapier",
+      "REST APIs",
+      "Webhooks",
+      "MCP",
+      "AI Agents",
+      "Human-in-the-loop",
+      "JavaScript/TypeScript",
+      "Node.js",
+      "React/Next.js",
+      "Firebase",
+      "Supabase",
+      "Vercel",
+      "Docker",
+      "Cloudflare",
+      "OpenAI",
+      "Twilio",
+      "WhatsApp Cloud API",
+      "Cartesia",
+      "Responsive UX",
+      "Accessibility",
+      "Behavioral QA",
+      "Prototyping",
+      "Documentation",
+      "Release Verification",
+    ]) {
+      expect(skills, skill).toContain(skill);
+    }
+
+    expect(cvCredentials).toHaveLength(4);
+    expect(cvLanguages.en).toEqual(["Spanish - Native", "English - C2", "Portuguese - A2"]);
+    expect(cvLanguages.es).toEqual(["Español - Nativo", "Inglés - C2", "Portugués - A2"]);
+  });
+
+  it("keeps best-fit titles separate from employment history", () => {
+    const employmentText = JSON.stringify(cvExperience).toLowerCase();
+    const verifiedEmploymentTitles = new Set([
+      "Product Development Manager",
+    ]);
+    const aspirationalTitles = cvVariants
+      .flatMap((variant) => variant.fitRoles.en)
+      .filter((title) => !verifiedEmploymentTitles.has(title));
+
+    for (const title of aspirationalTitles) {
+      expect(employmentText).not.toContain(title.toLowerCase());
+    }
+
+    const actualTitles = cvExperience.map((entry) => entry.title.en).join(" ");
+    expect(actualTitles).toContain("Product Specialist");
+    expect(actualTitles).toContain("Product Development Manager");
   });
 });

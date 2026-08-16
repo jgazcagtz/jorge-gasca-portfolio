@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import type { CaseStudy } from "@/lib/case-studies";
+import {
+  cvHubPath,
+  cvUiCopy,
+  cvVariantPath,
+  type CvVariant,
+} from "@/lib/cv";
 import { homeCopy } from "@/lib/home";
 import { localePath, SITE_URL, type Locale } from "@/lib/site";
 
-export const CONTENT_DATE = "2026-08-09";
+export const CONTENT_DATE = "2026-08-15";
 export const CONTENT_DATE_ISO = `${CONTENT_DATE}T00:00:00-06:00`;
 
 export const HOME_TITLES: Record<Locale, string> = {
@@ -93,6 +99,86 @@ export function caseStudyMetadata(
       card: "summary_large_image",
       title: copy.seoTitle,
       description: copy.seoDescription,
+    },
+  };
+}
+
+export function cvHubMetadata(locale: Locale): Metadata {
+  const canonicalPath = cvHubPath(locale);
+  const englishPath = cvHubPath("en");
+  const spanishPath = cvHubPath("es");
+  const copy = cvUiCopy[locale];
+  const title = locale === "en"
+    ? "Jorge Gasca | CV for GTM, Product and AI Automation"
+    : "Jorge Gasca | CV de GTM, Producto y Automatización con IA";
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description: copy.hubSummary,
+    authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+    creator: AUTHOR_NAME,
+    publisher: AUTHOR_NAME,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        en: englishPath,
+        es: spanishPath,
+        "x-default": englishPath,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: locale === "en" ? "en_US" : "es_MX",
+      alternateLocale: locale === "en" ? ["es_MX"] : ["en_US"],
+      url: canonicalPath,
+      siteName: SITE_NAME,
+      title,
+      description: copy.hubSummary,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: copy.hubSummary,
+    },
+  };
+}
+
+export function cvMetadata(locale: Locale, variant: CvVariant): Metadata {
+  const englishPath = cvVariantPath("en", variant.slug);
+  const spanishPath = cvVariantPath("es", variant.slug);
+  const canonicalPath = cvVariantPath(locale, variant.slug);
+  const title = variant.seoTitle[locale];
+  const description = variant.seoDescription[locale];
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+    creator: AUTHOR_NAME,
+    publisher: AUTHOR_NAME,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        en: englishPath,
+        es: spanishPath,
+        "x-default": englishPath,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: locale === "en" ? "en_US" : "es_MX",
+      alternateLocale: locale === "en" ? ["es_MX"] : ["en_US"],
+      url: canonicalPath,
+      siteName: SITE_NAME,
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }

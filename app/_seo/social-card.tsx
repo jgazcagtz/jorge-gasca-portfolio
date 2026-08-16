@@ -4,6 +4,7 @@ import { extname, resolve, sep } from "node:path";
 import { cache } from "react";
 import { ImageResponse } from "next/og";
 import type { CaseStudy } from "@/lib/case-studies";
+import { cvUiCopy, type CvVariant } from "@/lib/cv";
 import type { Locale } from "@/lib/site";
 
 export const SOCIAL_CARD_SIZE = {
@@ -333,6 +334,135 @@ export async function createCaseSocialCard(locale: Locale, study: CaseStudy) {
           >
             <span>{isEnglish ? "Privacy-reviewed evidence" : "Evidencia revisada por privacidad"}</span>
             <span style={{ background: accent, color: palette.ink, padding: "6px 9px" }}>{copy.stageLabel}</span>
+          </div>
+        </div>
+      </div>
+    ),
+    SOCIAL_CARD_SIZE,
+  );
+}
+
+export async function createCvSocialCard(locale: Locale, variant?: CvVariant) {
+  const portrait = await publicAssetDataUri("/media/jorge-gasca-portrait.png");
+  const copy = cvUiCopy[locale];
+  const title = variant?.title[locale] ?? copy.hubTitle;
+  const eyebrow = variant?.eyebrow[locale] ?? copy.hubEyebrow;
+  const accent = variant
+    ? caseAccents[variant.accent === "lime" ? "lime" : variant.accent === "coral" ? "coral" : variant.accent === "cyan" ? "cyan" : "violet"]
+    : palette.violet;
+  const isEnglish = locale === "en";
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          background: palette.paper,
+          color: palette.ink,
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            background: accent,
+            display: "flex",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: 14,
+          }}
+        />
+        <div
+          style={{
+            backgroundImage: `linear-gradient(${palette.rule}55 1px, transparent 1px), linear-gradient(90deg, ${palette.rule}55 1px, transparent 1px)`,
+            backgroundSize: "42px 42px",
+            display: "flex",
+            position: "absolute",
+            inset: 0,
+            opacity: 0.42,
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: 820,
+            padding: "52px 52px 44px 58px",
+            position: "relative",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 14, fontWeight: 800, letterSpacing: 2.2, textTransform: "uppercase" }}>
+              {eyebrow}
+            </span>
+            <span style={{ color: palette.muted, fontSize: 13, fontWeight: 750, letterSpacing: 1.8 }}>
+              CV / 2026
+            </span>
+          </div>
+          <div style={{ background: palette.ink, display: "flex", width: "100%", height: 1, marginTop: 24 }} />
+          <div
+            style={{
+              display: "flex",
+              fontSize: title.length > 54 ? 50 : 60,
+              fontWeight: 800,
+              letterSpacing: -2.6,
+              lineHeight: 0.98,
+              marginTop: 50,
+              maxWidth: 700,
+            }}
+          >
+            {title}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", marginTop: "auto" }}>
+            <span style={{ fontSize: 27, fontWeight: 800 }}>Jorge Manuel Gasca Gutiérrez</span>
+            <span style={{ color: palette.muted, fontSize: 15, fontWeight: 700, marginTop: 8 }}>
+              {isEnglish
+                ? "Apollo.io Product Specialist | Mexico City | Remote"
+                : "Product Specialist en Apollo.io | Ciudad de México | Remoto"}
+            </span>
+          </div>
+        </div>
+        <div
+          style={{
+            background: palette.raised,
+            borderLeft: `1px solid ${palette.ink}`,
+            display: "flex",
+            flex: 1,
+            position: "relative",
+          }}
+        >
+          <img
+            src={portrait}
+            alt=""
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "58% 42%",
+            }}
+          />
+          <div
+            style={{
+              background: accent,
+              color: palette.ink,
+              display: "flex",
+              position: "absolute",
+              right: 24,
+              bottom: 24,
+              padding: "16px 18px",
+              fontSize: 14,
+              fontWeight: 800,
+              letterSpacing: 1.6,
+              textTransform: "uppercase",
+            }}
+          >
+            {isEnglish ? "Web CV + ATS PDF" : "CV web + PDF ATS"}
           </div>
         </div>
       </div>
