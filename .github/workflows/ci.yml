@@ -45,6 +45,9 @@ jobs:
       - name: Test content contracts
         run: npm run test:content
 
+      - name: Verify CV PDFs
+        run: npm run test:cv
+
       - name: Check external links
         run: npm run test:links
 
