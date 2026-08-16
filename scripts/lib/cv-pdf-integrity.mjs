@@ -88,7 +88,10 @@ export async function sourceDigest(root = process.cwd()) {
   for (const file of CV_SOURCE_FILES) {
     hash.update(file);
     hash.update("\0");
-    hash.update(await readFile(resolve(root, file)));
+    const contents = await readFile(resolve(root, file), "utf8");
+    // Git may materialize these text sources with CRLF on Windows and LF in CI.
+    // Hash their logical content so one committed manifest verifies everywhere.
+    hash.update(contents.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n"));
     hash.update("\0");
   }
   return hash.digest("hex");
