@@ -125,16 +125,16 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     },
     automationLab: {
       eyebrow: "Automation Lab",
-      title: "AI + GTM systems translated into recruiter-friendly proof.",
+      title: "An animated map of the AI + GTM systems I build.",
       intro:
-        "These workflows show how I turn messy operating problems into orchestrated systems across signals, APIs, scoring, drafting, and routing. n8n is part of the stack, not the headline.",
+        "This system map turns my n8n workflow inventory into a sanitized, animated graph of intake, data enrichment, AI logic, outbound drafting, alerts, and operating loops. The point is the architecture: from business problem to data, automation, AI, and outcome.",
       recruiterTitle: "Recruiter mode",
       recruiterPoints: [
         "What it automates: lead research, signal monitoring, scoring, drafting, and intake triage.",
         "Why it matters: less manual ops, faster response cycles, and repeatable decision logic.",
         "What I built: workflow design, automation logic, AI steps, and the system handoff points.",
       ],
-      featuredLabel: "Featured automations",
+      featuredLabel: "Animated workflow graph",
       detailLabel: "Selected case study",
       workflowLabel: "Workflow",
       stackLabel: "Stack",
@@ -146,7 +146,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       aiLabel: "AI layer",
       outcomeLabel: "Outcome",
       note:
-        "Workflow visuals are portfolio-grade reconstructions based on read-only auditing of the live n8n workspace. Sensitive implementation details are intentionally sanitized.",
+        "This is an emulated portfolio visualization based on read-only auditing of the live n8n workspace. Provider names, internal project names, credentials, URLs, and private data are intentionally replaced with generic system labels.",
     },
     approach: {
       eyebrow: "How I work",
@@ -277,16 +277,16 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     },
     automationLab: {
       eyebrow: "Automation Lab",
-      title: "Sistemas de IA + GTM convertidos en evidencia clara para reclutadores.",
+      title: "Un mapa animado de los sistemas de IA + GTM que construyo.",
       intro:
-        "Estos workflows muestran cómo convierto problemas operativos ambiguos en sistemas orquestados con señales, APIs, scoring, drafting y routing. n8n forma parte del stack, pero no es el mensaje principal.",
+        "Este mapa convierte mi inventario de workflows en n8n en un grafo animado y sanitizado de intake, enriquecimiento de datos, lógica con IA, drafting outbound, alertas y loops operativos. El punto es la arquitectura: del problema de negocio a datos, automatización, IA y resultado.",
       recruiterTitle: "Modo recruiter",
       recruiterPoints: [
         "Qué automatiza: research de leads, monitoreo de señales, scoring, drafting e intake con triage.",
         "Por qué importa: menos trabajo manual, ciclos de respuesta más rápidos y lógica repetible para decidir.",
         "Qué construí: diseño del workflow, lógica de automatización, pasos con IA y puntos de handoff del sistema.",
       ],
-      featuredLabel: "Automatizaciones destacadas",
+      featuredLabel: "Grafo animado de workflows",
       detailLabel: "Caso seleccionado",
       workflowLabel: "Workflow",
       stackLabel: "Stack",
@@ -298,7 +298,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       aiLabel: "Capa de IA",
       outcomeLabel: "Resultado",
       note:
-        "Las visualizaciones son reconstrucciones diseñadas para portafolio a partir de una auditoría read-only del workspace real en n8n. Los detalles sensibles fueron sanitizados intencionalmente.",
+        "Esta es una visualización emulada para portafolio basada en una auditoría read-only del workspace real en n8n. Nombres de proveedores, proyectos internos, credenciales, URLs y datos privados se reemplazan intencionalmente con etiquetas genéricas de sistema.",
     },
     approach: {
       eyebrow: "Cómo trabajo",
