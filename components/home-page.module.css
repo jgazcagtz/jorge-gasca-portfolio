@@ -1,5 +1,6 @@
 .hero,
 .workSection,
+.automationSection,
 .approachSection,
 .experienceSection,
 .partnerBand,
@@ -203,6 +204,7 @@
 }
 
 .workSection,
+.automationSection,
 .approachSection,
 .experienceSection {
   content-visibility: auto;

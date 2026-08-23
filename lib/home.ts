@@ -29,6 +29,25 @@ export type HomeCopy = {
     labs: string;
     viewCase: string;
   };
+  automationLab: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    recruiterTitle: string;
+    recruiterPoints: string[];
+    featuredLabel: string;
+    detailLabel: string;
+    workflowLabel: string;
+    stackLabel: string;
+    impactLabel: string;
+    systemLabel: string;
+    problemLabel: string;
+    logicLabel: string;
+    integrationsLabel: string;
+    aiLabel: string;
+    outcomeLabel: string;
+    note: string;
+  };
   approach: {
     eyebrow: string;
     title: string;
@@ -103,6 +122,31 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       featured: "Signature work",
       labs: "More products and experiments",
       viewCase: "Read case study",
+    },
+    automationLab: {
+      eyebrow: "Automation Lab",
+      title: "AI + GTM systems translated into recruiter-friendly proof.",
+      intro:
+        "These workflows show how I turn messy operating problems into orchestrated systems across signals, APIs, scoring, drafting, and routing. n8n is part of the stack, not the headline.",
+      recruiterTitle: "Recruiter mode",
+      recruiterPoints: [
+        "What it automates: lead research, signal monitoring, scoring, drafting, and intake triage.",
+        "Why it matters: less manual ops, faster response cycles, and repeatable decision logic.",
+        "What I built: workflow design, automation logic, AI steps, and the system handoff points.",
+      ],
+      featuredLabel: "Featured automations",
+      detailLabel: "Selected case study",
+      workflowLabel: "Workflow",
+      stackLabel: "Stack",
+      impactLabel: "Business impact",
+      systemLabel: "System view",
+      problemLabel: "Problem",
+      logicLabel: "Automation logic",
+      integrationsLabel: "Integrations",
+      aiLabel: "AI layer",
+      outcomeLabel: "Outcome",
+      note:
+        "Workflow visuals are portfolio-grade reconstructions based on read-only auditing of the live n8n workspace. Sensitive implementation details are intentionally sanitized.",
     },
     approach: {
       eyebrow: "How I work",
@@ -230,6 +274,31 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       featured: "Proyectos clave",
       labs: "Más productos y experimentos",
       viewCase: "Ver proyecto",
+    },
+    automationLab: {
+      eyebrow: "Automation Lab",
+      title: "Sistemas de IA + GTM convertidos en evidencia clara para reclutadores.",
+      intro:
+        "Estos workflows muestran cómo convierto problemas operativos ambiguos en sistemas orquestados con señales, APIs, scoring, drafting y routing. n8n forma parte del stack, pero no es el mensaje principal.",
+      recruiterTitle: "Modo recruiter",
+      recruiterPoints: [
+        "Qué automatiza: research de leads, monitoreo de señales, scoring, drafting e intake con triage.",
+        "Por qué importa: menos trabajo manual, ciclos de respuesta más rápidos y lógica repetible para decidir.",
+        "Qué construí: diseño del workflow, lógica de automatización, pasos con IA y puntos de handoff del sistema.",
+      ],
+      featuredLabel: "Automatizaciones destacadas",
+      detailLabel: "Caso seleccionado",
+      workflowLabel: "Workflow",
+      stackLabel: "Stack",
+      impactLabel: "Impacto de negocio",
+      systemLabel: "Vista del sistema",
+      problemLabel: "Problema",
+      logicLabel: "Lógica de automatización",
+      integrationsLabel: "Integraciones",
+      aiLabel: "Capa de IA",
+      outcomeLabel: "Resultado",
+      note:
+        "Las visualizaciones son reconstrucciones diseñadas para portafolio a partir de una auditoría read-only del workspace real en n8n. Los detalles sensibles fueron sanitizados intencionalmente.",
     },
     approach: {
       eyebrow: "Cómo trabajo",
