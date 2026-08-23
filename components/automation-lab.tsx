@@ -7,246 +7,412 @@ import { homeCopy } from "@/lib/home";
 import type { Locale } from "@/lib/site";
 import styles from "./automation-lab.module.css";
 
-type AutomationStudy = {
+type GraphNode = {
+  id: string;
+  lane: "intake" | "data" | "ai" | "action" | "ops";
+  title: Record<Locale, string>;
+  summary: Record<Locale, string>;
+  stack: string[];
+  x: number;
+  y: number;
+};
+
+type CaseStudy = {
   id: string;
   accent: "coral" | "violet" | "lime" | "cyan";
   title: Record<Locale, string>;
-  strapline: Record<Locale, string>;
   whatItDoes: Record<Locale, string>;
-  stack: string[];
   impact: Record<Locale, string>;
   problem: Record<Locale, string>;
-  workflow: string[];
   logic: Record<Locale, string[]>;
-  integrations: string[];
   aiLayer: Record<Locale, string>;
   outcome: Record<Locale, string>;
+  nodeIds: string[];
 };
 
-const studies: AutomationStudy[] = [
+const graphNodes: GraphNode[] = [
   {
-    id: "signal-os",
-    accent: "coral",
-    title: {
-      en: "Free Signal OS",
-      es: "Free Signal OS",
+    id: "batch-review",
+    lane: "intake",
+    title: { en: "Batch Review", es: "Revisión por lote" },
+    summary: {
+      en: "Collects several work items into a single review surface.",
+      es: "Agrupa varios elementos de trabajo en una superficie de revisión.",
     },
-    strapline: {
-      en: "Trigger -> Feed assembly -> Signal scoring -> Brief -> Response pack",
-      es: "Trigger -> armado de feeds -> scoring de señales -> brief -> response pack",
-    },
-    whatItDoes: {
-      en: "Runs a repeatable signal-intelligence workflow that gathers fresh inputs, scores them with an AI-assisted decision layer, and turns the output into a structured brief for downstream GTM action.",
-      es: "Ejecuta un flujo repetible de inteligencia de señales que reúne inputs frescos, los puntúa con una capa de decisión asistida por IA y convierte el resultado en un brief estructurado para acciones GTM posteriores.",
-    },
-    stack: ["n8n", "RSS/API", "AI scoring", "Briefing", "Webhook response"],
-    impact: {
-      en: "Turns scattered market inputs into one reusable decision surface instead of manual feed checking.",
-      es: "Convierte inputs dispersos del mercado en una sola superficie reutilizable de decisión en lugar de revisión manual de feeds.",
-    },
-    problem: {
-      en: "Signal research breaks down when useful updates live across too many sources and nobody has time to normalize them consistently.",
-      es: "La investigación de señales se rompe cuando las actualizaciones útiles viven en demasiadas fuentes y nadie tiene tiempo de normalizarlas con consistencia.",
-    },
-    workflow: [
-      "Run Free Signal OS",
-      "Build Free Signal Feeds",
-      "Fetch RSS Feed",
-      "Hermes GTM Scoring Brain",
-      "Build Brief",
-      "Respond With Signal Pack",
-    ],
-    logic: {
-      en: [
-        "Starts from a controlled trigger instead of ad-hoc browsing.",
-        "Normalizes multiple signal sources before ranking them.",
-        "Packages the output as a brief another workflow or operator can use immediately.",
-      ],
-      es: [
-        "Parte de un trigger controlado en vez de navegación ad-hoc.",
-        "Normaliza múltiples fuentes de señales antes de priorizarlas.",
-        "Empaqueta la salida como un brief que otro workflow u operador puede usar de inmediato.",
-      ],
-    },
-    integrations: ["RSS feeds", "AI scoring layer", "Internal briefing format"],
-    aiLayer: {
-      en: "AI is used as the scoring brain that helps rank which signals deserve attention before the final brief is assembled.",
-      es: "La IA se usa como cerebro de scoring para priorizar qué señales merecen atención antes de ensamblar el brief final.",
-    },
-    outcome: {
-      en: "Creates a reusable operating rhythm for signal monitoring, qualification, and distribution.",
-      es: "Crea un ritmo operativo reutilizable para monitoreo, calificación y distribución de señales.",
-    },
+    stack: ["n8n", "Webhook", "Review queue"],
+    x: 7,
+    y: 16,
   },
   {
-    id: "gmail-drafts",
-    accent: "violet",
-    title: {
-      en: "Prospeo-Aware Gmail Drafts",
-      es: "Prospeo-Aware Gmail Drafts",
+    id: "gateway-preflight",
+    lane: "ops",
+    title: { en: "Gateway Preflight", es: "Preflight de gateway" },
+    summary: {
+      en: "Checks request shape before a workflow spends downstream resources.",
+      es: "Valida la forma de la solicitud antes de usar recursos posteriores.",
     },
-    strapline: {
-      en: "Draft request -> Credit-aware build -> Gmail drafts -> Run summary",
-      es: "Solicitud -> armado con control de créditos -> drafts en Gmail -> resumen",
+    stack: ["n8n", "API guardrail", "Validation"],
+    x: 22,
+    y: 9,
+  },
+  {
+    id: "signal-os",
+    lane: "data",
+    title: { en: "Signal OS", es: "Signal OS" },
+    summary: {
+      en: "Turns free public signals into a structured GTM brief.",
+      es: "Convierte señales públicas gratuitas en un brief GTM estructurado.",
     },
-    whatItDoes: {
-      en: "Builds outbound drafts with enrichment-aware logic so prospecting output is useful without wasting enrichment spend or forcing manual writing every time.",
-      es: "Construye drafts outbound con lógica consciente del enriquecimiento para que la prospección produzca mensajes útiles sin desperdiciar créditos ni depender de escritura manual en cada caso.",
+    stack: ["n8n", "RSS/API", "Briefing"],
+    x: 25,
+    y: 36,
+  },
+  {
+    id: "guarded-enrichment",
+    lane: "data",
+    title: { en: "Guarded Enrichment", es: "Enriquecimiento controlado" },
+    summary: {
+      en: "Uses data-source guardrails before enriching a person record.",
+      es: "Usa guardrails de fuente de datos antes de enriquecer un registro.",
     },
-    stack: ["n8n", "Prospeo", "Gmail API", "LLM", "Run summaries"],
-    impact: {
-      en: "Reduces repetitive outbound prep while adding guardrails around enrichment usage and message generation.",
-      es: "Reduce la preparación repetitiva de outbound y agrega guardrails alrededor del uso de enriquecimiento y la generación de mensajes.",
+    stack: ["n8n", "Data source", "Cost control"],
+    x: 42,
+    y: 18,
+  },
+  {
+    id: "credit-spend",
+    lane: "ops",
+    title: { en: "Credit Spend Control", es: "Control de créditos" },
+    summary: {
+      en: "Tracks when enrichment should spend credits and when it should stop.",
+      es: "Define cuándo gastar créditos de enriquecimiento y cuándo detenerse.",
     },
-    problem: {
-      en: "Outbound teams lose time when research, personalization, and draft creation all happen as disconnected manual steps.",
-      es: "Los equipos outbound pierden tiempo cuando research, personalización y creación de drafts ocurren como pasos manuales desconectados.",
+    stack: ["n8n", "Rules", "Budget guardrail"],
+    x: 58,
+    y: 6,
+  },
+  {
+    id: "account-preflight",
+    lane: "data",
+    title: { en: "Account Preflight", es: "Preflight de cuenta" },
+    summary: {
+      en: "Checks account data before deeper qualification or outreach.",
+      es: "Revisa datos de cuenta antes de calificación u outreach.",
     },
-    workflow: [
-      "GTM Draft Request",
-      "Build Credit-Aware Drafts",
-      "Create Gmail Drafts",
-      "Summarize Draft Run",
-      "Respond",
-    ],
-    logic: {
-      en: [
-        "Accepts a draft request as structured intake.",
-        "Applies credit-aware logic before generating outreach.",
-        "Creates drafts in Gmail and returns a usable summary instead of opaque automation output.",
-      ],
-      es: [
-        "Recibe una solicitud de draft como intake estructurado.",
-        "Aplica lógica consciente de créditos antes de generar outreach.",
-        "Crea drafts en Gmail y devuelve un resumen utilizable en vez de una salida opaca.",
-      ],
+    stack: ["n8n", "Data source", "Qualification"],
+    x: 59,
+    y: 29,
+  },
+  {
+    id: "aware-drafts",
+    lane: "action",
+    title: { en: "Aware Email Drafts", es: "Drafts de email con contexto" },
+    summary: {
+      en: "Builds outbound drafts using context, limits, and run summaries.",
+      es: "Crea drafts outbound usando contexto, límites y resúmenes.",
     },
-    integrations: ["Webhook intake", "Prospeo", "Gmail API", "LLM drafting"],
-    aiLayer: {
-      en: "AI supports the drafting step, but the workflow frames it inside data, budget, and channel constraints.",
-      es: "La IA apoya la parte de drafting, pero el workflow la encuadra dentro de restricciones de datos, presupuesto y canal.",
-    },
-    outcome: {
-      en: "Makes outbound drafting faster, more consistent, and easier to operationalize across a repeatable GTM process.",
-      es: "Vuelve el drafting outbound más rápido, consistente y fácil de operacionalizar dentro de un proceso GTM repetible.",
-    },
+    stack: ["n8n", "Email workspace", "LLM"],
+    x: 76,
+    y: 19,
   },
   {
     id: "signal-scanner",
-    accent: "lime",
-    title: {
-      en: "Signal Scanner",
-      es: "Signal Scanner",
+    lane: "data",
+    title: { en: "Signal Scanner", es: "Scanner de señales" },
+    summary: {
+      en: "Runs scheduled scans and scores which signals deserve attention.",
+      es: "Corre scans programados y puntúa señales relevantes.",
     },
-    strapline: {
-      en: "Daily trigger -> Query builder -> Feed fetch -> Signal score",
-      es: "Trigger diario -> constructor de queries -> captura de feed -> scoring",
-    },
-    whatItDoes: {
-      en: "Runs on a schedule, builds product-specific searches, fetches fresh inputs, and scores which signals should move into the next operating step.",
-      es: "Corre con una programación fija, construye búsquedas por producto, obtiene inputs recientes y puntúa qué señales deben pasar al siguiente paso operativo.",
-    },
-    stack: ["n8n", "Scheduler", "Queries", "Feeds", "Scoring"],
-    impact: {
-      en: "Creates a dependable top-of-funnel signal layer instead of relying on memory or sporadic manual checks.",
-      es: "Crea una capa confiable de señales top-of-funnel en lugar de depender de memoria o revisiones manuales esporádicas.",
-    },
-    problem: {
-      en: "Opportunity signals decay quickly if nobody watches the right sources at the right cadence.",
-      es: "Las señales de oportunidad se degradan rápido si nadie observa las fuentes correctas con la cadencia adecuada.",
-    },
-    workflow: [
-      "Daily 9:15 CDMX",
-      "Build product queries",
-      "Fetch signal feed",
-      "Score signals",
-    ],
-    logic: {
-      en: [
-        "Uses a fixed schedule to remove inconsistency.",
-        "Builds queries dynamically around the products being monitored.",
-        "Scores signals before they create noise downstream.",
-      ],
-      es: [
-        "Usa una programación fija para eliminar inconsistencia.",
-        "Construye queries dinámicamente alrededor de los productos monitoreados.",
-        "Puntúa señales antes de que generen ruido aguas abajo.",
-      ],
-    },
-    integrations: ["Scheduler", "Search/feed sources", "Scoring layer"],
-    aiLayer: {
-      en: "AI can help judge relevance after the raw signals are collected, turning a feed into a prioritized watchlist.",
-      es: "La IA puede ayudar a juzgar relevancia después de recolectar las señales, convirtiendo un feed en una watchlist priorizada.",
-    },
-    outcome: {
-      en: "Gives GTM work a durable signal-ingestion habit that can plug into briefing, routing, or research workflows.",
-      es: "Le da al trabajo GTM un hábito durable de ingesta de señales que puede conectarse con workflows de briefing, routing o research.",
-    },
+    stack: ["n8n", "Scheduler", "Scoring"],
+    x: 13,
+    y: 55,
   },
   {
-    id: "job-intake",
-    accent: "cyan",
-    title: {
-      en: "High-Fit Intake",
-      es: "High-Fit Intake",
+    id: "daily-briefing",
+    lane: "ai",
+    title: { en: "Daily Briefing", es: "Briefing diario" },
+    summary: {
+      en: "Converts automation and AI signals into a concise operating brief.",
+      es: "Convierte señales de automatización e IA en un brief operativo.",
     },
-    strapline: {
-      en: "Job intake -> Fit scoring -> Response payload",
-      es: "Intake de vacante -> scoring de fit -> respuesta estructurada",
+    stack: ["n8n", "LLM", "Brief"],
+    x: 36,
+    y: 62,
+  },
+  {
+    id: "ai-signal-brief",
+    lane: "ai",
+    title: { en: "AI Signal Brief", es: "Brief de señales IA" },
+    summary: {
+      en: "Summarizes relevant AI and automation updates for review.",
+      es: "Resume actualizaciones relevantes de IA y automatización.",
     },
-    whatItDoes: {
-      en: "Receives a role or opportunity intake, evaluates fit automatically, and returns a score that can support quicker triage decisions.",
-      es: "Recibe el intake de una vacante u oportunidad, evalúa el fit automáticamente y devuelve un score que ayuda a tomar decisiones de triage más rápido.",
+    stack: ["n8n", "Feeds", "LLM"],
+    x: 52,
+    y: 50,
+  },
+  {
+    id: "showcase-builder",
+    lane: "action",
+    title: { en: "Showcase Builder", es: "Constructor de showcase" },
+    summary: {
+      en: "Packages product evidence into a reusable portfolio narrative.",
+      es: "Empaqueta evidencia de producto en una narrativa reutilizable.",
     },
-    stack: ["n8n", "Webhook", "Scoring", "AI evaluation", "Structured response"],
-    impact: {
-      en: "Cuts the time spent manually reviewing every intake with the same level of attention.",
-      es: "Reduce el tiempo invertido en revisar manualmente cada intake con el mismo nivel de atención.",
+    stack: ["n8n", "Content logic", "Publishing"],
+    x: 72,
+    y: 55,
+  },
+  {
+    id: "alert-intake",
+    lane: "intake",
+    title: { en: "Alert Intake", es: "Intake de alertas" },
+    summary: {
+      en: "Receives uptime alerts and formats them for operational review.",
+      es: "Recibe alertas de uptime y las prepara para revisión operativa.",
     },
-    problem: {
-      en: "Manual opportunity review slows down fast when every inbound item needs the same reading, comparison, and judgment steps.",
-      es: "La revisión manual de oportunidades se vuelve lenta cuando cada item entrante requiere la misma lectura, comparación y juicio.",
+    stack: ["n8n", "Monitoring", "Webhook"],
+    x: 8,
+    y: 77,
+  },
+  {
+    id: "draft-factory",
+    lane: "action",
+    title: { en: "Email Draft Factory", es: "Fábrica de drafts" },
+    summary: {
+      en: "Turns structured requests into ready-to-review outbound drafts.",
+      es: "Convierte solicitudes estructuradas en drafts listos para revisar.",
     },
-    workflow: [
-      "Job intake webhook",
-      "Score fit",
-      "Respond score",
-    ],
-    logic: {
-      en: [
-        "Takes structured intake from a webhook entrypoint.",
-        "Scores the fit before a human spends time on full review.",
-        "Returns a response that another tool or operator can act on quickly.",
-      ],
-      es: [
-        "Toma intake estructurado desde un webhook.",
-        "Puntúa el fit antes de que una persona invierta tiempo en revisión completa.",
-        "Devuelve una respuesta que otra herramienta u operador puede accionar rápidamente.",
-      ],
+    stack: ["n8n", "Webhook", "LLM drafting"],
+    x: 86,
+    y: 39,
+  },
+  {
+    id: "fit-intake",
+    lane: "ai",
+    title: { en: "High-Fit Intake", es: "Intake de alto fit" },
+    summary: {
+      en: "Scores incoming opportunities before deeper human review.",
+      es: "Puntúa oportunidades entrantes antes de una revisión humana profunda.",
     },
-    integrations: ["Webhook intake", "Scoring logic", "Structured response"],
-    aiLayer: {
-      en: "AI is best framed here as an evaluation aid inside a bounded scoring workflow, not as a black-box decision maker.",
-      es: "Aquí la IA se entiende mejor como apoyo de evaluación dentro de un workflow acotado de scoring, no como caja negra de decisión.",
+    stack: ["n8n", "Webhook", "Fit scoring"],
+    x: 62,
+    y: 80,
+  },
+  {
+    id: "health-sweep",
+    lane: "ops",
+    title: { en: "Health Sweep", es: "Health sweep" },
+    summary: {
+      en: "Checks system health and turns status into a reviewable signal.",
+      es: "Revisa salud del sistema y convierte estado en una señal revisable.",
     },
-    outcome: {
-      en: "Transforms intake review into a systemized filter that supports faster prioritization.",
-      es: "Transforma la revisión de intake en un filtro sistematizado que apoya una priorización más rápida.",
-    },
+    stack: ["n8n", "Health check", "Ops signal"],
+    x: 27,
+    y: 87,
   },
 ];
 
-const accentClass: Record<AutomationStudy["accent"], string> = {
+const graphLinks = [
+  ["batch-review", "gateway-preflight"],
+  ["gateway-preflight", "guarded-enrichment"],
+  ["guarded-enrichment", "credit-spend"],
+  ["guarded-enrichment", "account-preflight"],
+  ["account-preflight", "aware-drafts"],
+  ["aware-drafts", "draft-factory"],
+  ["signal-scanner", "signal-os"],
+  ["signal-os", "daily-briefing"],
+  ["daily-briefing", "ai-signal-brief"],
+  ["ai-signal-brief", "showcase-builder"],
+  ["alert-intake", "health-sweep"],
+  ["health-sweep", "daily-briefing"],
+  ["fit-intake", "showcase-builder"],
+  ["fit-intake", "draft-factory"],
+] as const;
+
+const caseStudies: CaseStudy[] = [
+  {
+    id: "signal-intelligence",
+    accent: "coral",
+    title: { en: "Signal Intelligence System", es: "Sistema de inteligencia de señales" },
+    whatItDoes: {
+      en: "Runs scheduled scans, ranks useful signals, and turns noisy inputs into concise GTM briefs.",
+      es: "Corre scans programados, prioriza señales útiles y convierte inputs ruidosos en briefs GTM claros.",
+    },
+    impact: {
+      en: "Creates a repeatable habit for market monitoring instead of manual feed checking.",
+      es: "Crea un hábito repetible de monitoreo de mercado en vez de revisión manual de feeds.",
+    },
+    problem: {
+      en: "Useful market signals decay quickly when they are scattered across sources and reviewed inconsistently.",
+      es: "Las señales útiles pierden valor rápido cuando están dispersas entre fuentes y se revisan sin consistencia.",
+    },
+    logic: {
+      en: [
+        "Run scans on a defined cadence.",
+        "Normalize source data into a common shape.",
+        "Score relevance before sending the brief downstream.",
+      ],
+      es: [
+        "Ejecutar scans con una cadencia definida.",
+        "Normalizar datos de distintas fuentes en una forma común.",
+        "Puntuar relevancia antes de enviar el brief al siguiente paso.",
+      ],
+    },
+    aiLayer: {
+      en: "AI supports ranking and summarization after the data is collected, so the workflow stays explainable.",
+      es: "La IA apoya ranking y resumen después de recolectar datos, manteniendo el workflow explicable.",
+    },
+    outcome: {
+      en: "A signal pipeline that can feed briefing, routing, or outbound action.",
+      es: "Un pipeline de señales que puede alimentar briefing, routing o acciones outbound.",
+    },
+    nodeIds: ["signal-scanner", "signal-os", "daily-briefing", "ai-signal-brief"],
+  },
+  {
+    id: "enrichment-governance",
+    accent: "violet",
+    title: { en: "Data Enrichment Governance", es: "Gobernanza de enriquecimiento" },
+    whatItDoes: {
+      en: "Checks request quality, account readiness, and data-source spend before deeper enrichment.",
+      es: "Valida calidad de solicitud, preparación de cuenta y gasto de fuente de datos antes de enriquecer.",
+    },
+    impact: {
+      en: "Adds budget and quality guardrails around GTM data workflows.",
+      es: "Agrega guardrails de presupuesto y calidad a workflows de datos GTM.",
+    },
+    problem: {
+      en: "Enrichment workflows can waste credits or create bad downstream data when every request is treated the same.",
+      es: "Los workflows de enriquecimiento pueden gastar créditos o crear datos malos si todas las solicitudes se tratan igual.",
+    },
+    logic: {
+      en: [
+        "Validate the request at the gateway.",
+        "Check whether person and account data justify enrichment.",
+        "Spend data-source credits only when the workflow has enough signal.",
+      ],
+      es: [
+        "Validar la solicitud en el gateway.",
+        "Revisar si persona y cuenta justifican enriquecimiento.",
+        "Gastar créditos de fuente de datos sólo con suficiente señal.",
+      ],
+    },
+    aiLayer: {
+      en: "AI can interpret fit and context, while deterministic checks protect budget and data quality.",
+      es: "La IA puede interpretar fit y contexto, mientras checks determinísticos protegen presupuesto y calidad.",
+    },
+    outcome: {
+      en: "Cleaner records, fewer wasted runs, and a better handoff into outreach or CRM work.",
+      es: "Registros más limpios, menos ejecuciones desperdiciadas y mejor handoff hacia outreach o CRM.",
+    },
+    nodeIds: ["gateway-preflight", "guarded-enrichment", "credit-spend", "account-preflight"],
+  },
+  {
+    id: "outbound-factory",
+    accent: "lime",
+    title: { en: "Outbound Draft Factory", es: "Fábrica outbound" },
+    whatItDoes: {
+      en: "Turns structured GTM requests into context-aware email drafts and run summaries.",
+      es: "Convierte solicitudes GTM estructuradas en drafts con contexto y resúmenes de ejecución.",
+    },
+    impact: {
+      en: "Reduces repetitive writing while keeping a human review step in the loop.",
+      es: "Reduce escritura repetitiva manteniendo revisión humana en el flujo.",
+    },
+    problem: {
+      en: "Outbound preparation becomes slow when research, personalization, and draft writing happen separately.",
+      es: "La preparación outbound se vuelve lenta cuando research, personalización y escritura ocurren por separado.",
+    },
+    logic: {
+      en: [
+        "Receive a structured draft request.",
+        "Use available context and guardrails before generation.",
+        "Return a draft and summary that a person can review quickly.",
+      ],
+      es: [
+        "Recibir una solicitud estructurada de draft.",
+        "Usar contexto disponible y guardrails antes de generar.",
+        "Devolver un draft y resumen que una persona pueda revisar rápido.",
+      ],
+    },
+    aiLayer: {
+      en: "AI drafts the message, but the automation controls intake, context, and final handoff.",
+      es: "La IA redacta el mensaje, pero la automatización controla intake, contexto y handoff final.",
+    },
+    outcome: {
+      en: "A faster route from qualified signal to reviewable outreach.",
+      es: "Una ruta más rápida de señal calificada a outreach revisable.",
+    },
+    nodeIds: ["aware-drafts", "draft-factory", "fit-intake"],
+  },
+  {
+    id: "ops-monitoring",
+    accent: "cyan",
+    title: { en: "Ops Monitoring Loop", es: "Loop de monitoreo operativo" },
+    whatItDoes: {
+      en: "Receives alerts, checks health, and translates operational state into reviewable signals.",
+      es: "Recibe alertas, revisa salud y traduce estado operativo en señales revisables.",
+    },
+    impact: {
+      en: "Makes operational issues easier to triage before they disappear into disconnected tools.",
+      es: "Hace más fácil priorizar issues operativos antes de que se pierdan entre herramientas desconectadas.",
+    },
+    problem: {
+      en: "Alerts are easy to ignore when they do not become clear action signals.",
+      es: "Las alertas se ignoran fácilmente cuando no se convierten en señales claras de acción.",
+    },
+    logic: {
+      en: [
+        "Capture alert intake through a webhook.",
+        "Run a health sweep to add context.",
+        "Route the result into a briefing or review workflow.",
+      ],
+      es: [
+        "Capturar alertas por webhook.",
+        "Correr un health sweep para agregar contexto.",
+        "Enviar el resultado a un briefing o revisión.",
+      ],
+    },
+    aiLayer: {
+      en: "AI is useful for summarizing status and grouping related signals, while the workflow keeps the source trail intact.",
+      es: "La IA ayuda a resumir estado y agrupar señales relacionadas, mientras el workflow conserva la trazabilidad.",
+    },
+    outcome: {
+      en: "A lightweight operations loop for monitoring, briefing, and prioritization.",
+      es: "Un loop operativo ligero para monitoreo, briefing y priorización.",
+    },
+    nodeIds: ["alert-intake", "health-sweep", "batch-review", "showcase-builder"],
+  },
+];
+
+const accentClass: Record<CaseStudy["accent"], string> = {
   coral: styles.coral,
   violet: styles.violet,
   lime: styles.lime,
   cyan: styles.cyan,
 };
 
+const laneLabels: Record<GraphNode["lane"], Record<Locale, string>> = {
+  intake: { en: "Intake", es: "Intake" },
+  data: { en: "Data", es: "Datos" },
+  ai: { en: "AI logic", es: "Lógica IA" },
+  action: { en: "Action", es: "Acción" },
+  ops: { en: "Ops", es: "Ops" },
+};
+
+function nodeById(id: string) {
+  const node = graphNodes.find((item) => item.id === id);
+  if (!node) {
+    throw new Error(`Missing graph node: ${id}`);
+  }
+  return node;
+}
+
 export function AutomationLab({ locale }: { locale: Locale }) {
   const copy = homeCopy[locale].automationLab;
-  const [selectedId, setSelectedId] = useState(studies[0].id);
-  const selected = studies.find((study) => study.id === selectedId) ?? studies[0];
+  const [selectedId, setSelectedId] = useState(caseStudies[0].id);
+  const selected = caseStudies.find((study) => study.id === selectedId) ?? caseStudies[0];
+  const selectedNodes = new Set(selected.nodeIds);
 
   return (
     <div className={styles.lab}>
@@ -261,70 +427,86 @@ export function AutomationLab({ locale }: { locale: Locale }) {
 
       <div className={styles.sectionMeta}>
         <MetaLabel>{copy.featuredLabel}</MetaLabel>
-        <span aria-hidden="true">01-04</span>
+        <span aria-hidden="true">15 nodes / 4 systems</span>
       </div>
 
-      <div className={styles.cardGrid}>
-        {studies.map((study, index) => {
-          const isSelected = study.id === selected.id;
-          return (
-            <button
-              key={study.id}
-              type="button"
-              className={`${styles.card} ${accentClass[study.accent]}`}
-              data-selected={isSelected ? "true" : "false"}
-              data-reveal
-              style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}
-              onClick={() => setSelectedId(study.id)}
-            >
-              <div className={styles.cardTop}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <span>{copy.detailLabel}</span>
-              </div>
-              <h3>{study.title[locale]}</h3>
-              <p className={styles.strapline}>{study.strapline[locale]}</p>
-              <p className={styles.body}>{study.whatItDoes[locale]}</p>
-              <div className={styles.flowPreview} aria-label={`${copy.workflowLabel}: ${study.title[locale]}`}>
-                {study.workflow.slice(0, 4).map((step, stepIndex) => (
-                  <div key={step} className={styles.flowStep}>
-                    <span>{step}</span>
-                    {stepIndex < Math.min(study.workflow.length, 4) - 1 ? <i aria-hidden="true" /> : null}
-                  </div>
-                ))}
-              </div>
-              <dl className={styles.metaGrid}>
-                <div>
-                  <dt>{copy.stackLabel}</dt>
-                  <dd>{study.stack.join(" · ")}</dd>
-                </div>
-                <div>
-                  <dt>{copy.impactLabel}</dt>
-                  <dd>{study.impact[locale]}</dd>
-                </div>
-              </dl>
-            </button>
-          );
-        })}
+      <div className={`${styles.graphShell} ${accentClass[selected.accent]}`} data-reveal>
+        <div className={styles.graphHeader}>
+          <div>
+            <span>{copy.systemLabel}</span>
+            <h3>{selected.title[locale]}</h3>
+          </div>
+          <p>{selected.whatItDoes[locale]}</p>
+        </div>
+
+        <div className={styles.graphStage} aria-label={`${copy.workflowLabel}: ${selected.title[locale]}`}>
+          <svg className={styles.graphLinks} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            {graphLinks.map(([from, to], index) => {
+              const source = nodeById(from);
+              const target = nodeById(to);
+              const isActive = selectedNodes.has(from) && selectedNodes.has(to);
+              const midX = (source.x + target.x) / 2;
+              const midY = (source.y + target.y) / 2 - 9;
+              return (
+                <path
+                  key={`${from}-${to}`}
+                  className={isActive ? styles.activeLink : styles.link}
+                  d={`M ${source.x} ${source.y} Q ${midX} ${midY} ${target.x} ${target.y}`}
+                  pathLength="1"
+                  style={{ "--link-delay": `${index * 180}ms` } as CSSProperties}
+                />
+              );
+            })}
+          </svg>
+
+          {graphNodes.map((node, index) => {
+            const isActive = selectedNodes.has(node.id);
+            return (
+              <button
+                key={node.id}
+                type="button"
+                className={styles.graphNode}
+                data-lane={node.lane}
+                data-active={isActive ? "true" : "false"}
+                style={{
+                  "--node-x": `${node.x}%`,
+                  "--node-y": `${node.y}%`,
+                  "--node-delay": `${index * 70}ms`,
+                } as CSSProperties}
+                onClick={() => {
+                  const next = caseStudies.find((study) => study.nodeIds.includes(node.id));
+                  setSelectedId(next?.id ?? selected.id);
+                }}
+              >
+                <span>{laneLabels[node.lane][locale]}</span>
+                <strong>{node.title[locale]}</strong>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className={styles.systemTabs} role="tablist" aria-label={copy.detailLabel}>
+        {caseStudies.map((study, index) => (
+          <button
+            key={study.id}
+            type="button"
+            role="tab"
+            aria-selected={study.id === selected.id}
+            className={`${styles.systemTab} ${accentClass[study.accent]}`}
+            onClick={() => setSelectedId(study.id)}
+          >
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {study.title[locale]}
+          </button>
+        ))}
       </div>
 
       <article className={`${styles.caseStudy} ${accentClass[selected.accent]}`} data-reveal>
-        <div className={styles.caseIntro}>
-          <div className={styles.caseHeading}>
-            <MetaLabel>{copy.detailLabel}</MetaLabel>
-            <h3>{selected.title[locale]}</h3>
-            <p>{selected.whatItDoes[locale]}</p>
-          </div>
-          <div className={styles.systemPanel}>
-            <span>{copy.systemLabel}</span>
-            <div className={styles.systemFlow}>
-              {selected.workflow.map((step, index) => (
-                <div key={step} className={styles.systemNode}>
-                  <strong>{step}</strong>
-                  {index < selected.workflow.length - 1 ? <i aria-hidden="true" /> : null}
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className={styles.caseHeading}>
+          <MetaLabel>{copy.detailLabel}</MetaLabel>
+          <h3>{selected.title[locale]}</h3>
+          <p>{selected.impact[locale]}</p>
         </div>
 
         <div className={styles.detailGrid}>
@@ -340,7 +522,7 @@ export function AutomationLab({ locale }: { locale: Locale }) {
           </section>
           <section>
             <span>{copy.integrationsLabel}</span>
-            <p>{selected.integrations.join(" · ")}</p>
+            <p>{selected.nodeIds.flatMap((id) => nodeById(id).stack).filter((item, index, items) => items.indexOf(item) === index).join(" · ")}</p>
           </section>
           <section>
             <span>{copy.aiLabel}</span>

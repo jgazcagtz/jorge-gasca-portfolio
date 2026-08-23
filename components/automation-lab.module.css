@@ -3,31 +3,43 @@
   gap: 28px;
 }
 
-.recruiterStrip,
-.caseStudy,
-.card,
-.systemPanel {
-  position: relative;
-  overflow: hidden;
-}
-
 .recruiterStrip {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
+  grid-template-columns: 1.15fr 1fr 1fr;
   gap: 16px;
   padding: 18px;
-  border: 1px solid var(--border-strong);
+  border-block: 1px solid var(--border-strong);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--surface-raised) 92%, transparent), color-mix(in srgb, var(--accent-coral) 9%, transparent)),
-    var(--surface-raised);
-  box-shadow: var(--shadow-small);
+    linear-gradient(90deg, color-mix(in srgb, var(--surface-raised) 78%, transparent), transparent),
+    repeating-linear-gradient(90deg, transparent 0 28px, color-mix(in srgb, var(--border) 35%, transparent) 28px 29px);
+}
+
+.recruiterStrip p,
+.graphHeader p,
+.caseHeading p,
+.detailGrid p,
+.detailGrid li,
+.note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.62;
 }
 
 .recruiterStrip p {
-  margin: 10px 0 0;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  line-height: 1.55;
+  margin-top: 10px;
+}
+
+.sectionMeta,
+.graphHeader span,
+.graphNode span,
+.caseHeading span,
+.detailGrid section > span,
+.systemTab span {
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .sectionMeta {
@@ -35,233 +47,230 @@
   align-items: center;
   justify-content: space-between;
   color: var(--text-muted);
-  font-size: 0.68rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.card {
+.graphShell {
+  --tone: var(--accent-coral);
+  position: relative;
   display: grid;
   gap: 18px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-raised) 82%, transparent);
-  color: inherit;
-  cursor: pointer;
-  text-align: left;
-  transition:
-    transform var(--motion-medium) var(--ease-out),
-    border-color var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease,
-    background var(--motion-fast) ease;
+  overflow: hidden;
+  padding: clamp(18px, 3%, 30px);
+  border: 1px solid var(--border-strong);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-raised) 92%, transparent), color-mix(in srgb, var(--tone) 8%, transparent)),
+    var(--surface-raised);
+  box-shadow: var(--shadow-large);
 }
 
-.card::before,
-.caseStudy::before,
-.systemPanel::before {
+.graphShell::before {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, transparent 49.4%, rgb(255 255 255 / 8%) 50%, transparent 50.6%) 0 0 / 38px 38px,
-    linear-gradient(transparent 49.4%, rgb(255 255 255 / 8%) 50%, transparent 50.6%) 0 0 / 38px 38px;
+    linear-gradient(90deg, transparent 49%, color-mix(in srgb, var(--border) 48%, transparent) 50%, transparent 51%) 0 0 / 44px 44px,
+    linear-gradient(transparent 49%, color-mix(in srgb, var(--border) 48%, transparent) 50%, transparent 51%) 0 0 / 44px 44px;
   content: "";
-  opacity: 0.42;
+  opacity: 0.34;
 }
 
-.card:hover,
-.card:focus-visible,
-.card[data-selected="true"] {
-  border-color: var(--tone);
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--tone) 12%, transparent);
-  transform: translateY(-5px);
+.graphHeader {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(280px, 0.78fr);
+  gap: 22px;
+  align-items: end;
 }
 
-.cardTop,
-.caseHeading span,
-.detailGrid section > span,
-.systemPanel > span,
-.metaGrid dt {
-  font-size: 0.66rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cardTop {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--text-muted);
-}
-
-.card h3,
+.graphHeader h3,
 .caseHeading h3 {
   margin: 0;
   font-family: var(--font-display), Georgia, serif;
   font-weight: 400;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
-.card h3 {
-  font-size: clamp(2rem, 1.35rem + 1.8vw, 3rem);
-  line-height: 0.94;
+.graphHeader h3 {
+  margin-top: 12px;
+  font-size: clamp(2.8rem, 4rem, 4.6rem);
+  line-height: 0.92;
 }
 
-.strapline,
-.body,
-.caseHeading p,
-.detailGrid p,
-.metaGrid dd,
-.note {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-.strapline {
-  color: var(--tone);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.body,
-.caseHeading p,
-.detailGrid p,
-.metaGrid dd,
-.detailGrid li,
-.note {
-  font-size: 0.84rem;
-  line-height: 1.62;
-}
-
-.flowPreview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.flowStep {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.flowStep span,
-.systemNode strong {
-  display: inline-flex;
-  min-height: 36px;
-  align-items: center;
-  padding: 8px 10px;
-  border: 1px solid color-mix(in srgb, var(--tone) 36%, var(--border));
-  background: color-mix(in srgb, var(--surface) 76%, transparent);
-  font-size: 0.72rem;
-  font-weight: 680;
-  line-height: 1.35;
-}
-
-.flowStep i,
-.systemNode i {
+.graphStage {
   position: relative;
-  width: 18px;
-  height: 1px;
-  background: color-mix(in srgb, var(--tone) 55%, var(--border));
+  z-index: 1;
+  height: 620px;
+  min-height: 620px;
+  overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--tone) 28%, var(--border));
 }
 
-.flowStep i::after,
-.systemNode i::after {
+.graphLinks {
   position: absolute;
-  top: -2px;
-  right: 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--tone);
-  content: "";
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.metaGrid {
-  display: grid;
-  gap: 14px;
-  margin: 0;
+.link,
+.activeLink {
+  fill: none;
+  vector-effect: non-scaling-stroke;
 }
 
-.metaGrid div {
+.link {
+  stroke: color-mix(in srgb, var(--border-strong) 42%, transparent);
+  stroke-width: 0.42;
+}
+
+.activeLink {
+  stroke: var(--tone);
+  stroke-dasharray: 0.08 0.92;
+  stroke-linecap: round;
+  stroke-width: 0.82;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--tone) 56%, transparent));
+}
+
+.graphNode {
+  --node-x: 50%;
+  --node-y: 50%;
+  position: absolute;
+  left: var(--node-x);
+  top: var(--node-y);
   display: grid;
+  width: 172px;
+  min-height: 74px;
   gap: 7px;
-  padding-top: 14px;
-  border-top: 1px solid color-mix(in srgb, var(--tone) 24%, var(--border));
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--border-strong) 62%, transparent);
+  background: color-mix(in srgb, var(--canvas) 88%, transparent);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transform: translate(-50%, -50%);
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-medium) var(--ease-out);
 }
 
-.metaGrid dt {
+.graphNode span {
   color: var(--text-muted);
+}
+
+.graphNode strong {
+  font-size: 0.82rem;
+  font-weight: 720;
+  line-height: 1.18;
+}
+
+.graphNode::after {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--node-tone, var(--border-strong));
+  content: "";
+  opacity: 0.78;
+}
+
+.graphNode[data-active="true"],
+.graphNode:hover,
+.graphNode:focus-visible {
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--surface-raised) 96%, var(--tone) 4%);
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--tone) 16%, transparent);
+  transform: translate(-50%, -50%) translateY(-4px);
+}
+
+.graphNode[data-lane="intake"] {
+  --node-tone: var(--accent-blue);
+}
+
+.graphNode[data-lane="data"] {
+  --node-tone: var(--accent-lime);
+}
+
+.graphNode[data-lane="ai"] {
+  --node-tone: var(--accent-violet);
+}
+
+.graphNode[data-lane="action"] {
+  --node-tone: var(--accent-coral);
+}
+
+.graphNode[data-lane="ops"] {
+  --node-tone: var(--accent-cyan);
+}
+
+.systemTabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.systemTab {
+  --tone: var(--accent-coral);
+  display: grid;
+  min-height: 78px;
+  align-content: space-between;
+  gap: 8px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    transform var(--motion-medium) var(--ease-out);
+}
+
+.systemTab span {
+  color: var(--text-muted);
+}
+
+.systemTab:hover,
+.systemTab:focus-visible,
+.systemTab[aria-selected="true"] {
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--surface-raised) 76%, var(--tone) 8%);
+  transform: translateY(-2px);
 }
 
 .caseStudy {
+  --tone: var(--accent-coral);
   display: grid;
+  grid-template-columns: minmax(260px, 0.48fr) minmax(0, 1fr);
   gap: 24px;
-  padding: clamp(22px, 3vw, 34px);
-  border: 1px solid var(--border-strong);
-  background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--tone) 16%, transparent), transparent 36%),
-    color-mix(in srgb, var(--surface-raised) 94%, transparent);
-  box-shadow: var(--shadow-large);
-}
-
-.caseIntro {
-  display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(320px, 1fr);
-  gap: 22px;
-  align-items: start;
+  padding-block: 30px;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
 }
 
 .caseHeading {
   display: grid;
+  align-content: start;
   gap: 14px;
 }
 
 .caseHeading h3 {
-  font-size: clamp(2.6rem, 1.6rem + 3vw, 4.7rem);
-  line-height: 0.9;
-}
-
-.systemPanel {
-  padding: 18px;
-  border: 1px solid color-mix(in srgb, var(--tone) 34%, var(--border));
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-}
-
-.systemPanel > span {
-  display: block;
-  margin-bottom: 14px;
-  color: var(--text-muted);
-}
-
-.systemFlow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 12px;
-  align-items: center;
-}
-
-.systemNode {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  font-size: clamp(2.4rem, 3.4rem, 3.8rem);
+  line-height: 0.94;
 }
 
 .detailGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -271,10 +280,11 @@
   min-height: 100%;
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--tone) 26%, var(--border));
-  background: color-mix(in srgb, var(--surface-raised) 76%, transparent);
+  background: color-mix(in srgb, var(--surface-raised) 74%, transparent);
 }
 
-.detailGrid section:nth-child(2) {
+.detailGrid section:nth-child(2),
+.detailGrid section:nth-child(5) {
   grid-column: span 2;
 }
 
@@ -288,7 +298,7 @@
 }
 
 .note {
-  max-width: 860px;
+  max-width: 920px;
 }
 
 .coral {
@@ -308,26 +318,18 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .flowStep span,
-  .systemNode strong {
-    animation: pulse-node 6s ease-in-out infinite;
-    animation-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+  .graphShell::before {
+    animation: drift-grid 18s linear infinite;
   }
 
-  .card::before,
-  .caseStudy::before,
-  .systemPanel::before {
-    animation: drift-grid 16s linear infinite;
+  .activeLink {
+    animation: dash-flow 3.8s linear infinite;
+    animation-delay: var(--link-delay, 0ms);
   }
-}
 
-@keyframes pulse-node {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-1px);
+  .graphNode[data-active="true"]::after {
+    animation: node-pulse 1.8s ease-in-out infinite;
+    animation-delay: var(--node-delay, 0ms);
   }
 }
 
@@ -336,67 +338,112 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(38px);
+    transform: translateX(44px);
   }
 }
 
-@media (max-width: 1040px) {
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--tone) 46%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--tone) 0%, transparent);
+  }
+}
+
+@media (max-width: 1120px) {
+  .graphStage {
+    height: 700px;
+    min-height: 700px;
+  }
+
+  .graphNode {
+    width: 150px;
+  }
+}
+
+@media (max-width: 900px) {
   .recruiterStrip,
-  .caseIntro,
+  .graphHeader,
+  .caseStudy,
   .detailGrid {
     grid-template-columns: 1fr;
   }
 
-  .detailGrid section:nth-child(2) {
+  .detailGrid section:nth-child(2),
+  .detailGrid section:nth-child(5) {
     grid-column: auto;
   }
-}
 
-@media (max-width: 820px) {
-  .cardGrid {
-    grid-template-columns: 1fr;
+  .graphStage {
+    display: grid;
+    height: auto;
+    min-height: auto;
+    gap: 9px;
+    padding-top: 18px;
+    overflow: visible;
+  }
+
+  .graphLinks {
+    display: none;
+  }
+
+  .graphNode {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    min-height: 58px;
+    grid-template-columns: 96px 1fr;
+    align-items: center;
+    transform: none;
+  }
+
+  .graphNode[data-active="true"],
+  .graphNode:hover,
+  .graphNode:focus-visible {
+    transform: translateX(4px);
+  }
+
+  .graphNode::after {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .systemTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
   .lab {
-    gap: 18px;
+    gap: 20px;
   }
 
   .recruiterStrip,
-  .card,
-  .caseStudy,
-  .systemPanel,
+  .graphShell,
   .detailGrid section {
-    padding: 16px;
+    padding: 15px;
   }
 
-  .card h3 {
-    font-size: clamp(2rem, 11vw, 2.7rem);
-  }
-
+  .graphHeader h3,
   .caseHeading h3 {
-    font-size: clamp(2.2rem, 13vw, 3.25rem);
+    font-size: 2.35rem;
   }
 
-  .systemFlow {
-    display: grid;
+  .graphNode {
+    grid-template-columns: 82px 1fr;
+    padding: 11px;
   }
 
-  .systemNode {
-    display: grid;
-    justify-items: start;
-  }
-
-  .systemNode i {
-    width: 1px;
-    height: 14px;
-    margin-left: 16px;
-  }
-
-  .systemNode i::after {
-    top: auto;
-    right: -2px;
-    bottom: 0;
+  .systemTabs {
+    grid-template-columns: 1fr;
   }
 }
