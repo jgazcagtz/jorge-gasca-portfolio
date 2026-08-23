@@ -8,6 +8,7 @@ import {
   MetaLabel,
   SectionHeading,
 } from "@/components/design-primitives";
+import { AutomationLab } from "@/components/automation-lab";
 import { RevealController } from "@/components/reveal-controller";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { homeCopy } from "@/lib/home";
@@ -218,6 +219,16 @@ export function HomePage({ locale }: { locale: Locale }) {
             <ProductCard key={study.slug} study={study} locale={locale} variant="compact" />
           ))}
         </div>
+      </section>
+
+      <section className={styles.automationSection} id="automation-lab" aria-labelledby="automation-title">
+        <SectionHeading
+          eyebrow={copy.automationLab.eyebrow}
+          title={copy.automationLab.title}
+          body={copy.automationLab.intro}
+          id="automation-title"
+        />
+        <AutomationLab locale={locale} />
       </section>
 
       <section className={styles.approachSection} id="approach" aria-labelledby="approach-title" data-reveal>

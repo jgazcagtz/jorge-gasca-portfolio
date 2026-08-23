@@ -1,0 +1,402 @@
+.lab {
+  display: grid;
+  gap: 28px;
+}
+
+.recruiterStrip,
+.caseStudy,
+.card,
+.systemPanel {
+  position: relative;
+  overflow: hidden;
+}
+
+.recruiterStrip {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border-strong);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-raised) 92%, transparent), color-mix(in srgb, var(--accent-coral) 9%, transparent)),
+    var(--surface-raised);
+  box-shadow: var(--shadow-small);
+}
+
+.recruiterStrip p {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.sectionMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-raised) 82%, transparent);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform var(--motion-medium) var(--ease-out),
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    background var(--motion-fast) ease;
+}
+
+.card::before,
+.caseStudy::before,
+.systemPanel::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 49.4%, rgb(255 255 255 / 8%) 50%, transparent 50.6%) 0 0 / 38px 38px,
+    linear-gradient(transparent 49.4%, rgb(255 255 255 / 8%) 50%, transparent 50.6%) 0 0 / 38px 38px;
+  content: "";
+  opacity: 0.42;
+}
+
+.card:hover,
+.card:focus-visible,
+.card[data-selected="true"] {
+  border-color: var(--tone);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--tone) 12%, transparent);
+  transform: translateY(-5px);
+}
+
+.cardTop,
+.caseHeading span,
+.detailGrid section > span,
+.systemPanel > span,
+.metaGrid dt {
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.card h3,
+.caseHeading h3 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.card h3 {
+  font-size: clamp(2rem, 1.35rem + 1.8vw, 3rem);
+  line-height: 0.94;
+}
+
+.strapline,
+.body,
+.caseHeading p,
+.detailGrid p,
+.metaGrid dd,
+.note {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.strapline {
+  color: var(--tone);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.body,
+.caseHeading p,
+.detailGrid p,
+.metaGrid dd,
+.detailGrid li,
+.note {
+  font-size: 0.84rem;
+  line-height: 1.62;
+}
+
+.flowPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flowStep {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flowStep span,
+.systemNode strong {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--tone) 36%, var(--border));
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  font-size: 0.72rem;
+  font-weight: 680;
+  line-height: 1.35;
+}
+
+.flowStep i,
+.systemNode i {
+  position: relative;
+  width: 18px;
+  height: 1px;
+  background: color-mix(in srgb, var(--tone) 55%, var(--border));
+}
+
+.flowStep i::after,
+.systemNode i::after {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+  content: "";
+}
+
+.metaGrid {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.metaGrid div {
+  display: grid;
+  gap: 7px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--tone) 24%, var(--border));
+}
+
+.metaGrid dt {
+  color: var(--text-muted);
+}
+
+.caseStudy {
+  display: grid;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--border-strong);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--tone) 16%, transparent), transparent 36%),
+    color-mix(in srgb, var(--surface-raised) 94%, transparent);
+  box-shadow: var(--shadow-large);
+}
+
+.caseIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(320px, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.caseHeading {
+  display: grid;
+  gap: 14px;
+}
+
+.caseHeading h3 {
+  font-size: clamp(2.6rem, 1.6rem + 3vw, 4.7rem);
+  line-height: 0.9;
+}
+
+.systemPanel {
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--tone) 34%, var(--border));
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+.systemPanel > span {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+}
+
+.systemFlow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+}
+
+.systemNode {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.detailGrid section {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--tone) 26%, var(--border));
+  background: color-mix(in srgb, var(--surface-raised) 76%, transparent);
+}
+
+.detailGrid section:nth-child(2) {
+  grid-column: span 2;
+}
+
+.detailGrid ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.detailGrid li + li {
+  margin-top: 8px;
+}
+
+.note {
+  max-width: 860px;
+}
+
+.coral {
+  --tone: var(--accent-coral);
+}
+
+.violet {
+  --tone: var(--accent-violet);
+}
+
+.lime {
+  --tone: var(--accent-lime);
+}
+
+.cyan {
+  --tone: var(--accent-cyan);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flowStep span,
+  .systemNode strong {
+    animation: pulse-node 6s ease-in-out infinite;
+    animation-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+  }
+
+  .card::before,
+  .caseStudy::before,
+  .systemPanel::before {
+    animation: drift-grid 16s linear infinite;
+  }
+}
+
+@keyframes pulse-node {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes drift-grid {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(38px);
+  }
+}
+
+@media (max-width: 1040px) {
+  .recruiterStrip,
+  .caseIntro,
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailGrid section:nth-child(2) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .lab {
+    gap: 18px;
+  }
+
+  .recruiterStrip,
+  .card,
+  .caseStudy,
+  .systemPanel,
+  .detailGrid section {
+    padding: 16px;
+  }
+
+  .card h3 {
+    font-size: clamp(2rem, 11vw, 2.7rem);
+  }
+
+  .caseHeading h3 {
+    font-size: clamp(2.2rem, 13vw, 3.25rem);
+  }
+
+  .systemFlow {
+    display: grid;
+  }
+
+  .systemNode {
+    display: grid;
+    justify-items: start;
+  }
+
+  .systemNode i {
+    width: 1px;
+    height: 14px;
+    margin-left: 16px;
+  }
+
+  .systemNode i::after {
+    top: auto;
+    right: -2px;
+    bottom: 0;
+  }
+}
