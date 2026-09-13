@@ -462,7 +462,7 @@ test("home metadata and JSON-LD expose factual product, Apollo, sales automation
   expect(nodes.some((node) => node["@type"] === "ProfilePage")).toBe(true);
   const person = nodes.find((node) => node["@type"] === "Person");
   expect(person?.name).toBe("Jorge Manuel Gasca Gutiérrez");
-  expect(person?.jobTitle).toBe("Product Specialist");
+  expect(person?.jobTitle).toBe("Product Specialist II");
   expect(person?.worksFor).toMatchObject({
     "@type": "Organization",
     name: "Apollo.io",
@@ -484,7 +484,7 @@ test("home metadata and JSON-LD expose factual product, Apollo, sales automation
   expect(discovery.status()).toBe(200);
   expect(discovery.headers()["content-type"]).toContain("text/plain");
   const llms = await discovery.text();
-  expect(llms).toContain("Product Specialist at Apollo.io, May 2025 to present");
+  expect(llms).toContain("Product Specialist II at Apollo.io, May 2025 to present");
   expect(llms.toLowerCase()).toContain("sales automation");
   expect(llms).toContain("https://marblism.com?via=zentixmarblism");
   expect(llms.toLowerCase()).not.toContain("ai-readable");

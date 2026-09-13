@@ -18,7 +18,7 @@ A bilingual portfolio for Jorge Manuel Gasca Gutiérrez, a Product Specialist, h
 
 ## Professional profile
 
-- Product Specialist at Apollo.io since May 2025.
+- Product Specialist II at Apollo.io since May 2025 (promoted July 2026).
 - Product Development Manager at MiniTiendAI from March 2024 to May 2025.
 - Hands-on product builder focused on product UX, sales and CRM automation, AI workflows, web/API delivery, and practical QA.
 - Role-focused CVs for GTM/RevOps, product implementation, AI automation, and customer solutions at `/cv` and `/es/cv`.
