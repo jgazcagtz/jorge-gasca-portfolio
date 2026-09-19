@@ -8,6 +8,7 @@ const slugs = [
   "ordenai",
   "zentix-office",
   "tonalli-ai",
+  "pizzago",
 ] as const;
 
 const auditedRoutes = [

@@ -7,6 +7,7 @@ const slugs = [
   "ordenai",
   "zentix-office",
   "tonalli-ai",
+  "pizzago",
 ] as const;
 
 const localizedRoutes = [
@@ -29,6 +30,7 @@ const productNames = {
   ordenai: "OrdenAI",
   "zentix-office": "Zentix Office",
   "tonalli-ai": "Tonalli AI",
+  pizzago: "PizzaGo",
 } as const;
 
 const chapterIds = [
