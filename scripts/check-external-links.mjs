@@ -5,6 +5,8 @@ const urls = [
   "https://ordenai.cloud/",
   "https://zentix-office.vercel.app/demo/",
   "https://tonalli.cloud/app",
+  "https://pizzago.online/",
+  "https://pizzago.online/tienda.html",
   "https://github.com/jgazcagtz/zentix-office",
   "https://github.com/jgazcagtz",
 ];

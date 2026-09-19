@@ -9,7 +9,7 @@ A bilingual portfolio for Jorge Manuel Gasca Gutiérrez, a Product Specialist, h
 
 - An editorial portfolio built with Next.js App Router and TypeScript.
 - English at `/` and Spanish at `/es`.
-- Six pre-rendered case studies with Jorge’s ownership, actions, decisions, outcomes, reflections, current status, and limitations.
+- Seven pre-rendered case studies with Jorge’s ownership, actions, decisions, outcomes, reflections, current status, and limitations.
 - Four bilingual role-focused CVs with eight matching two-page ATS PDF downloads.
 - Privacy-reviewed desktop, mobile, and short walkthrough media from public or synthetic product views.
 - Accessible theme, navigation, media controls, metadata, structured data, sitemap, robots, and social sharing assets.

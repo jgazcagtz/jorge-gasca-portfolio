@@ -36,6 +36,7 @@ const expectedLaunchSlugs = [
   "ordenai",
   "zentix-office",
   "tonalli-ai",
+  "pizzago",
 ] as const;
 const locales = ["en", "es"] as const;
 const evidenceClassifications = [
@@ -81,7 +82,7 @@ describe("portfolio content contract", () => {
       "minitiendai",
       "ordenai",
     ]);
-    expect(caseStudies.filter((study) => !study.featured)).toHaveLength(3);
+    expect(caseStudies.filter((study) => !study.featured)).toHaveLength(4);
   });
 
   it("keeps public and private source policies explicit", () => {

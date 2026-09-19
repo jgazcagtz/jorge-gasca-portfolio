@@ -37,6 +37,7 @@ The HTML CV pages are canonical and indexable. Downloadable PDFs are provided fo
 - OrdenAI: limited restaurant-operations pilot; private source.
 - Zentix Office: simulated POC; public source at https://github.com/jgazcagtz/zentix-office.
 - Tonalli AI: live product demo; private source and provider-dependent features.
+- PizzaGo: live pickup-ordering product with a public demo store; private source.
 
 Each case study states Jorge's ownership, the current product stage, what can be seen publicly, and what remains limited. Public media uses public or synthetic content and excludes customer and account data.
 
