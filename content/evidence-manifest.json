@@ -397,6 +397,68 @@
       "privacyReviewed": true,
       "privacyApproval": "approved-for-public-portfolio",
       "caveat": "Restaurante El Sabor, its products, prices, cart, contact details, and order data are synthetic demo content."
+    },
+    {
+      "id": "pizzago-desktop",
+      "product": "PizzaGo",
+      "stage": "Live product for sale · Private source",
+      "captureUrl": "https://pizzago.online/",
+      "kind": "image",
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/pizzago/pizzago-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "captureDate": "2026-09-19",
+      "privacyReviewed": true,
+      "privacyApproval": "approved-for-public-portfolio",
+      "caveat": "Public marketing surface and public demo store only. The illustrated orders are product mockups, not merchant activity; no account, customer record, or payment was opened."
+    },
+    {
+      "id": "pizzago-mobile",
+      "product": "PizzaGo",
+      "stage": "Live product for sale · Private source",
+      "captureUrl": "https://pizzago.online/",
+      "kind": "image",
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/pizzago/pizzago-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 693
+      },
+      "captureDate": "2026-09-19",
+      "privacyReviewed": true,
+      "privacyApproval": "approved-for-public-portfolio",
+      "caveat": "Public marketing surface and public demo store only. The illustrated orders are product mockups, not merchant activity; no account, customer record, or payment was opened."
+    },
+    {
+      "id": "pizzago-walkthrough",
+      "product": "PizzaGo",
+      "stage": "Live product for sale · Private source",
+      "captureUrl": "https://pizzago.online/",
+      "kind": "video",
+      "evidenceType": "public-marketing",
+      "classification": "public-marketing",
+      "src": "/evidence/pizzago/pizzago-walkthrough.webm",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "captureDate": "2026-09-19",
+      "privacyReviewed": true,
+      "privacyApproval": "approved-for-public-portfolio",
+      "caveat": "Public marketing surface and public demo store only. The illustrated orders are product mockups, not merchant activity; no account, customer record, or payment was opened.",
+      "poster": "/evidence/pizzago/pizzago-desktop.png",
+      "sources": {
+        "webm": "/evidence/pizzago/pizzago-walkthrough.webm",
+        "mp4": "/evidence/pizzago/pizzago-walkthrough.mp4"
+      },
+      "durationSeconds": 21.8,
+      "audioStreams": 0
     }
-  ]
+  ],
+  "lastUpdated": "2026-09-19"
 }

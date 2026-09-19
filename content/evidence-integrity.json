@@ -302,6 +302,64 @@
       "publicUseApproved": true,
       "privacyReviewed": true,
       "publicationBasis": "owner-authorized-portfolio-evidence"
+    },
+    {
+      "id": "pizzago-walkthrough",
+      "assetId": "pizzago-walkthrough",
+      "format": "video",
+      "files": [
+        {
+          "id": "pizzago-walkthrough-webm",
+          "assetId": "pizzago-walkthrough",
+          "src": "/evidence/pizzago/pizzago-walkthrough.webm",
+          "format": "webm",
+          "mimeType": "video/webm",
+          "sha256": "02bd4378316dd1fa8913e86ef268f394f5fd7f8f54ccd24ac7de126f3dff6493",
+          "bytes": 2659519,
+          "publicUseApproved": true,
+          "privacyReviewed": true,
+          "publicationBasis": "owner-authorized-portfolio-evidence"
+        },
+        {
+          "id": "pizzago-walkthrough-mp4",
+          "assetId": "pizzago-walkthrough",
+          "src": "/evidence/pizzago/pizzago-walkthrough.mp4",
+          "format": "mp4",
+          "mimeType": "video/mp4",
+          "sha256": "debf2065ffe3484ec5ac8689273c75dff512f54244df00f5e60e02af97d2265d",
+          "bytes": 2454192,
+          "publicUseApproved": true,
+          "privacyReviewed": true,
+          "publicationBasis": "owner-authorized-portfolio-evidence"
+        }
+      ],
+      "publicUseApproved": true,
+      "privacyReviewed": true,
+      "publicationBasis": "owner-authorized-portfolio-evidence"
+    },
+    {
+      "id": "pizzago-desktop-png",
+      "assetId": "pizzago-desktop",
+      "src": "/evidence/pizzago/pizzago-desktop.png",
+      "format": "png",
+      "mimeType": "image/png",
+      "sha256": "676747badef57c8c661ab8baf9f6b5cb138136431015152ee3be4429212b0909",
+      "bytes": 196527,
+      "publicUseApproved": true,
+      "privacyReviewed": true,
+      "publicationBasis": "owner-authorized-portfolio-evidence"
+    },
+    {
+      "id": "pizzago-mobile-png",
+      "assetId": "pizzago-mobile",
+      "src": "/evidence/pizzago/pizzago-mobile.png",
+      "format": "png",
+      "mimeType": "image/png",
+      "sha256": "399ea273dce44c79a30e4d543561966135645855b639ef648c81cc8b8949a810",
+      "bytes": 108228,
+      "publicUseApproved": true,
+      "privacyReviewed": true,
+      "publicationBasis": "owner-authorized-portfolio-evidence"
     }
   ]
 }

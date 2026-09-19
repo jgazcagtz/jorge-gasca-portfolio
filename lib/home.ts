@@ -112,7 +112,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       languages: "Spanish and English",
       primaryCta: "Explore signature work",
       secondaryCta: "Start a conversation",
-      proofLabel: "Six products. Clear ownership. Honest evidence.",
+      proofLabel: "Seven products. Clear ownership. Honest evidence.",
     },
     work: {
       eyebrow: "Selected work",
@@ -264,7 +264,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       languages: "Español e inglés",
       primaryCta: "Explorar proyectos clave",
       secondaryCta: "Iniciar una conversación",
-      proofLabel: "Seis productos. Responsabilidad clara. Evidencia honesta.",
+      proofLabel: "Siete productos. Responsabilidad clara. Evidencia honesta.",
     },
     work: {
       eyebrow: "Proyectos destacados",

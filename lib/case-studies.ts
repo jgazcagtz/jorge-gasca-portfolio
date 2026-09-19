@@ -6,7 +6,8 @@ export type CaseStudySlug =
   | "minitiendai"
   | "ordenai"
   | "zentix-office"
-  | "tonalli-ai";
+  | "tonalli-ai"
+  | "pizzago";
 
 export type EvidenceClassification =
   | "public-marketing"
@@ -98,6 +99,7 @@ const makeMedia = (
     slug: CaseStudySlug;
     product: Record<Locale, string>;
     captureUrl: string;
+    captureDate?: string;
     classification: EvidenceClassification;
     walkthroughClassification?: EvidenceClassification;
     alt: Record<Locale, string>;
@@ -109,7 +111,7 @@ const makeMedia = (
   const common = {
     classification: config.classification,
     captureUrl: config.captureUrl,
-    captureDate: "2026-08-09",
+    captureDate: config.captureDate ?? "2026-08-09",
     privacyReviewed: true as const,
     alt: config.alt,
     caveat: config.caveat,
@@ -874,6 +876,128 @@ export const caseStudies: CaseStudy[] = [
       },
     },
   },
+  {
+    slug: "pizzago",
+    featured: false,
+    sequence: 7,
+    stage: "live-mvp",
+    sourceVisibility: "private",
+    liveUrl: "https://pizzago.online/",
+    accent: "orange",
+    stack: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Firebase Auth",
+      "Firestore",
+      "PayPal",
+      "Stripe",
+      "Mercado Pago",
+      "Static hosting",
+    ],
+    media: makeMedia({
+      slug: "pizzago",
+      product: { en: "PizzaGo", es: "PizzaGo" },
+      captureUrl: "https://pizzago.online/",
+      captureDate: "2026-09-19",
+      classification: "public-marketing",
+      alt: {
+        en: "PizzaGo landing page with its pickup-ordering pitch, pricing rows, and an illustrated admin dashboard.",
+        es: "Página de PizzaGo con su propuesta de pedidos pickup, sus precios y una ilustración del panel administrativo.",
+      },
+      caveat: {
+        en: "The landing illustration, the storefront demo, and the walkthrough use published marketing mockups and seed menu data, not merchant orders or revenue.",
+        es: "La ilustración de la landing, la demo de tienda y el recorrido usan maquetas publicadas y datos de menú semilla, no pedidos ni ingresos de comercios.",
+      },
+      durationSeconds: 21.8,
+    }),
+    copy: {
+      en: {
+        title: "PizzaGo — Pickup ordering and branch admin for small pizzerias",
+        seoTitle: "PizzaGo Case Study | Jorge Gasca",
+        seoDescription:
+          "How Jorge Gasca built PizzaGo: a pickup-ordering storefront, a branch-aware admin panel, and a licensing model for small pizzerias.",
+        stageLabel: "Live product for sale",
+        sourceLabel: "Private source",
+        role: "Independent product builder",
+        cardResult:
+          "Built a pickup storefront with a branch-aware panel, live order status, and payments the owner can rebrand and resell.",
+        summary:
+          "PizzaGo is a pickup-ordering storefront plus an admin panel for small pizzerias: branches, live order status, an editable menu, payments, and reporting, with the brand defined in a single configuration file.",
+        ownership:
+          "I framed the product, built the storefront and the admin panel, wrote the Firestore rules and role model, produced the sales landing and its pricing, and tested the ordering journey on desktop and mobile.",
+        challenge:
+          "Small pizzerias take orders through chat, phone calls, and paper. The owner needs a menu that can change without a developer, and the customer needs to know which branch will prepare the order.",
+        actions: [
+          "I built one ordering journey from branch selection through cart, payment method, and a status the customer can follow.",
+          "I kept branding, currency, logo, and contact details in a single configuration file so the same build can be resold.",
+          "I separated admin and staff permissions in Firestore rules so the panel cannot be opened by an unlisted account.",
+          "I wrote the sales landing, the three license models, and the lead form that feeds the panel.",
+        ],
+        outcome:
+          "The result is a product the owner can run and rebrand alone, plus a license offer for agencies that need the same system for their own restaurant clients.",
+        decisionRationale:
+          "I kept the system on static hosting with Firebase instead of adding a server, so a small restaurant pays almost nothing to run it and a junior developer can maintain the code.",
+        reflection:
+          "PizzaGo confirmed that the hard part of commerce is not the cart. It is deciding how much the owner can change alone before a developer becomes necessary.",
+        currentStatus:
+          "PizzaGo is live at pizzago.online with the sales landing at the root and a public storefront demo. The repository and the license delivery stay private.",
+        limitations: [
+          "The screenshots and walkthrough use the published landing and the public demo store; they do not show a real merchant's orders or revenue.",
+          "The orders visible in the landing illustration are product mockups, not customer activity.",
+          "Payments are handed to PayPal, Stripe, or Mercado Pago links; the portfolio does not confirm a settled transaction.",
+        ],
+        coverAlt:
+          "PizzaGo landing page with its pickup-ordering message and an illustrated admin dashboard.",
+        videoDescription:
+          "A short scroll through the PizzaGo landing and its public storefront demo.",
+        videoTranscript:
+          "The walkthrough opens on the PizzaGo landing, moves through the features, pricing, and FAQ sections, and finishes on the public storefront demo with its seed menu and cart. The orders shown in the landing illustration are product mockups, not customer activity.",
+      },
+      es: {
+        title: "PizzaGo — Pedidos pickup y panel con sucursales para pizzerías",
+        seoTitle: "Caso PizzaGo | Jorge Gasca",
+        seoDescription:
+          "Cómo Jorge Gasca construyó PizzaGo: tienda de pedidos pickup, panel con sucursales y un modelo de licencias para pizzerías pequeñas.",
+        stageLabel: "Producto activo a la venta",
+        sourceLabel: "Código privado",
+        role: "Creador independiente de producto",
+        cardResult:
+          "Construí una tienda pickup con panel de sucursales, estado de pedidos en vivo y pagos que el dueño puede renombrar y revender.",
+        summary:
+          "PizzaGo es una tienda de pedidos pickup con panel de administración para pizzerías pequeñas: sucursales, estado de pedidos en vivo, menú editable, pagos y reportes, con la marca definida en un solo archivo de configuración.",
+        ownership:
+          "Definí el producto, construí la tienda y el panel, escribí las reglas y el modelo de roles de Firestore, produje la landing de ventas con sus precios y probé el recorrido de pedido en desktop y móvil.",
+        challenge:
+          "Las pizzerías pequeñas reciben pedidos por chat, teléfono y papel. El dueño necesita un menú que pueda cambiar sin programador y el cliente necesita saber qué sucursal preparará su pedido.",
+        actions: [
+          "Construí un recorrido único desde la elección de sucursal hasta el carrito, el método de pago y un estado que el cliente puede seguir.",
+          "Concentré marca, moneda, logo y datos de contacto en un solo archivo para que el mismo código se pueda revender.",
+          "Separé los permisos de administrador y staff en las reglas de Firestore para que el panel no se abra con una cuenta no autorizada.",
+          "Escribí la landing de ventas, los tres esquemas de licencia y el formulario de leads que alimenta el panel.",
+        ],
+        outcome:
+          "El resultado es un producto que el dueño puede operar y renombrar por su cuenta, más una oferta de licencia para agencias que necesitan el mismo sistema con sus clientes.",
+        decisionRationale:
+          "Mantuve el sistema con hosting estático y Firebase en lugar de agregar un servidor, para que un restaurante pequeño casi no pague operación y cualquier desarrollador junior pueda mantener el código.",
+        reflection:
+          "PizzaGo me confirmó que la parte difícil del comercio no es el carrito, sino decidir cuánto puede cambiar el dueño solo antes de necesitar a un desarrollador.",
+        currentStatus:
+          "PizzaGo está activo en pizzago.online con la landing de ventas en la raíz y una demo pública de la tienda. El repositorio y la entrega de licencias siguen siendo privados.",
+        limitations: [
+          "Las capturas y el recorrido usan la landing publicada y la tienda de demostración; no muestran pedidos ni ingresos de un comercio real.",
+          "Los pedidos que aparecen en la ilustración de la landing son maquetas del producto, no actividad de clientes.",
+          "Los pagos se delegan a enlaces de PayPal, Stripe o Mercado Pago; el portafolio no confirma una transacción liquidada.",
+        ],
+        coverAlt:
+          "Landing de PizzaGo con su propuesta de pedidos pickup y la ilustración del panel administrativo.",
+        videoDescription:
+          "Un recorrido breve por la landing de PizzaGo y su demo pública de tienda.",
+        videoTranscript:
+          "El recorrido abre en la landing de PizzaGo, pasa por las secciones de funciones, precios y preguntas, y termina en la demo pública de la tienda con su menú semilla y su carrito. Los pedidos de la ilustración de la landing son maquetas del producto, no actividad de clientes.",
+      },
+    },
+  },
 ];
 
 export const caseStudySlugs = caseStudies.map((item) => item.slug);
@@ -890,6 +1014,7 @@ export function getNextCaseStudy(slug: CaseStudySlug) {
     "hablaya",
     "zentix-office",
     "tonalli-ai",
+    "pizzago",
   ];
   const currentIndex = atlasOrder.indexOf(slug);
   const nextSlug = atlasOrder[(currentIndex + 1) % atlasOrder.length];
