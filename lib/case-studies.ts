@@ -653,9 +653,8 @@ export const caseStudies: CaseStudy[] = [
     featured: false,
     sequence: 5,
     stage: "simulated-poc",
-    sourceVisibility: "public",
+    sourceVisibility: "private",
     liveUrl: "https://zentix-office.vercel.app/demo/",
-    sourceUrl: "https://github.com/jgazcagtz/zentix-office",
     accent: "blue",
     stack: [
       "Vite",
@@ -688,7 +687,7 @@ export const caseStudies: CaseStudy[] = [
         seoDescription:
           "How Jorge Gasca built a bilingual, clearly labeled simulation for evaluating an AI-team concept before integration.",
         stageLabel: "Simulated POC",
-        sourceLabel: "Public source",
+        sourceLabel: "Private source",
         role: "Independent product builder",
         cardResult:
           "Made the AI-team concept inspectable without presenting simulated activity as live telemetry.",
@@ -709,7 +708,7 @@ export const caseStudies: CaseStudy[] = [
         reflection:
           "This project was a useful reminder that transparency is part of the interface. A caveat hidden in documentation cannot correct a misleading product screen.",
         currentStatus:
-          "The bilingual static experience and public repository are available. Zentix Office remains a simulated POC, not an operating AI team.",
+          "The bilingual static experience is available for inspection. Zentix Office remains a simulated POC, not an operating AI team.",
         limitations: [
           "The API health route currently returns 503 because its runtime configuration is missing.",
           "The evaluation form, notification delivery, booking handoff, and operational automation are not presented as working.",
@@ -727,7 +726,7 @@ export const caseStudies: CaseStudy[] = [
         seoDescription:
           "Cómo Jorge Gasca construyó una simulación bilingüe y claramente identificada para evaluar el concepto de un equipo de IA antes de integrarlo.",
         stageLabel: "POC simulado",
-        sourceLabel: "Repositorio público",
+        sourceLabel: "Código privado",
         role: "Creador independiente de producto",
         cardResult:
           "Hice inspeccionable el concepto de equipo con IA sin presentar actividad simulada como telemetría real.",
@@ -748,7 +747,7 @@ export const caseStudies: CaseStudy[] = [
         reflection:
           "Este proyecto me recordó que la transparencia también se diseña. Un aviso escondido en la documentación no corrige una pantalla que puede llevar a una conclusión equivocada.",
         currentStatus:
-          "La experiencia bilingüe y el repositorio público están disponibles. Zentix Office sigue siendo un POC simulado, no un equipo de IA en operación.",
+          "La experiencia bilingüe está disponible para inspección. Zentix Office sigue siendo un POC simulado, no un equipo de IA en operación.",
         limitations: [
           "La ruta de salud de la API devuelve 503 porque falta la configuración de runtime.",
           "El formulario de evaluación, las notificaciones, la agenda y la automatización operativa no se presentan como funcionales.",

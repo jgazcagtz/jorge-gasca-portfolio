@@ -26,7 +26,7 @@ A bilingual portfolio for Jorge Manuel Gasca Gutiérrez, a Product Specialist, h
 
 ## Product evidence policy
 
-Most current product sources stay private. Only Zentix Office exposes a repository link. Other launch case studies omit source buttons; HablaYa explicitly distinguishes its private current-production source from an older public prototype repository.
+Most current product sources stay private, including Zentix Office after its workspace-data cleanup. Launch case studies omit source buttons; HablaYa explicitly distinguishes its private current-production source from an older public prototype repository.
 
 Product assets are tracked in [`content/evidence-manifest.json`](content/evidence-manifest.json). Each entry records its source URL, viewport, capture date, product stage, classification, caveat, and privacy-review state. [`content/evidence-integrity.json`](content/evidence-integrity.json) binds that review to the exact SHA-256 and byte size shipped in the repository and makes CI fail if an approved file changes. Captures are limited to public or synthetic views and exclude customer, account, conversation, order, prompt, analytics, credential, and provider-configuration data.
 

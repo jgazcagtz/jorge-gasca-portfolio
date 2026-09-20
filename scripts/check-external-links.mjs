@@ -7,7 +7,6 @@ const urls = [
   "https://tonalli.cloud/app",
   "https://pizzago.online/",
   "https://pizzago.online/tienda.html",
-  "https://github.com/jgazcagtz/zentix-office",
   "https://github.com/jgazcagtz",
 ];
 

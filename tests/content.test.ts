@@ -97,8 +97,9 @@ describe("portfolio content contract", () => {
     }
 
     expect(
-      caseStudies.find((study) => study.slug === "zentix-office")?.sourceUrl,
-    ).toBe("https://github.com/jgazcagtz/zentix-office");
+      caseStudies.find((study) => study.slug === "zentix-office")
+        ?.sourceVisibility,
+    ).toBe("private");
   });
 
   it("provides distinct, complete bilingual case-study narratives", () => {

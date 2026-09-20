@@ -538,10 +538,8 @@ test("private sources never render a GitHub source link", async ({ page }) => {
   await expect(page.getByTestId("source-link")).toHaveCount(0);
 
   await page.goto("/work/zentix-office", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("source-link")).toHaveAttribute(
-    "href",
-    "https://github.com/jgazcagtz/zentix-office",
-  );
+  await expect(page.getByTestId("private-source")).toHaveText("Private source");
+  await expect(page.getByTestId("source-link")).toHaveCount(0);
 });
 
 test("walkthrough is lazy, transfers focus, exposes two formats and a transcript", async ({
