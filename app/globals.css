@@ -178,7 +178,7 @@ video {
   height: var(--header-height);
   border-bottom: 1px solid var(--rule-alpha);
   background: color-mix(in srgb, var(--canvas) 92%, transparent);
-  backdrop-filter: blur(18px) saturate(1.12);
+  backdrop-filter: blur(16px);
 }
 
 .siteHeader::after {

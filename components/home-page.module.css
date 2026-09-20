@@ -13,11 +13,9 @@
 
 @keyframes hero-curtain {
   from {
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(14px);
+    transform: translateY(18px);
   }
   to {
-    clip-path: inset(0 0 0 0);
     transform: translateY(0);
   }
 }
