@@ -2,7 +2,7 @@
   "version": 1,
   "contentDate": "2026-08-15",
   "algorithm": "sha256",
-  "sourceDigest": "936f5138494b96d6650f443071c61bd041d3e2a29bdaec4f66356cbf6f6090e8",
+  "sourceDigest": "5da5adfc5082d24b5695a7937e995b7d97250f52af2829fe6ff4465890a332b0",
   "outputCount": 8,
   "outputs": [
     {
@@ -10,8 +10,8 @@
       "variant": "gtm-revops",
       "route": "/cv/gtm-revops",
       "path": "public/cv/downloads/jorge-gasca-gtm-revops-en.pdf",
-      "bytes": 340697,
-      "sha256": "45475121ff8ca14631716a12e8fdfd393bf9bdb35abe92f9644071a07872f4e9",
+      "bytes": 340694,
+      "sha256": "03fa7bfbec0311f6fcfda1a8f3bd37b50f8e04f11e9eeac3c0a339e36df96b4a",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -31,8 +31,8 @@
       "variant": "product-implementation",
       "route": "/cv/product-implementation",
       "path": "public/cv/downloads/jorge-gasca-product-implementation-en.pdf",
-      "bytes": 340557,
-      "sha256": "a53d67338d397960cd9db1df2e540d62bd94735d2712cf87bcfcd6f724991ee3",
+      "bytes": 340530,
+      "sha256": "5f5168fa87f29c38ec6f8067c846fd838d3b7b2f0b1610ebdcd894ad9e26ebcc",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -52,8 +52,8 @@
       "variant": "ai-automation",
       "route": "/cv/ai-automation",
       "path": "public/cv/downloads/jorge-gasca-ai-automation-en.pdf",
-      "bytes": 343795,
-      "sha256": "af93331fef777a40fe4b8a6828533db6f7d47aec0a63f078307e9832096891b5",
+      "bytes": 343763,
+      "sha256": "a225a0228a508923f1a77b64ba6a44dcc05b96d8d94c130974afa4890474c46d",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -73,8 +73,8 @@
       "variant": "customer-solutions",
       "route": "/cv/customer-solutions",
       "path": "public/cv/downloads/jorge-gasca-customer-solutions-en.pdf",
-      "bytes": 343508,
-      "sha256": "b03e52c792cb5f440ced4efb19b486c811549ea41f16490caadb0d7892116de0",
+      "bytes": 343486,
+      "sha256": "b3379e2a530836f602fda41df3a226a5cf0e02386dcfe7aee6be1421caaefb04",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -94,8 +94,8 @@
       "variant": "gtm-revops",
       "route": "/es/cv/gtm-revops",
       "path": "public/cv/downloads/jorge-gasca-gtm-revops-es.pdf",
-      "bytes": 358334,
-      "sha256": "3adab2e982f2cb44989691e735cbc1bb35dd67df518e47ff48849b1926b9b8da",
+      "bytes": 358303,
+      "sha256": "77aeb33e63276c2a032cbdb047cc2c02678a48f145f7771195266fa8defce297",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -115,8 +115,8 @@
       "variant": "product-implementation",
       "route": "/es/cv/product-implementation",
       "path": "public/cv/downloads/jorge-gasca-product-implementation-es.pdf",
-      "bytes": 353296,
-      "sha256": "e550a8c951e0492efb77a493a176afe2d01436596c69b85ee870345122276c75",
+      "bytes": 353291,
+      "sha256": "4dd02139528370dc7c88753ce6a858a1addb2f8fded0adf5a257b74c320c6882",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -136,8 +136,8 @@
       "variant": "ai-automation",
       "route": "/es/cv/ai-automation",
       "path": "public/cv/downloads/jorge-gasca-ai-automation-es.pdf",
-      "bytes": 354900,
-      "sha256": "3d0243591509b998788acd7e074edb1f9094843f03c62e40499a1470b5f0e0cb",
+      "bytes": 354842,
+      "sha256": "fb47830c5f71346c453ad109757c0c375622a2a2c1d65012d505399333a061ef",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",
@@ -157,8 +157,8 @@
       "variant": "customer-solutions",
       "route": "/es/cv/customer-solutions",
       "path": "public/cv/downloads/jorge-gasca-customer-solutions-es.pdf",
-      "bytes": 356594,
-      "sha256": "2ab2a2205430ee3710d1c0e671116c160efb8259770053624618b1faf6198806",
+      "bytes": 356534,
+      "sha256": "11cf36bc3fa76f715b2a2a5152da3a7174b139f0004889d05b687a7fb1761a5a",
       "pages": 2,
       "textChecks": [
         "Jorge Manuel Gasca Gutiérrez",

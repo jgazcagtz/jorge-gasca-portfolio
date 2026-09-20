@@ -25,7 +25,7 @@ export function SiteHeader({
   return (
     <header className="siteHeader">
       <div className="headerInner">
-        <Link className="wordmark" href={home} aria-label="Jorge Gasca — home">
+        <Link className="wordmark" href={home} aria-label="Jorge Gasca">
           <span className="wordmarkMonogram" aria-hidden="true">JG</span>
           <span className="wordmarkName">Jorge Gasca</span>
         </Link>

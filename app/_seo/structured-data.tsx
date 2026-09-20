@@ -108,6 +108,10 @@ export function homeStructuredData(locale: Locale) {
         hasPart: caseStudies.map((study) => ({
           "@id": `${absoluteUrl(localePath(locale, `/work/${study.slug}`))}#case-study`,
         })),
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", ".heroSummary"],
+        },
       },
       personNode(locale),
       {
@@ -119,6 +123,24 @@ export function homeStructuredData(locale: Locale) {
         author: { "@id": PERSON_ID },
         publisher: { "@id": PERSON_ID },
       },
+      ...(locale === "en"
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${pageUrl}#faq`,
+              url: pageUrl,
+              inLanguage: locale,
+              mainEntity: homeCopy[locale].faq.items.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.answer,
+                },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 }

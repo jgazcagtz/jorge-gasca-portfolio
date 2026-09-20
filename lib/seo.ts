@@ -9,7 +9,7 @@ import {
 import { homeCopy } from "@/lib/home";
 import { localePath, SITE_URL, type Locale } from "@/lib/site";
 
-export const CONTENT_DATE = "2026-08-15";
+export const CONTENT_DATE = "2026-09-19";
 export const CONTENT_DATE_ISO = `${CONTENT_DATE}T00:00:00-06:00`;
 
 export const HOME_TITLES: Record<Locale, string> = {
