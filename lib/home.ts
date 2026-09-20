@@ -88,6 +88,12 @@ export type HomeCopy = {
     note: string;
     rights: string;
   };
+  faq: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: Array<{ question: string; answer: string }>;
+  };
 };
 
 export const homeCopy: Record<Locale, HomeCopy> = {
@@ -223,6 +229,33 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       body:
         "As a Marblism partner, I help teams evaluate where AI employees can remove repetitive work and connect the setup to a practical sales, customer, or operations workflow. This is a sponsored partner link.",
       cta: "Explore Marblism",
+    },
+    faq: {
+      eyebrow: "Common questions",
+      title: "What teams usually ask before working with me.",
+      intro: "Direct answers about availability, working languages, engagement scope, and evidence.",
+      items: [
+        {
+          question: "What is Jorge Gasca current role?",
+          answer: "Jorge Gasca is a Product Specialist at Apollo.io since May 2025. Before that, he was Product Development Manager at MiniTiendAI from March 2024 to May 2025, leading a small-business storefront MVP across creation flows, responsive UX, commerce handoffs, QA, and releases."
+        },
+        {
+          question: "Is Jorge Gasca available for product roles or client work?",
+          answer: "Yes. Jorge is open to product roles and selected client projects in SaaS, CRM, sales automation, and AI systems. Reach him by email at gascagtz@gmail.com, on LinkedIn, or by WhatsApp for project briefs."
+        },
+        {
+          question: "Which languages does Jorge Gasca work in?",
+          answer: "Spanish (native) and English (C2), with working Portuguese. The portfolio and all CVs are fully bilingual."
+        },
+        {
+          question: "What does the portfolio evidence show?",
+          answer: "Seven shipped products with clear ownership, verified results, and honest limitations. Each case study separates what shipped, what it changed, and what stayed hard, with privacy-reviewed desktop, mobile, and walkthrough media."
+        },
+        {
+          question: "Where can I see role-focused CVs?",
+          answer: "Four bilingual, role-focused CVs live at jgasca.io/cv: GTM and revenue operations, product implementation, AI automation, and customer solutions. Each has matching two-page ATS-friendly PDF downloads."
+        },
+      ],
     },
     contact: {
       eyebrow: "Let’s talk",
@@ -375,6 +408,33 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       body:
         "Como partner de Marblism, ayudo a evaluar dónde los empleados con IA pueden reducir trabajo repetitivo y conecto la configuración con flujos prácticos de ventas, clientes u operaciones. Este es un enlace patrocinado de partner.",
       cta: "Conocer Marblism",
+    },
+    faq: {
+      eyebrow: "Preguntas frecuentes",
+      title: "Lo que los equipos suelen preguntar antes de trabajar conmigo.",
+      intro: "Respuestas directas sobre disponibilidad, idiomas, alcance y evidencia.",
+      items: [
+        {
+          question: "Cuál es el rol actual de Jorge Gasca?",
+          answer: "Jorge Gasca es Product Specialist en Apollo.io desde mayo de 2025. Antes fue Product Development Manager en MiniTiendAI de marzo de 2024 a mayo de 2025, liderando un MVP de tiendas para pequeños negocios: flujos de creación, UX responsive, handoffs de comercio, QA y lanzamientos."
+        },
+        {
+          question: "Está Jorge Gasca disponible para puestos o proyectos?",
+          answer: "Sí. Jorge está abierto a puestos de producto y proyectos seleccionados en SaaS, CRM, automatización de ventas y sistemas con IA. Escríbele a gascagtz@gmail.com, por LinkedIn, o por WhatsApp para compartir un brief."
+        },
+        {
+          question: "En qué idiomas trabaja Jorge Gasca?",
+          answer: "Español (nativo) e inglés (C2), con portugués funcional. El portafolio y todos los CVs son completamente bilingües."
+        },
+        {
+          question: "Qué muestra la evidencia del portafolio?",
+          answer: "Siete productos entregados con responsabilidad clara, resultados verificados y limitaciones honestas. Cada caso distingue qué se lanzó, qué cambió y qué siguió difícil, con medios revisados en privacidad."
+        },
+        {
+          question: "Dónde puedo ver los CVs por tipo de puesto?",
+          answer: "Cuatro CVs bilingües por rol viven en jgasca.io/cv: sistemas GTM y revops, implementación de producto, automatización con IA y customer solutions. Cada uno incluye PDFs ATS de dos páginas."
+        },
+      ],
     },
     contact: {
       eyebrow: "Hablemos",

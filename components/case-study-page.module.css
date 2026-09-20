@@ -176,7 +176,8 @@
 
 .chapterNav > p {
   margin: 0 0 14px;
-  color: var(--text-muted);
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.66rem;
   font-weight: 760;
   letter-spacing: 0.11em;
@@ -210,8 +211,16 @@
 }
 
 .chapterNav a span {
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.58rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
+  color: var(--annotation);
+}
+
+.chapterNav a:hover span,
+.chapterNav a:focus-visible span {
+  color: var(--accent-coral);
 }
 
 .chapterNav a:hover,
@@ -244,8 +253,10 @@
 
 .chapterHeader > span {
   padding-top: 0.55em;
-  color: var(--text-muted);
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.68rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
 }
 

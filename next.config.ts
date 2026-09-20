@@ -49,17 +49,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/cv/downloads/:path*",
-        headers: [
-          { key: "X-Robots-Tag", value: "noindex, follow" },
-        ],
-      },
-      {
         source: "/(.*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Robots-Tag", value: "max-image-preview: large" },
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
@@ -68,6 +63,12 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: contentSecurityPolicy,
           },
+        ],
+      },
+      {
+        source: "/cv/downloads/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, follow" },
         ],
       },
     ];

@@ -89,7 +89,6 @@ function ProductCard({
         className={styles.productCardLink}
         href={localePath(locale, `/work/${study.slug}`)}
         transitionTypes={["case-forward"]}
-        aria-label={`${homeCopy[locale].work.viewCase}: ${copy.title}`}
       >
         <div className={styles.productMedia}>
           <EvidenceMedia
@@ -142,7 +141,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <HomeStructuredData locale={locale} />
       <RevealController />
 
-      <section className={styles.hero} aria-labelledby="hero-title">
+      <section className={styles.hero} aria-labelledby="hero-title" data-hero-animated>
         <div className={styles.heroCopy}>
           <div className={styles.heroIdentity}>
             <p className={styles.eyebrow}>{copy.hero.eyebrow}</p>
@@ -296,6 +295,35 @@ export function HomePage({ locale }: { locale: Locale }) {
           {copy.partner.cta}<span aria-hidden="true">↗</span>
         </a>
       </aside>
+
+      <section className={styles.faqSection} id="faq" aria-labelledby="faq-title" data-reveal>
+        <SectionHeading
+          eyebrow={copy.faq.eyebrow}
+          title={copy.faq.title}
+          body={copy.faq.intro}
+          id="faq-title"
+        />
+        <div className={styles.faqList}>
+          {copy.faq.items.map((item, index) => (
+            <details
+              key={item.question}
+              className={styles.faqItem}
+              data-reveal
+              style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}
+              open={index === 0}
+            >
+              <summary>
+                <span className={styles.faqIndex} aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{item.question}</h3>
+                <span className={styles.faqToggle} aria-hidden="true" />
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
       <section className={styles.contactSection} id="contact" aria-labelledby="contact-title" data-reveal>
         <SectionHeading
