@@ -421,8 +421,8 @@ export async function createCvSocialCard(locale: Locale, variant?: CvVariant) {
             <span style={{ fontSize: 27, fontWeight: 800 }}>Jorge Manuel Gasca Gutiérrez</span>
             <span style={{ color: palette.muted, fontSize: 15, fontWeight: 700, marginTop: 8 }}>
               {isEnglish
-                ? "Apollo.io Product Specialist | Mexico City | Remote"
-                : "Product Specialist en Apollo.io | Ciudad de México | Remoto"}
+                ? "Apollo.io Product Specialist II | Mexico City | Remote"
+                : "Product Specialist II en Apollo.io | Ciudad de México | Remoto"}
             </span>
           </div>
         </div>

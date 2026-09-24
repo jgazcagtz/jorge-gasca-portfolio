@@ -74,8 +74,8 @@ export const cvExperience: CvExperience[] = [
     period: { en: "May 2025 - Present", es: "Mayo 2025 - Actualidad" },
     organization: { en: "Apollo.io", es: "Apollo.io" },
     title: {
-      en: "Product Specialist | SaaS onboarding and GTM systems",
-      es: "Product Specialist | Onboarding SaaS y sistemas GTM",
+      en: "Product Specialist II | SaaS onboarding and GTM systems",
+      es: "Product Specialist II | Onboarding SaaS y sistemas GTM",
     },
     context: {
       en: "Current employment",
@@ -562,7 +562,7 @@ export const cvUiCopy = {
     linkedIn: "LinkedIn",
     github: "GitHub",
     location: "Mexico City | Remote",
-    current: "Current role: Product Specialist at Apollo.io",
+    current: "Current role: Product Specialist II at Apollo.io",
     verifiedNote: "Matching titles describe role fit, not past employment.",
     printLabel: "Two-page ATS resume",
     caseStudy: "Read case study",
@@ -598,7 +598,7 @@ export const cvUiCopy = {
     linkedIn: "LinkedIn",
     github: "GitHub",
     location: "Ciudad de México | Remoto",
-    current: "Rol actual: Product Specialist en Apollo.io",
+    current: "Rol actual: Product Specialist II en Apollo.io",
     verifiedNote: "Los puestos sugeridos describen encaje, no empleos anteriores.",
     printLabel: "CV ATS de dos páginas",
     caseStudy: "Ver caso de estudio",

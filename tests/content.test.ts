@@ -177,7 +177,7 @@ describe("portfolio content contract", () => {
     );
 
     expect(apolloEn).toMatchObject({
-      title: "Product Specialist · Apollo.io",
+      title: "Product Specialist II · Apollo.io",
       period: "May 2025 — Present",
     });
     expect(miniEn).toMatchObject({
@@ -185,7 +185,7 @@ describe("portfolio content contract", () => {
       period: "Mar 2024 — May 2025",
     });
     expect(apolloEs).toMatchObject({
-      title: "Product Specialist · Apollo.io",
+      title: "Product Specialist II · Apollo.io",
       period: "Mayo 2025 — Actualidad",
     });
     expect(miniEs).toMatchObject({
@@ -432,7 +432,7 @@ describe("portfolio content contract", () => {
     }
     expect(llms).toContain("https://jgasca.io/");
     expect(llms).toContain("https://jgasca.io/es");
-    expect(llms).toContain("Product Specialist at Apollo.io, May 2025 to present");
+    expect(llms).toContain("Product Specialist II at Apollo.io, May 2025 to present");
     expect(llms).toContain(
       "Product Development Manager at MiniTiendAI, March 2024 to May 2025",
     );
@@ -497,7 +497,7 @@ describe("bilingual CV content contract", () => {
       period: { en: "May 2025 - Present", es: "Mayo 2025 - Actualidad" },
       organization: { en: "Apollo.io", es: "Apollo.io" },
     });
-    expect(cvExperience[0].title.en).toContain("Product Specialist");
+    expect(cvExperience[0].title.en).toContain("Product Specialist II");
     expect(cvExperience[0].bullets.en.join(" ")).toContain("50+ B2B customer teams weekly");
     expect(cvExperience[1]).toMatchObject({
       id: "minitiendai",
