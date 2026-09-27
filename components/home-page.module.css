@@ -3,6 +3,7 @@
 .automationSection,
 .approachSection,
 .experienceSection,
+.faqSection,
 .partnerBand,
 .contactSection {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-width));

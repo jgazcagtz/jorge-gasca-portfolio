@@ -6,10 +6,20 @@ import {
   ActionLink,
   EvidenceMedia,
   MetaLabel,
-  SectionHeading,
 } from "@/components/design-primitives";
 import { AutomationLab } from "@/components/automation-lab";
 import { RevealController } from "@/components/reveal-controller";
+import {
+  ExperienceMeter,
+} from "@/components/scroll-fx/experience-meter";
+import { FinaleZoom } from "@/components/scroll-fx/finale-zoom";
+import { ApproachScenes } from "@/components/scroll-fx/approach-scenes";
+import { ScrollFxController } from "@/components/scroll-fx/scroll-fx-controller";
+import {
+  SectionHeadingFx,
+  WordSpans,
+} from "@/components/scroll-fx/section-heading-fx";
+import fx from "@/components/scroll-fx/scroll-fx.module.css";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { homeCopy } from "@/lib/home";
 import {
@@ -47,6 +57,7 @@ const fieldLabels = {
     partnerProof: "Supporting partner",
     roleIndex: "01 / HIRING",
     projectIndex: "02 / PROJECTS",
+    words: { work: "PROOF", automation: "SYSTEM", approach: "METHOD", experience: "TIMELINE" },
   },
   es: {
     top: "HUMANO / SISTEMAS",
@@ -58,8 +69,19 @@ const fieldLabels = {
     partnerProof: "Partner de apoyo",
     roleIndex: "01 / OPORTUNIDADES",
     projectIndex: "02 / PROYECTOS",
+    words: { work: "EVIDENCIA", automation: "SISTEMA", approach: "MÉTODO", experience: "TRAYECTORIA" },
   },
 } as const;
+
+function GiantWord({ text, align }: { text: string; align?: "left" }) {
+  return (
+    <div className={fx.giantWordLayer} aria-hidden="true">
+      <span className={fx.giantWord} data-align={align}>
+        {text}
+      </span>
+    </div>
+  );
+}
 
 function ProductCard({
   study,
@@ -105,7 +127,7 @@ function ProductCard({
           <span className={styles.cardStage}>{copy.stageLabel}</span>
         </div>
 
-        <div className={styles.productBody}>
+        <div className={`${styles.productBody} ${fx.cardBodyFx}`}>
           <div className={styles.cardRole}>
             <span>{labels.role}</span>
             <strong>{copy.role}</strong>
@@ -135,19 +157,35 @@ export function HomePage({ locale }: { locale: Locale }) {
   const moreWork = caseStudies
     .filter((study) => !study.featured)
     .sort((a, b) => a.sequence - b.sequence);
+  const rangeLabel = (list: CaseStudy[]) =>
+    `${String(list[0].sequence).padStart(2, "0")}—${String(
+      list[list.length - 1].sequence,
+    ).padStart(2, "0")}`;
 
   return (
     <main id="main-content">
       <HomeStructuredData locale={locale} />
       <RevealController />
+      <ScrollFxController />
 
-      <section className={styles.hero} aria-labelledby="hero-title" data-hero-animated>
-        <div className={styles.heroCopy}>
+      <section
+        className={`${styles.hero} ${fx.heroFx}`}
+        aria-labelledby="hero-title"
+        data-hero-animated
+        data-fx="hero"
+      >
+        <div className={fx.heroWatermarkLayer} aria-hidden="true">
+          <span className={fx.heroWatermark}>JG</span>
+        </div>
+
+        <div className={`${styles.heroCopy} ${fx.heroLayerCopy}`}>
           <div className={styles.heroIdentity}>
             <p className={styles.eyebrow}>{copy.hero.eyebrow}</p>
             <p className={styles.name}>Jorge Gasca</p>
           </div>
-          <h1 id="hero-title">{copy.hero.headline}</h1>
+          <h1 id="hero-title" aria-label={copy.hero.headline}>
+            <WordSpans text={copy.hero.headline} />
+          </h1>
           <p className={styles.heroSummary}>{copy.hero.summary}</p>
           <div className={styles.heroActions}>
             <ActionLink href="#work" variant="primary">{copy.hero.primaryCta}</ActionLink>
@@ -159,35 +197,49 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        <figure className={styles.heroPortraitCard}>
-          <Image
-            src="/media/jorge-gasca-portrait.webp"
-            alt={
-              locale === "en"
-                ? "Black-and-white portrait of Jorge Gasca smiling with his arms crossed"
-                : "Retrato en blanco y negro de Jorge Gasca sonriendo con los brazos cruzados"
-            }
-            width={1254}
-            height={1254}
-            sizes="(max-width: 820px) 112px, 34vw"
-            preload
-          />
-          <div className={styles.portraitTop}>
-            <span>{labels.top}</span>
-            <span>{labels.location}</span>
-          </div>
-          <figcaption>
-            <MetaLabel>{copy.hero.proofLabel}</MetaLabel>
-          </figcaption>
-        </figure>
-
-        <div className={styles.heroSystemTrace} aria-hidden="true">
-          <span>DISCOVER</span><i /><span>DESIGN</span><i /><span>AUTOMATE</span><i /><span>VERIFY</span>
+        <div className={fx.heroLayerPortrait}>
+          <figure className={styles.heroPortraitCard}>
+            <Image
+              src="/media/jorge-gasca-portrait.webp"
+              alt={
+                locale === "en"
+                  ? "Black-and-white portrait of Jorge Gasca smiling with his arms crossed"
+                  : "Retrato en blanco y negro de Jorge Gasca sonriendo con los brazos cruzados"
+              }
+              width={1254}
+              height={1254}
+              sizes="(max-width: 820px) 112px, 34vw"
+              preload
+            />
+            <div className={styles.portraitTop}>
+              <span>{labels.top}</span>
+              <span>{labels.location}</span>
+            </div>
+            <figcaption>
+              <MetaLabel>{copy.hero.proofLabel}</MetaLabel>
+            </figcaption>
+          </figure>
         </div>
+
+        <div className={fx.heroLayerTrace}>
+          <div className={styles.heroSystemTrace} aria-hidden="true">
+            <span>DISCOVER</span><i /><span>DESIGN</span><i /><span>AUTOMATE</span><i /><span>VERIFY</span>
+          </div>
+        </div>
+
+        <span className={fx.heroCue} aria-hidden="true">
+          {locale === "en" ? "Scroll" : "Desliza"}
+        </span>
       </section>
 
-      <section className={styles.workSection} id="work" aria-labelledby="work-title">
-        <SectionHeading
+      <section
+        className={`${styles.workSection} ${fx.sectionFx}`}
+        id="work"
+        aria-labelledby="work-title"
+        data-fx="work"
+      >
+        <GiantWord text={labels.words.work} />
+        <SectionHeadingFx
           eyebrow={copy.work.eyebrow}
           title={copy.work.title}
           body={copy.work.intro}
@@ -196,32 +248,42 @@ export function HomePage({ locale }: { locale: Locale }) {
 
         <div className={styles.collectionHeader}>
           <MetaLabel>{copy.work.featured}</MetaLabel>
-          <span aria-hidden="true">01—03</span>
+          <span aria-hidden="true">{rangeLabel(signature)}</span>
         </div>
-        <div className={styles.signatureGrid}>
-          {signature.map((study, index) => (
-            <ProductCard
-              key={study.slug}
-              study={study}
-              locale={locale}
-              variant={index === 0 ? "lead" : "standard"}
-            />
-          ))}
+        <div className={fx.workStage} data-fx="track">
+          <div className={fx.workViewport}>
+            <div className={`${styles.signatureGrid} ${fx.signatureTrack}`}>
+              {signature.map((study, index) => (
+                <ProductCard
+                  key={study.slug}
+                  study={study}
+                  locale={locale}
+                  variant={index === 0 ? "lead" : "standard"}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={styles.collectionHeader}>
           <MetaLabel>{copy.work.labs}</MetaLabel>
-          <span aria-hidden="true">04—06</span>
+          <span aria-hidden="true">{rangeLabel(moreWork)}</span>
         </div>
-        <div className={styles.moreGrid}>
+        <div className={`${styles.moreGrid} ${fx.moreGridFx}`}>
           {moreWork.map((study) => (
             <ProductCard key={study.slug} study={study} locale={locale} variant="compact" />
           ))}
         </div>
       </section>
 
-      <section className={styles.automationSection} id="automation-lab" aria-labelledby="automation-title">
-        <SectionHeading
+      <section
+        className={`${styles.automationSection} ${fx.automationSectionFx} ${fx.sectionFx}`}
+        id="automation-lab"
+        aria-labelledby="automation-title"
+        data-fx="automation"
+      >
+        <GiantWord text={labels.words.automation} align="left" />
+        <SectionHeadingFx
           eyebrow={copy.automationLab.eyebrow}
           title={copy.automationLab.title}
           body={copy.automationLab.intro}
@@ -230,14 +292,21 @@ export function HomePage({ locale }: { locale: Locale }) {
         <AutomationLab locale={locale} />
       </section>
 
-      <section className={styles.approachSection} id="approach" aria-labelledby="approach-title" data-reveal>
-        <SectionHeading
+      <section
+        className={`${styles.approachSection} ${fx.sectionFx}`}
+        id="approach"
+        aria-labelledby="approach-title"
+        data-reveal
+        data-fx="scenes"
+      >
+        <GiantWord text={labels.words.approach} />
+        <SectionHeadingFx
           eyebrow={copy.approach.eyebrow}
           title={copy.approach.title}
           body={copy.approach.intro}
           id="approach-title"
         />
-        <ol className={styles.approachTrace}>
+        <ol className={styles.approachTrace} data-fx-steps>
           {copy.approach.steps.map((step, index) => (
             <li
               key={step.title}
@@ -257,10 +326,18 @@ export function HomePage({ locale }: { locale: Locale }) {
             </li>
           ))}
         </ol>
+        <ApproachScenes />
       </section>
 
-      <section className={styles.experienceSection} id="experience" aria-labelledby="experience-title" data-reveal>
-        <SectionHeading
+      <section
+        className={`${styles.experienceSection} ${fx.sectionFx}`}
+        id="experience"
+        aria-labelledby="experience-title"
+        data-reveal
+        data-fx="experience"
+      >
+        <GiantWord text={labels.words.experience} align="left" />
+        <SectionHeadingFx
           eyebrow={copy.experience.eyebrow}
           title={copy.experience.title}
           body={copy.experience.intro}
@@ -275,6 +352,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             </article>
           ))}
         </div>
+        <ExperienceMeter locale={locale} />
         <div className={styles.experienceCta}>
           <ActionLink href={localePath(locale, "/cv")} variant="secondary">
             {copy.experience.cta}
@@ -282,7 +360,11 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <aside className={styles.partnerBand} aria-label={labels.partnerAria} data-reveal>
+      <aside
+        className={`${styles.partnerBand} ${fx.partnerBandFx}`}
+        aria-label={labels.partnerAria}
+        data-reveal
+      >
         <div className={styles.partnerMark}>
           <Image src="/media/marblism-wordmark.png" alt="Marblism" width={1484} height={432} sizes="150px" />
           <MetaLabel>{labels.partnerProof}</MetaLabel>
@@ -296,8 +378,13 @@ export function HomePage({ locale }: { locale: Locale }) {
         </a>
       </aside>
 
-      <section className={styles.faqSection} id="faq" aria-labelledby="faq-title" data-reveal>
-        <SectionHeading
+      <section
+        className={`${styles.faqSection} ${fx.sectionFx}`}
+        id="faq"
+        aria-labelledby="faq-title"
+        data-reveal
+      >
+        <SectionHeadingFx
           eyebrow={copy.faq.eyebrow}
           title={copy.faq.title}
           body={copy.faq.intro}
@@ -325,8 +412,16 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className={styles.contactSection} id="contact" aria-labelledby="contact-title" data-reveal>
-        <SectionHeading
+      <FinaleZoom />
+
+      <section
+        className={`${styles.contactSection} ${fx.contactSectionFx}`}
+        id="contact"
+        aria-labelledby="contact-title"
+        data-reveal
+        data-fx="contact"
+      >
+        <SectionHeadingFx
           eyebrow={copy.contact.eyebrow}
           title={copy.contact.title}
           body={copy.contact.intro}
