@@ -1,0 +1,1148 @@
+/* ==========================================================================
+   scroll-fx — cinematic scroll layer for the home page only.
+   Everything here is additive: with JS off or prefers-reduced-motion the
+   enhanced layouts never activate (html.fx-enhanced is set by the controller)
+   and the page renders exactly like the static markup.
+   ========================================================================== */
+
+/* ---------- scroll progress rail (under the sticky header) ---------- */
+
+.progressRail {
+  position: fixed;
+  z-index: 90;
+  top: var(--header-height);
+  right: 0;
+  left: 0;
+  height: 2px;
+  pointer-events: none;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-coral),
+    var(--accent-violet) 55%,
+    var(--accent-cyan)
+  );
+  transform: scaleX(var(--fx-progress, 0));
+  transform-origin: left center;
+  opacity: 0.9;
+}
+
+/* ---------- live text: word-by-word reveal ---------- */
+
+.wordRow {
+  display: inline;
+}
+
+.word {
+  display: inline-block;
+  overflow: clip;
+  margin-right: 0.24em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  vertical-align: top;
+}
+
+.word:last-child {
+  margin-right: 0;
+}
+
+.wordInner {
+  display: inline-block;
+  transition: transform 760ms var(--ease-out);
+  transition-delay: calc(var(--wi, 0) * 42ms);
+  will-change: transform;
+}
+
+/* Hidden state only once the reveal system is live, so a no-JS load keeps
+   every heading fully visible. */
+:global(html.reveal-ready) [data-reveal]:not([data-revealed="true"]) .wordInner {
+  transform: translateY(118%);
+}
+
+[data-revealed="true"] .wordInner {
+  transform: translateY(0);
+}
+
+/* Hero h1 words rise on load instead of on reveal. */
+@media (prefers-reduced-motion: no-preference) {
+  .heroFx h1 .wordInner {
+    animation: fx-hero-word 860ms var(--ease-out) both;
+    animation-delay: calc(var(--wi, 0) * 58ms + 160ms);
+    transition: none;
+  }
+}
+
+@keyframes fx-hero-word {
+  from {
+    transform: translateY(118%) rotate(2deg);
+  }
+  to {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* ---------- section heading (home-scoped twin of SectionHeading) ---------- */
+
+.sectionHeadingFx {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(120px, 0.34fr) minmax(0, 1fr) minmax(220px, 0.52fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.sectionHeadingFx > p {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--annotation-ink);
+}
+
+.sectionHeadingFx > p::before {
+  content: "\25CF\00a0\00a0";
+  color: var(--accent-coral);
+  font-size: 0.55em;
+  vertical-align: 0.22em;
+}
+
+.sectionHeadingFx h2 {
+  max-width: 820px;
+  margin: 0;
+  text-wrap: balance;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-5);
+  font-weight: 400;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+}
+
+.sectionBodyFx {
+  max-width: 520px;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+
+.sectionHeadingFx[data-tone="inverse"] > p,
+.sectionHeadingFx[data-tone="inverse"] .sectionBodyFx {
+  color: var(--text-inverse-muted);
+}
+
+/* ---------- giant parallax section words ---------- */
+
+.giantWordLayer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.giantWord {
+  position: absolute;
+  right: -0.04em;
+  bottom: 0.02em;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(96px, 17vw, 300px);
+  letter-spacing: 0.01em;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--grid-line);
+  user-select: none;
+  transform: translate3d(0, calc((var(--fx-p, 0.5) - 0.5) * -16vh), 0);
+}
+
+.giantWord[data-align="left"] {
+  right: auto;
+  left: -0.04em;
+}
+
+/* ---------- section scope helpers ---------- */
+
+.sectionFx {
+  position: relative;
+}
+
+/* The enhanced sections are much taller than their content-visibility
+   estimate, which makes absolute scroll positions jump while scrolling.
+   Desktop enhanced mode renders them normally for stable sticky choreography. */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :global(html.fx-enhanced) .sectionFx {
+    content-visibility: visible;
+    contain-intrinsic-block-size: none;
+  }
+}
+
+/* ---------- HERO choreography ---------- */
+
+.heroFx {
+  position: relative;
+}
+
+.heroWatermarkLayer {
+  position: absolute;
+  inset: calc(var(--page-gutter) * -1);
+  overflow: clip;
+  pointer-events: none;
+}
+
+.heroWatermark {
+  position: absolute;
+  top: 4%;
+  right: 6%;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(220px, 34vw, 560px);
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--grid-line);
+  opacity: 0.9;
+  user-select: none;
+  transform: translate3d(0, calc(var(--fx-p, 0) * 12vh), 0)
+    rotate(calc(var(--fx-p, 0) * 9deg - 4deg));
+  will-change: transform;
+}
+
+.heroWatermark::after {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 12%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-coral);
+  opacity: 0.55;
+}
+
+.heroLayerCopy {
+  transform: translate3d(0, calc(var(--fx-p, 0) * -11vh), 0);
+  opacity: calc(1 - var(--fx-p, 0) * 1.15);
+  will-change: transform, opacity;
+}
+
+.heroLayerPortrait {
+  display: grid;
+  transform: translate3d(0, calc(var(--fx-p, 0) * -5vh), 0)
+    rotate(calc(var(--fx-p, 0) * -1.5deg))
+    scale(calc(1 - var(--fx-p, 0) * 0.04));
+  will-change: transform;
+}
+
+.heroLayerTrace {
+  grid-column: 1 / -1;
+  transform: translate3d(calc(var(--fx-p, 0) * -18vw), 0, 0);
+  opacity: calc(1 - var(--fx-p, 0) * 1.7);
+  will-change: transform, opacity;
+}
+
+.heroCue {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 760;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  opacity: calc(1 - var(--fx-p, 0) * 3);
+}
+
+.heroCue::after {
+  content: "";
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(var(--text-primary), transparent);
+  animation: fx-cue 1800ms var(--ease-out) infinite;
+}
+
+@keyframes fx-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ---------- WORK: horizontal world track (desktop, enhanced only) ---------- */
+
+.signatureTrack {
+  min-width: 0;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :global(html.fx-enhanced) .workStage {
+    height: 330vh;
+    height: 330svh;
+  }
+
+  :global(html.fx-enhanced) .workViewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: clip;
+  }
+
+  :global(html.fx-enhanced) .signatureTrack {
+    display: flex;
+    flex: none;
+    width: max-content;
+    gap: clamp(22px, 3vw, 52px);
+    align-items: stretch;
+    padding: 24px var(--page-gutter) 8px;
+    transform: translate3d(
+        calc(var(--fx-p, 0) * (100vw - 100%)),
+        0,
+        0
+      )
+      skewX(calc(var(--fx-veln, 0) * -1.3deg));
+    will-change: transform;
+  }
+
+  :global(html.fx-enhanced) .signatureTrack > article {
+    width: min(56vw, 780px);
+    flex: 0 0 auto;
+    transform: rotate(0.001deg);
+  }
+
+  :global(html.fx-enhanced) .signatureTrack > article[data-variant="lead"] {
+    width: min(64vw, 920px);
+  }
+
+  /* layered parallax inside each travelling card */
+  :global(html.fx-enhanced) .signatureTrack article img {
+    transform: translate3d(calc(var(--fx-p, 0) * -2.5vw), 0, 0) scale(1.06);
+    will-change: transform;
+  }
+
+  :global(html.fx-enhanced) .signatureTrack .cardBodyFx {
+    transform: translate3d(calc(var(--fx-p, 0) * 1.2vw), 0, 0);
+    will-change: transform;
+  }
+
+  /* leading panel marker inside the pinned viewport */
+  :global(html.fx-enhanced) .workViewport::before {
+    content: "SIGNATURE WORLDS";
+    position: absolute;
+    top: calc(var(--header-height) + 14px);
+    left: var(--page-gutter);
+    color: var(--annotation-ink);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    font-weight: 760;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* compact cards: subtle 3D tilt as they enter */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.fx-enhanced) .moreGridFx > article {
+      animation: fx-card-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes fx-card-enter {
+  from {
+    transform: perspective(900px) rotateX(6deg) translateY(34px) scale(0.975);
+  }
+  to {
+    transform: perspective(900px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+/* ---------- APPROACH: sticky scene switcher ---------- */
+
+.sceneStage {
+  display: none;
+}
+
+.scene {
+  opacity: 0;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :global(html.fx-enhanced) [data-fx="scenes"] {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    column-gap: clamp(28px, 4vw, 76px);
+    align-items: start;
+  }
+
+  :global(html.fx-enhanced) [data-fx="scenes"] .sectionHeadingFx {
+    grid-column: 1 / -1;
+  }
+
+  :global(html.fx-enhanced) [data-fx="scenes"] [data-fx-steps] {
+    grid-column: 1;
+    margin-top: clamp(40px, 6vw, 84px);
+  }
+
+  :global(html.fx-enhanced) [data-fx-steps] > li {
+    min-height: 38vh;
+    opacity: 0.3;
+    transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+  }
+
+  :global(html.fx-enhanced) [data-fx-steps] > li[data-active] {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+
+  :global(html.fx-enhanced) [data-fx-steps] > li[data-active] .traceNode span {
+    box-shadow: 0 0 0 1px var(--border-strong), 0 0 0 7px color-mix(in srgb, var(--accent-coral) 22%, transparent);
+  }
+
+  :global(html.fx-enhanced) .sceneStage {
+    display: block;
+    position: sticky;
+    z-index: 1;
+    top: calc(var(--header-height) + 28px);
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+.sceneFrame {
+  position: relative;
+  height: min(64vh, 580px);
+  overflow: clip;
+  border: 1px solid var(--border-strong);
+  background:
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 44px 100%,
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 44px,
+    color-mix(in srgb, var(--surface-raised) 72%, transparent);
+  box-shadow: var(--shadow-large);
+}
+
+.sceneFrameTick {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--border-strong);
+  border-style: solid;
+}
+
+.sceneFrameTick[data-tick="tl"] { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+.sceneFrameTick[data-tick="tr"] { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+.sceneFrameTick[data-tick="bl"] { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+.sceneFrameTick[data-tick="br"] { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+.scene {
+  position: absolute;
+  inset: 0;
+  padding: clamp(18px, 3vw, 40px);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+  transform: translateY(16px) scale(0.975);
+}
+
+.sceneSvg {
+  width: 100%;
+  height: 100%;
+}
+
+[data-fx="scenes"][data-fx-step="1"] .scene[data-scene="1"],
+[data-fx="scenes"][data-fx-step="2"] .scene[data-scene="2"],
+[data-fx="scenes"][data-fx-step="3"] .scene[data-scene="3"],
+[data-fx="scenes"][data-fx-step="4"] .scene[data-scene="4"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sceneTag {
+  fill: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: 0.18em;
+}
+
+.sketchStroke,
+.wire,
+.node,
+.checkRow rect {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sketchAccent circle {
+  fill: var(--accent-coral);
+  animation: fx-blink 2200ms ease-in-out infinite;
+}
+
+.visitorPath {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 7;
+}
+
+.visitorDot {
+  fill: var(--accent-coral);
+  offset-path: path("M40 236 C 90 210, 96 176, 150 190 S 236 226, 262 196");
+  animation: fx-travel 7s var(--ease-in-out) infinite;
+}
+
+.signalRing {
+  fill: none;
+  stroke: var(--accent-violet);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fx-ring 2400ms var(--ease-out) infinite;
+}
+
+.signalRing + .signalRing {
+  animation-delay: 1200ms;
+}
+
+.kanbanCard {
+  fill: color-mix(in srgb, var(--surface-raised) 85%, transparent);
+  stroke: var(--text-primary);
+  stroke-width: 1.4;
+  animation: fx-bob 4200ms ease-in-out infinite;
+}
+
+.kanbanDone {
+  stroke: var(--accent-cyan);
+  animation: none;
+}
+
+.kanbanCheck {
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  animation: fx-draw 2400ms var(--ease-out) infinite;
+}
+
+.wireGlow rect {
+  fill: none;
+  stroke: var(--accent-violet);
+  stroke-width: 1.4;
+  animation: fx-blink 3000ms ease-in-out infinite;
+}
+
+.sceneCursor {
+  fill: var(--text-primary);
+  offset-path: path("M96 118 L 262 120 L 180 176 L 96 118");
+  animation: fx-cursor 9s var(--ease-in-out) infinite;
+}
+
+.wire path {
+  stroke-dasharray: 6 8;
+  animation: fx-flow 1200ms linear infinite;
+}
+
+.nodeSpin {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.nodeSpin {
+  fill: none;
+  stroke: var(--accent-violet);
+  stroke-width: 2;
+  animation: fx-spin 5200ms linear infinite;
+}
+
+.packet {
+  fill: var(--accent-coral);
+  offset-path: path("M74 130 H 330");
+  animation: fx-travel 4.4s linear infinite;
+}
+
+.checkRow {
+  animation: fx-pop 5200ms var(--ease-out) infinite;
+}
+
+.checkMark {
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: fx-draw 5200ms var(--ease-out) infinite;
+}
+
+.checkLine {
+  stroke: var(--border-strong);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: fx-draw 5200ms var(--ease-out) infinite;
+}
+
+.verifyMeter rect {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 1.4;
+}
+
+.verifyMeterFill {
+  fill: color-mix(in srgb, var(--accent-cyan) 55%, transparent) !important;
+  stroke: none !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: fx-fill 5200ms var(--ease-in-out) infinite;
+}
+
+.magnifier {
+  fill: none;
+  stroke: var(--accent-orange);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  animation: fx-scan 6s var(--ease-in-out) infinite;
+}
+
+.sceneLedger {
+  display: none;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :global(html.fx-enhanced) .sceneLedger {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    color: var(--annotation-ink);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    font-weight: 760;
+    letter-spacing: 0.1em;
+  }
+
+  :global(html.fx-enhanced) .sceneLedger span {
+    opacity: 0.35;
+    transition: opacity 320ms ease;
+  }
+
+  :global(html.fx-enhanced) [data-fx-step="1"] .sceneLedger span[data-ledger="1"],
+  :global(html.fx-enhanced) [data-fx-step="2"] .sceneLedger span[data-ledger="2"],
+  :global(html.fx-enhanced) [data-fx-step="3"] .sceneLedger span[data-ledger="3"],
+  :global(html.fx-enhanced) [data-fx-step="4"] .sceneLedger span[data-ledger="4"] {
+    opacity: 1;
+    color: var(--text-primary);
+  }
+}
+
+@keyframes fx-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fx-ring {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.9;
+  }
+  80% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fx-draw {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  22%, 82% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 40;
+  }
+}
+
+@keyframes fx-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes fx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fx-cursor {
+  0%, 100% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  45% {
+    offset-distance: 55%;
+  }
+  85% {
+    opacity: 1;
+  }
+  92%, 100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fx-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  14%, 86% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fx-fill {
+  0% {
+    transform: scaleX(0);
+  }
+  55%, 85% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes fx-scan {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-52px, 14px);
+  }
+}
+
+@keyframes fx-blink {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---------- EXPERIENCE: system readiness meter ---------- */
+
+.meter {
+  margin-top: clamp(44px, 6vw, 84px);
+  padding: clamp(20px, 3vw, 30px) clamp(20px, 3vw, 32px);
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--surface-raised) 62%, transparent);
+  box-shadow: var(--shadow-small);
+}
+
+.meterHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.meterTitle {
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.meterReadout {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.meterReadout i {
+  color: var(--annotation-ink);
+  font-size: 0.5em;
+  font-style: normal;
+}
+
+.meterTrack {
+  position: relative;
+  height: 30px;
+  margin-top: 16px;
+  overflow: clip;
+  border: 1px solid var(--border-strong);
+  background: var(--canvas);
+}
+
+.meterFill {
+  position: absolute;
+  inset: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-coral),
+    var(--accent-orange) 42%,
+    var(--accent-violet) 78%,
+    var(--accent-cyan)
+  );
+  transform: scaleX(var(--fx-meter, 0));
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.meterTicks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.meterTicks i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--canvas) 82%, transparent);
+  left: calc(var(--tick, 0) * 25%);
+}
+
+.meterBolt {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--fx-meter, 0) * (100% - 34px));
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  background: var(--text-primary);
+  color: var(--canvas);
+  opacity: clamp(0, calc(var(--fx-meter, 0) * 8), 1);
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease;
+}
+
+.meterBolt svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+.meterStates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 26px;
+  margin-top: 14px;
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  font-weight: 760;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.meterStates span {
+  opacity: 0.4;
+  transition: opacity 260ms ease, color 260ms ease;
+}
+
+.meter[data-fx-state="q1"] .meterStates span[data-state-index="1"],
+.meter[data-fx-state="q2"] .meterStates span[data-state-index="2"],
+.meter[data-fx-state="q3"] .meterStates span[data-state-index="3"],
+.meter[data-fx-state="full"] .meterStates span[data-state-index="4"] {
+  opacity: 1;
+  color: var(--text-primary);
+}
+
+.meter[data-fx-state="full"] .meterTrack {
+  border-color: var(--accent-cyan);
+}
+
+/* ---------- PARTNER + CONTACT + AUTOMATION flourishes ---------- */
+
+.partnerBandFx {
+  view-timeline-name: --partner-band;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.fx-enhanced) .partnerBandFx {
+      animation: fx-band-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+@keyframes fx-band-lift {
+  from {
+    transform: translateY(26px) rotate(0.4deg);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.contactSectionFx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    68% 60% at 50% 112%,
+    color-mix(in srgb, var(--accent-violet) 42%, transparent),
+    transparent 76%
+  );
+  opacity: calc(var(--fx-p, 0) * 0.95);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.fx-enhanced) .automationSectionFx > *:not(.giantWordLayer) {
+      animation: fx-section-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+  }
+}
+
+@keyframes fx-section-settle {
+  from {
+    transform: translateY(26px) scale(0.99);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---------- FINALE: infinite zoom ---------- */
+
+.finale {
+  position: relative;
+  height: 52vh;
+  border-top: 1px solid var(--rule-alpha);
+}
+
+.finaleStage {
+  position: relative;
+  display: grid;
+  height: 100%;
+  place-items: center;
+  overflow: clip;
+  background: var(--canvas);
+}
+
+.finaleLayer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.finaleFrame {
+  position: absolute;
+  inset: clamp(14px, 3vw, 34px);
+  border: 1px solid var(--border-strong);
+  transform: scale(calc(1.5 - var(--fx-fa, 1) * 0.5))
+    scale(calc(1 + var(--fx-fe, 0) * 7));
+  opacity: calc(var(--fx-fa, 1) * (1 - var(--fx-fe, 0)));
+  will-change: transform, opacity;
+}
+
+.finaleFrameLabel {
+  position: absolute;
+  top: clamp(22px, 3.4vw, 46px);
+  left: clamp(26px, 3.8vw, 50px);
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  font-weight: 760;
+  letter-spacing: 0.2em;
+  opacity: calc(var(--fx-fa, 1) * (1 - var(--fx-fe, 0)));
+}
+
+.finaleWindow {
+  position: relative;
+  display: grid;
+  width: min(430px, 62vw);
+  height: min(280px, 40vh);
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--surface-raised) 82%, transparent);
+  transform: scale(calc(0.5 + var(--fx-wa, 1) * 0.5))
+    scale(calc(1 + var(--fx-we, 0) * 10));
+  opacity: calc(var(--fx-wa, 1) * (1 - var(--fx-we, 0)));
+  will-change: transform, opacity;
+}
+
+.finaleWindowChrome {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-alpha);
+}
+
+.finaleWindowChrome i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.finaleWindowChrome i:nth-child(1) { background: var(--accent-coral); }
+.finaleWindowChrome i:nth-child(2) { background: var(--accent-orange); }
+.finaleWindowChrome i:nth-child(3) { background: var(--accent-cyan); }
+
+.finaleWindowBody {
+  background:
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 46px 100%;
+}
+
+.finaleMonogram {
+  width: min(520px, 72vw);
+  color: var(--text-primary);
+  opacity: calc(var(--fx-mi, 1) * 0.4 + 0.6);
+  transform: scale(calc(0.82 + var(--fx-mi, 1) * 0.18))
+    scale(calc(1 + var(--fx-mo, 0) * 22));
+  will-change: transform;
+}
+
+.finaleMonogram rect {
+  fill: currentColor;
+}
+
+.finaleMonogram circle {
+  stroke: currentColor;
+}
+
+.finaleLayer[data-layer="flood"] {
+  background: var(--inverse-canvas);
+  opacity: var(--fx-flood, 0);
+  transform: scale(calc(1 + var(--fx-flood, 0) * 0.25));
+  pointer-events: none;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  :global(html.fx-enhanced) .finale {
+    height: 320vh;
+    height: 320svh;
+  }
+
+  :global(html.fx-enhanced) .finaleStage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+  }
+}
+
+/* ---------- heading FX responsive twin of SectionHeading ---------- */
+
+@media (max-width: 820px) {
+  .sectionHeadingFx {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .sectionHeadingFx h2 {
+    font-size: var(--step-4);
+  }
+
+  .sectionBodyFx {
+    max-width: 620px;
+  }
+
+  .heroWatermark {
+    font-size: clamp(150px, 44vw, 240px);
+    right: -4%;
+  }
+
+  .heroLayerPortrait {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .heroLayerTrace {
+    grid-row: 6;
+  }
+
+  .heroCue {
+    display: none;
+  }
+
+  .giantWord {
+    font-size: clamp(64px, 18vw, 130px);
+  }
+
+  .meterReadout {
+    font-size: 1.5rem;
+  }
+}
