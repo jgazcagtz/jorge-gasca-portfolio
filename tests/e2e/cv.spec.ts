@@ -75,7 +75,7 @@ test("CV metadata, hreflang, structured data, and best-fit labeling remain truth
       const profile = nodes.find((node) => node["@type"] === "ProfilePage");
       const person = nodes.find((node) => node["@type"] === "Person");
       expect(profile?.url).toBe(`https://jgasca.io${route}`);
-      expect(person?.jobTitle).toBe("Product Specialist");
+      expect(person?.jobTitle).toBe("Product Specialist II");
       expect(person?.worksFor).toMatchObject({ name: "Apollo.io" });
       expect(JSON.stringify(person)).not.toContain("GTM Engineer");
     }

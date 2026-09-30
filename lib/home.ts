@@ -186,7 +186,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       items: [
         {
           period: "May 2025 — Present",
-          title: "Product Specialist · Apollo.io",
+          title: "Product Specialist II · Apollo.io",
           body: "I help customers understand and adopt B2B SaaS workflows across prospecting, sequences, CRM, data quality, integrations, and deliverability.",
         },
         {
@@ -365,7 +365,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       items: [
         {
           period: "Mayo 2025 — Actualidad",
-          title: "Product Specialist · Apollo.io",
+          title: "Product Specialist II · Apollo.io",
           body: "Ayudo a clientes a entender y adoptar flujos SaaS B2B de prospección, secuencias, CRM, calidad de datos, integraciones y entregabilidad.",
         },
         {
