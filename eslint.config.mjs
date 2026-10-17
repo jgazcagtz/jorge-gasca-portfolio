@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "output/**",
     ".playwright-cli/**",
     "next-env.d.ts",
+    // Local scratch (og-card font cache, debug scripts).
+    "tmp/**",
   ]),
 ]);
 

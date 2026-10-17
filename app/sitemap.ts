@@ -3,6 +3,7 @@ import { caseStudySlugs } from "@/lib/case-studies";
 import { cvVariantSlugs } from "@/lib/cv";
 import { CONTENT_DATE } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
+import { writingSlugs } from "@/lib/writing";
 
 const lastModified = new Date(`${CONTENT_DATE}T00:00:00-06:00`);
 
@@ -12,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...caseStudySlugs.map((slug) => `/work/${slug}`),
     "/cv",
     ...cvVariantSlugs.map((slug) => `/cv/${slug}`),
+    "/writing",
+    ...writingSlugs.map((slug) => `/writing/${slug}`),
   ];
 
   return pages.flatMap((path) => {

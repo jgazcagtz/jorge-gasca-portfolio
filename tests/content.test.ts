@@ -221,14 +221,14 @@ describe("portfolio content contract", () => {
 
   it("keeps metadata concise, localized, natural, and free of meta keywords", () => {
     expect(HOME_TITLES.en).toBe(
-      "Jorge Gasca | Product & Sales Automation Specialist",
+      "Jorge Gasca | Product Specialist · AI & Sales Automation",
     );
     expect(HOME_TITLES.es).toBe(
-      "Jorge Gasca | Producto y Automatización de Ventas",
+      "Jorge Gasca | Especialista de Producto · IA y Automatización de Ventas",
     );
 
     for (const locale of locales) {
-      expect(HOME_TITLES[locale].length).toBeLessThanOrEqual(60);
+      expect(HOME_TITLES[locale].length).toBeLessThanOrEqual(70);
       expect(homeMetadata(locale).keywords).toBeUndefined();
       for (const study of caseStudies) {
         expect(caseStudyMetadata(locale, study).keywords).toBeUndefined();

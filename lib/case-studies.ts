@@ -74,6 +74,16 @@ export type LocalizedCaseStudy = {
   videoTranscript: string;
 };
 
+/**
+ * Compact stat line rendered on the homepage work cards. Values must be real,
+ * verified numbers; while a value is still a `TODO-NUMBER` placeholder it is
+ * only rendered in development and never ships to production.
+ */
+export type CaseStudyMetric = {
+  value: Record<Locale, string>;
+  label: Record<Locale, string>;
+};
+
 export type CaseStudy = {
   slug: CaseStudySlug;
   featured: boolean;
@@ -90,6 +100,7 @@ export type CaseStudy = {
   sourceUrl?: string;
   accent: "violet" | "coral" | "lime" | "orange" | "blue" | "cyan";
   stack: string[];
+  metrics?: CaseStudyMetric[];
   media: CaseStudyMedia;
   copy: Record<Locale, LocalizedCaseStudy>;
 };
@@ -170,6 +181,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://zentixchatbot.cloud/",
     accent: "violet",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Conversation channels unified",
+          es: "Canales de conversación unificados",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "CRM record types linked to conversations",
+          es: "Tipos de registro de CRM vinculados a conversaciones",
+        },
+      },
+    ],
     stack: [
       "HTML",
       "CSS",
@@ -284,6 +311,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://hablaya.cloud/",
     accent: "coral",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Languages available for practice",
+          es: "Idiomas disponibles para practicar",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Practice modes in the learner journey",
+          es: "Modos de práctica en el recorrido de aprendizaje",
+        },
+      },
+    ],
     stack: [
       "JavaScript",
       "HTML",
@@ -399,6 +442,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://minitiendai.com/",
     accent: "lime",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Store creation paths for owners",
+          es: "Caminos de creación de tienda para dueños",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Steps from catalog to WhatsApp order",
+          es: "Pasos del catálogo al pedido por WhatsApp",
+        },
+      },
+    ],
     stack: [
       "HTML",
       "CSS",
@@ -542,6 +601,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://ordenai.cloud/",
     accent: "orange",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Order intake channels connected",
+          es: "Canales de entrada de pedidos conectados",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Operational views on the shared order",
+          es: "Vistas operativas sobre el pedido compartido",
+        },
+      },
+    ],
     stack: [
       "React",
       "TypeScript",
@@ -656,6 +731,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://zentix-office.vercel.app/demo/",
     accent: "blue",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Automated quality checks in CI",
+          es: "Verificaciones automáticas de calidad en CI",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Bilingual journeys in the POC",
+          es: "Recorridos bilingües del POC",
+        },
+      },
+    ],
     stack: [
       "Vite",
       "TypeScript",
@@ -769,6 +860,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://tonalli.cloud/app",
     accent: "cyan",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Routable model providers",
+          es: "Proveedores de modelos enrutables",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Scheduled delivery channels",
+          es: "Canales de entrega programada",
+        },
+      },
+    ],
     stack: [
       "JavaScript SPA",
       "HTML",
@@ -883,6 +990,22 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: "private",
     liveUrl: "https://pizzago.online/",
     accent: "orange",
+    metrics: [
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Integrated payment providers",
+          es: "Proveedores de pago integrados",
+        },
+      },
+      {
+        value: { en: "TODO-NUMBER", es: "TODO-NUMBER" },
+        label: {
+          en: "Branch roles managed in the panel",
+          es: "Roles de sucursal gestionados en el panel",
+        },
+      },
+    ],
     stack: [
       "HTML",
       "CSS",
@@ -1000,6 +1123,25 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 export const caseStudySlugs = caseStudies.map((item) => item.slug);
+
+const TODO_PLACEHOLDER = "TODO";
+
+/**
+ * Card metrics keep honest numbers only: while a metric value still carries a
+ * TODO placeholder it renders in development (so gaps stay visible) and is
+ * filtered out of production builds.
+ */
+export function visibleCardMetrics(study: CaseStudy): CaseStudyMetric[] {
+  const metrics = study.metrics ?? [];
+  if (process.env.NODE_ENV === "production") {
+    return metrics.filter(
+      (metric) =>
+        !metric.value.en.startsWith(TODO_PLACEHOLDER) &&
+        !metric.value.es.startsWith(TODO_PLACEHOLDER),
+    );
+  }
+  return metrics;
+}
 
 export function getCaseStudy(slug: string) {
   return caseStudies.find((item) => item.slug === slug);

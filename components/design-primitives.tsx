@@ -2,6 +2,16 @@ import type { ReactNode } from "react";
 import { ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  TrackedAnchor,
+} from "@/components/analytics/tracked-anchor";
+import {
+  TrackedLink,
+} from "@/components/analytics/tracked-link";
+import type {
+  AnalyticsEventData,
+  AnalyticsEventName,
+} from "@/components/analytics/track";
 import type { ImageEvidenceAsset } from "@/lib/case-studies";
 import type { Locale } from "@/lib/site";
 import styles from "./design-primitives.module.css";
@@ -34,12 +44,19 @@ export function ActionLink({
   variant = "primary",
   external = false,
   transitionTypes,
+  download = false,
+  analyticsEvent,
 }: {
   href: string;
   children: ReactNode;
   variant?: "primary" | "secondary" | "quiet" | "inverse";
   external?: boolean;
   transitionTypes?: string[];
+  download?: boolean;
+  analyticsEvent?: {
+    name: AnalyticsEventName;
+    data?: AnalyticsEventData;
+  };
 }) {
   const className = styles.actionLink;
   const content = (
@@ -49,7 +66,28 @@ export function ActionLink({
     </>
   );
 
-  if (external || href.startsWith("mailto:") || href.startsWith("tel:")) {
+  if (
+    external ||
+    download ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  ) {
+    if (analyticsEvent) {
+      return (
+        <TrackedAnchor
+          className={className}
+          data-variant={variant}
+          href={href}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noreferrer" : undefined}
+          download={download || undefined}
+          eventName={analyticsEvent.name}
+          eventData={analyticsEvent.data}
+        >
+          {content}
+        </TrackedAnchor>
+      );
+    }
     return (
       <a
         className={className}
@@ -57,9 +95,25 @@ export function ActionLink({
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer" : undefined}
+        download={download || undefined}
       >
         {content}
       </a>
+    );
+  }
+
+  if (analyticsEvent) {
+    return (
+      <TrackedLink
+        className={className}
+        data-variant={variant}
+        href={href}
+        transitionTypes={transitionTypes}
+        eventName={analyticsEvent.name}
+        eventData={analyticsEvent.data}
+      >
+        {content}
+      </TrackedLink>
     );
   }
 

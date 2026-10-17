@@ -448,7 +448,7 @@ test("home metadata and JSON-LD expose factual product, Apollo, sales automation
 }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveTitle(
-    "Jorge Gasca | Product & Sales Automation Specialist",
+    "Jorge Gasca | Product Specialist · AI & Sales Automation",
   );
   await expect(page.locator('meta[name="keywords"]')).toHaveCount(0);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
@@ -497,7 +497,7 @@ test("Spanish metadata and case structured data stay localized and visible", asy
 }) => {
   await page.goto("/es", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveTitle(
-    "Jorge Gasca | Producto y Automatización de Ventas",
+    "Jorge Gasca | Especialista de Producto · IA y Automatización de Ventas",
   );
   await expect(page.locator('meta[name="keywords"]')).toHaveCount(0);
 

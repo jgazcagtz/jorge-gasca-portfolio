@@ -53,3 +53,6 @@ next-env.d.ts
 
 # mimosa security hook local state
 .mimosa/
+
+# local scratch (og-card font cache, debug scripts)
+/tmp/

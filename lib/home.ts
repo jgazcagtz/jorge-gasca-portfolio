@@ -6,6 +6,7 @@ export type HomeCopy = {
     approach: string;
     experience: string;
     cv: string;
+    writing: string;
     contact: string;
     menu: string;
     theme: string;
@@ -28,6 +29,10 @@ export type HomeCopy = {
     featured: string;
     labs: string;
     viewCase: string;
+  };
+  testimonials: {
+    eyebrow: string;
+    title: string;
   };
   automationLab: {
     eyebrow: string;
@@ -103,6 +108,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       approach: "How I work",
       experience: "Experience",
       cv: "CV",
+      writing: "Writing",
       contact: "Contact",
       menu: "Menu",
       theme: "Change color theme",
@@ -114,7 +120,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       summary:
         "I connect customer insight, product UX, CRM and AI automation, and hands-on delivery—from the first useful workflow to a verified release.",
       availability:
-        "Open to product roles and selected client work in SaaS, CRM, sales automation, and AI systems.",
+        "Open to roles in GTM systems, AI automation, and product, plus selected client work across SaaS, CRM, and AI workflows.",
       languages: "Spanish and English",
       primaryCta: "Explore signature work",
       secondaryCta: "Start a conversation",
@@ -128,6 +134,10 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       featured: "Signature work",
       labs: "More products and experiments",
       viewCase: "Read case study",
+    },
+    testimonials: {
+      eyebrow: "Testimonials",
+      title: "What people say after shipping with me.",
     },
     automationLab: {
       eyebrow: "Automation Lab",
@@ -236,7 +246,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       intro: "Direct answers about availability, working languages, engagement scope, and evidence.",
       items: [
         {
-          question: "What is Jorge Gasca current role?",
+          question: "What is Jorge Gasca's current role?",
           answer: "Jorge Gasca is a Product Specialist at Apollo.io since May 2025. Before that, he was Product Development Manager at MiniTiendAI from March 2024 to May 2025, leading a small-business storefront MVP across creation flows, responsive UX, commerce handoffs, QA, and releases."
         },
         {
@@ -272,7 +282,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       phone: "Call",
     },
     footer: {
-      note: "Jorge Gasca · Product & Sales Automation Specialist · Mexico City",
+      note: "Jorge Gasca · Product Specialist · AI & Sales Automation · Mexico City",
       rights: "Personal copy, branding, and product media are rights reserved.",
     },
   },
@@ -282,6 +292,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       approach: "Cómo trabajo",
       experience: "Experiencia",
       cv: "CV",
+      writing: "Escritos",
       contact: "Contacto",
       menu: "Menú",
       theme: "Cambiar tema de color",
@@ -293,7 +304,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       summary:
         "Conecto conocimiento del cliente, UX de producto, CRM y automatización con IA, y entrega práctica: del primer flujo útil a una versión verificada.",
       availability:
-        "Estoy abierto a puestos de producto y a proyectos seleccionados de SaaS, CRM, automatización de ventas y sistemas con IA.",
+        "Estoy abierto a puestos de sistemas GTM, automatización con IA y producto, además de proyectos seleccionados de SaaS, CRM y flujos con IA.",
       languages: "Español e inglés",
       primaryCta: "Explorar proyectos clave",
       secondaryCta: "Iniciar una conversación",
@@ -307,6 +318,10 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       featured: "Proyectos clave",
       labs: "Más productos y experimentos",
       viewCase: "Ver proyecto",
+    },
+    testimonials: {
+      eyebrow: "Testimonios",
+      title: "Lo que dicen las personas tras trabajar conmigo.",
     },
     automationLab: {
       eyebrow: "Automation Lab",
@@ -415,23 +430,23 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       intro: "Respuestas directas sobre disponibilidad, idiomas, alcance y evidencia.",
       items: [
         {
-          question: "Cuál es el rol actual de Jorge Gasca?",
+          question: "¿Cuál es el rol actual de Jorge Gasca?",
           answer: "Jorge Gasca es Product Specialist en Apollo.io desde mayo de 2025. Antes fue Product Development Manager en MiniTiendAI de marzo de 2024 a mayo de 2025, liderando un MVP de tiendas para pequeños negocios: flujos de creación, UX responsive, handoffs de comercio, QA y lanzamientos."
         },
         {
-          question: "Está Jorge Gasca disponible para puestos o proyectos?",
+          question: "¿Está Jorge Gasca disponible para puestos o proyectos?",
           answer: "Sí. Jorge está abierto a puestos de producto y proyectos seleccionados en SaaS, CRM, automatización de ventas y sistemas con IA. Escríbele a gascagtz@gmail.com, por LinkedIn, o por WhatsApp para compartir un brief."
         },
         {
-          question: "En qué idiomas trabaja Jorge Gasca?",
+          question: "¿En qué idiomas trabaja Jorge Gasca?",
           answer: "Español (nativo) e inglés (C2), con portugués funcional. El portafolio y todos los CVs son completamente bilingües."
         },
         {
-          question: "Qué muestra la evidencia del portafolio?",
+          question: "¿Qué muestra la evidencia del portafolio?",
           answer: "Siete productos entregados con responsabilidad clara, resultados verificados y limitaciones honestas. Cada caso distingue qué se lanzó, qué cambió y qué siguió difícil, con medios revisados en privacidad."
         },
         {
-          question: "Dónde puedo ver los CVs por tipo de puesto?",
+          question: "¿Dónde puedo ver los CVs por tipo de puesto?",
           answer: "Cuatro CVs bilingües por rol viven en jgasca.io/cv: sistemas GTM y revops, implementación de producto, automatización con IA y customer solutions. Cada uno incluye PDFs ATS de dos páginas."
         },
       ],
@@ -451,7 +466,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       phone: "Llamar",
     },
     footer: {
-      note: "Jorge Gasca · Producto y Automatización de Ventas · Ciudad de México",
+      note: "Jorge Gasca · Especialista de Producto · IA y Automatización de Ventas · Ciudad de México",
       rights: "El contenido personal, la marca y los medios de producto tienen derechos reservados.",
     },
   },

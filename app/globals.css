@@ -561,6 +561,20 @@ body:has(.mobileNav > button[aria-expanded="true"]) .siteFooter {
   font-weight: 680;
 }
 
+/* Placeholder shown while the deferred automation-lab graph mounts. */
+.automationLabPending {
+  margin: 0;
+  padding: clamp(28px, 5vw, 64px) 0;
+  border-block: 1px dashed var(--border);
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .reveal-ready [data-reveal]:not([data-revealed="true"]) {
   transform: translateY(18px);
 }
