@@ -3,6 +3,7 @@
 .automationSection,
 .approachSection,
 .experienceSection,
+.testimonialsSection,
 .faqSection,
 .partnerBand,
 .contactSection {
@@ -460,6 +461,39 @@
   gap: 8px;
   margin-top: auto;
   padding-top: clamp(28px, 4vw, 58px);
+}
+
+.cardMetrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 22px 0 0;
+  padding: 16px 0;
+  border-block: 1px solid var(--rule-alpha);
+  list-style: none;
+}
+
+.cardMetrics li {
+  display: grid;
+  gap: 4px;
+  min-width: 118px;
+}
+
+.cardMetrics strong {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-2);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.cardMetrics span {
+  color: var(--annotation-ink);
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
+  text-transform: uppercase;
 }
 
 .cardResult > span {
@@ -1228,5 +1262,70 @@
 
   .faqItem p {
     padding: 0 0 24px 52px;
+  }
+}
+
+/* ---------- TESTIMONIALS ---------- */
+
+.testimonialsSection {
+  padding-block: clamp(60px, 8vw, 120px);
+  border-top: 1px solid var(--rule-alpha);
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+  margin-top: clamp(40px, 6vw, 80px);
+}
+
+.testimonialCard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+}
+
+.testimonialCard blockquote {
+  margin: 0;
+}
+
+.testimonialCard blockquote p {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-1);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.testimonialCard figcaption {
+  display: grid;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-alpha);
+}
+
+.testimonialCard figcaption strong {
+  font-size: 0.88rem;
+  font-weight: 720;
+}
+
+.testimonialCard figcaption span {
+  color: var(--annotation-ink);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
   }
 }

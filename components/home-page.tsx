@@ -1,13 +1,13 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { HomeStructuredData } from "@/app/_seo/structured-data";
 import {
   ActionLink,
   EvidenceMedia,
   MetaLabel,
 } from "@/components/design-primitives";
-import { AutomationLab } from "@/components/automation-lab";
+import { TrackedLink } from "@/components/analytics/tracked-link";
+import { LazyAutomationLab } from "@/components/lazy-automation-lab";
 import { RevealController } from "@/components/reveal-controller";
 import {
   ExperienceMeter,
@@ -20,8 +20,13 @@ import {
   WordSpans,
 } from "@/components/scroll-fx/section-heading-fx";
 import fx from "@/components/scroll-fx/scroll-fx.module.css";
-import { caseStudies, type CaseStudy } from "@/lib/case-studies";
+import {
+  caseStudies,
+  visibleCardMetrics,
+  type CaseStudy,
+} from "@/lib/case-studies";
 import { homeCopy } from "@/lib/home";
+import { visibleTestimonials } from "@/lib/testimonials";
 import {
   CONTACT,
   emailHref,
@@ -52,6 +57,7 @@ const fieldLabels = {
     location: "MX / REMOTE",
     availability: "Availability",
     result: "Verified result",
+    metrics: "Key metrics",
     role: "Jorge’s role",
     partnerAria: "Jorge Gasca’s Marblism partner disclosure",
     partnerProof: "Supporting partner",
@@ -64,6 +70,7 @@ const fieldLabels = {
     location: "MX / REMOTO",
     availability: "Disponibilidad",
     result: "Resultado verificado",
+    metrics: "Métricas clave",
     role: "Rol de Jorge",
     partnerAria: "Declaración del enlace de partner de Marblism de Jorge Gasca",
     partnerProof: "Partner de apoyo",
@@ -98,6 +105,7 @@ function ProductCard({
     "--reveal-delay": `${Math.min(study.sequence - 1, 3) * 45}ms`,
   };
   const labels = fieldLabels[locale];
+  const metrics = visibleCardMetrics(study);
 
   return (
     <article
@@ -107,10 +115,12 @@ function ProductCard({
       data-reveal
       style={cardStyle}
     >
-      <Link
+      <TrackedLink
         className={styles.productCardLink}
         href={localePath(locale, `/work/${study.slug}`)}
         transitionTypes={["case-forward"]}
+        eventName="case_study_open"
+        eventData={{ slug: study.slug, locale, source: "home_card" }}
       >
         <div className={styles.productMedia}>
           <EvidenceMedia
@@ -134,6 +144,16 @@ function ProductCard({
           </div>
           <h3>{copy.title}</h3>
           <p className={styles.productSummary}>{copy.summary}</p>
+          {metrics.length > 0 ? (
+            <ul className={styles.cardMetrics} aria-label={labels.metrics}>
+              {metrics.map((metric) => (
+                <li key={metric.label[locale]}>
+                  <strong>{metric.value[locale]}</strong>
+                  <span>{metric.label[locale]}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           <div className={styles.cardResult}>
             <span>{labels.result}</span>
             <p>{copy.cardResult}</p>
@@ -143,7 +163,7 @@ function ProductCard({
             <span aria-hidden="true">↗</span>
           </span>
         </div>
-      </Link>
+      </TrackedLink>
     </article>
   );
 }
@@ -151,6 +171,7 @@ function ProductCard({
 export function HomePage({ locale }: { locale: Locale }) {
   const copy = homeCopy[locale];
   const labels = fieldLabels[locale];
+  const quotes = visibleTestimonials();
   const signature = caseStudies
     .filter((study) => study.featured)
     .sort((a, b) => a.sequence - b.sequence);
@@ -276,6 +297,39 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {quotes.length > 0 ? (
+        <section
+          className={`${styles.testimonialsSection} ${fx.sectionFx}`}
+          id="testimonials"
+          aria-labelledby="testimonials-title"
+          data-reveal
+        >
+          <SectionHeadingFx
+            eyebrow={copy.testimonials.eyebrow}
+            title={copy.testimonials.title}
+            id="testimonials-title"
+          />
+          <div className={styles.testimonialsGrid}>
+            {quotes.map((quote, index) => (
+              <figure
+                key={`${quote.name}-${index}`}
+                className={styles.testimonialCard}
+                data-reveal
+                style={{ "--reveal-delay": `${index * 45}ms` } as CSSProperties}
+              >
+                <blockquote>
+                  <p>{quote.quote[locale]}</p>
+                </blockquote>
+                <figcaption>
+                  <strong>{quote.name}</strong>
+                  <span>{quote.role[locale]} · {quote.company}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <section
         className={`${styles.automationSection} ${fx.automationSectionFx} ${fx.sectionFx}`}
         id="automation-lab"
@@ -289,7 +343,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           body={copy.automationLab.intro}
           id="automation-title"
         />
-        <AutomationLab locale={locale} />
+        <LazyAutomationLab locale={locale} />
       </section>
 
       <section

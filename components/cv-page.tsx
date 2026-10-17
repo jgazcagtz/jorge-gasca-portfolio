@@ -5,6 +5,7 @@ import {
   CvHubStructuredData,
   CvStructuredData,
 } from "@/app/_seo/structured-data";
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { ActionLink, MetaLabel, SectionHeading } from "@/components/design-primitives";
 import {
   cvCredentials,
@@ -113,9 +114,14 @@ export function CvHubPage({ locale }: { locale: Locale }) {
               </ul>
               <div className={styles.variantCardActions}>
                 <ActionLink href={cvVariantPath(locale, variant.slug)}>{copy.view}</ActionLink>
-                <a href={cvPdfPath(locale, variant.slug)} download>
+                <TrackedAnchor
+                  href={cvPdfPath(locale, variant.slug)}
+                  download
+                  eventName="cv_pdf_download"
+                  eventData={{ variant: variant.slug, locale }}
+                >
                   {copy.download}<span aria-hidden="true">↓</span>
-                </a>
+                </TrackedAnchor>
               </div>
             </article>
           ))}
@@ -181,7 +187,15 @@ export function CvPage({ locale, variant }: { locale: Locale; variant: CvVariant
               <p className={styles.resumeSummary}>{variant.summary[locale]}</p>
               <CvIdentity locale={locale} />
               <div className={styles.resumeActions}>
-                <ActionLink href={cvPdfPath(locale, variant.slug)} variant="primary">
+                <ActionLink
+                  href={cvPdfPath(locale, variant.slug)}
+                  variant="primary"
+                  download
+                  analyticsEvent={{
+                    name: "cv_pdf_download",
+                    data: { variant: variant.slug, locale },
+                  }}
+                >
                   {copy.download}
                 </ActionLink>
                 <ActionLink href={emailHref(locale, "role")} variant="secondary">

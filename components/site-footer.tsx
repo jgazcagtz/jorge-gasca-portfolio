@@ -17,6 +17,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         </div>
         <nav aria-label={locale === "en" ? "Contact links" : "Enlaces de contacto"}>
           <Link href={localePath(locale, "/cv")}>CV</Link>
+          <Link href={localePath(locale, "/writing")}>{homeCopy[locale].nav.writing}</Link>
           <a href={CONTACT.linkedIn} target="_blank" rel="noreferrer">LinkedIn</a>
           <a href={CONTACT.github} target="_blank" rel="noreferrer">GitHub</a>
           <a href={CONTACT.emailHref}>Email</a>
