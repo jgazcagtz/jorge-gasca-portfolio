@@ -10,6 +10,10 @@ import styles from "./scroll-fx.module.css";
  * are opt-in through `data-fx` attributes rendered by the home page. With JS
  * disabled or `prefers-reduced-motion: reduce` the class `fx-enhanced` is
  * never added, so the page stays exactly as the static markup defines it.
+ *
+ * The loop parks itself once scrolling stops and the velocity skew has
+ * settled; scroll/resize/layout-size listeners wake it again, so an idle tab
+ * runs zero rAF work.
  */
 
 const clamp = (value: number, min = 0, max = 1) =>
@@ -40,6 +44,8 @@ type Tracked = {
    */
   kind: "pin" | "exit" | "enter";
   p: number;
+  /** Elements whose compositor layers are held only while 0 < p < 1. */
+  live: boolean;
 };
 
 /* ---------------------------------------------------------------------------
@@ -81,6 +87,8 @@ const IRIS: Record<PartName, PartState> = {
   barG: { x: 180, y: 132, r: 45, sx: 0.15, sy: 0.15, o: 0, dash: 0 },
 };
 
+const PART_NAMES: PartName[] = ["barJ", "footJ", "arcG", "barG"];
+
 const ARC_CIRCUMFERENCE = 2 * Math.PI * 64;
 
 function lerpState(a: PartState, b: PartState, t: number): PartState {
@@ -95,12 +103,20 @@ function lerpState(a: PartState, b: PartState, t: number): PartState {
   };
 }
 
-function renderMorph(root: HTMLElement, pinP: number) {
+/** Monogram parts resolved once; per-frame morphing writes styles directly. */
+type MorphParts = Array<{ name: PartName; el: SVGGraphicsElement }>;
+
+function collectMorphParts(root: HTMLElement): MorphParts {
+  return PART_NAMES.flatMap((name) => {
+    const el = root.querySelector<SVGGraphicsElement>(`[data-part="${name}"]`);
+    return el ? [{ name, el }] : [];
+  });
+}
+
+function renderMorph(parts: MorphParts, pinP: number) {
   const t1 = seg(pinP, 0.16, 0.58);
   const t2 = seg(pinP, 0.58, 0.82);
-  for (const name of Object.keys(LETTERS) as PartName[]) {
-    const el = root.querySelector<SVGGraphicsElement>(`[data-part="${name}"]`);
-    if (!el) continue;
+  for (const { name, el } of parts) {
     const state =
       t2 > 0
         ? lerpState(CIRCUIT[name], IRIS[name], t2)
@@ -160,6 +176,7 @@ export function ScrollFxController() {
     const tracked: Tracked[] = [];
     const pinKeys = ["track", "scenes", "finale"] as const;
     const exitKeys = ["hero"] as const;
+    const liveKeys = ["hero", "track", "finale"] as const;
     for (const [key, el] of byKey) {
       tracked.push({
         key,
@@ -170,19 +187,30 @@ export function ScrollFxController() {
             ? "exit"
             : "enter",
         p: -1,
+        live: false,
       });
     }
 
-    const steps = byKey.has("scenes")
+    const scenesEl = byKey.get("scenes");
+    const steps = scenesEl
       ? Array.from(
-          byKey.get("scenes")!.querySelectorAll<HTMLElement>(
-            "[data-fx-steps] > li",
+          scenesEl.querySelectorAll<HTMLElement>("[data-fx-steps] > li"),
+        )
+      : [];
+    const sceneFrames = scenesEl
+      ? Array.from(
+          scenesEl.querySelectorAll<HTMLElement>(
+            "[data-fx-scene-stage] [data-scene]",
           ),
         )
       : [];
     const meterValueEl = byKey
       .get("meter")
       ?.querySelector<HTMLElement>("[data-fx-meter-value]");
+    const trackEl = byKey.get("track");
+    const morphParts = byKey.has("finale")
+      ? collectMorphParts(byKey.get("finale")!)
+      : [];
 
     let lastY = window.scrollY;
     let vel = 0;
@@ -192,6 +220,7 @@ export function ScrollFxController() {
     let lastMeterState = "";
     let lastMeterValue = -1;
     let raf = 0;
+    let running = false;
 
     const write = () => {
       /* ---- read phase ---- */
@@ -209,19 +238,21 @@ export function ScrollFxController() {
       }));
 
       /* ---- write phase ---- */
+      let dirty = dy !== 0;
+
       if (Math.abs(progress - lastProgress) > 0.0004) {
         lastProgress = progress;
+        dirty = true;
         root.style.setProperty("--fx-progress", progress.toFixed(4));
       }
-      root.style.setProperty("--fx-vel", clamp(vel / 46, -1, 1).toFixed(4));
 
       // Velocity skew decays on its own cadence, independent of whether the
       // track's progress is still moving (a clamped pin must not freeze skew).
       // Below ~0.2% the skew is imperceptible — snap to zero so it fully settles.
-      const trackEl = byKey.get("track");
       const veln = Math.abs(vel / 46) < 0.002 ? 0 : clamp(vel / 46, -1, 1);
       if (trackEl && Math.abs(veln - lastVeln) > 0.0004) {
         lastVeln = veln;
+        dirty = true;
         trackEl.style.setProperty("--fx-veln", veln.toFixed(4));
       }
 
@@ -238,7 +269,18 @@ export function ScrollFxController() {
             : clamp(-rect.top / range);
         if (Math.abs(p - t.p) < 0.0006) continue;
         t.p = p;
+        dirty = true;
         t.el.style.setProperty("--fx-p", p.toFixed(4));
+
+        // Hold compositor layers only while the choreography is mid-flight;
+        // past either end the element releases them (data-fx-live in CSS).
+        if ((liveKeys as readonly string[]).includes(t.key)) {
+          const live = p > 0 && p < 1;
+          if (live !== t.live) {
+            t.live = live;
+            t.el.toggleAttribute("data-fx-live", live);
+          }
+        }
 
         if (t.key === "scenes" && steps.length > 0) {
           const step = Math.min(
@@ -250,6 +292,12 @@ export function ScrollFxController() {
             t.el.setAttribute("data-fx-step", String(step));
             steps.forEach((li, index) =>
               li.toggleAttribute("data-active", index === step - 1),
+            );
+            sceneFrames.forEach((scene) =>
+              scene.toggleAttribute(
+                "data-active",
+                Number(scene.dataset.scene) === step,
+              ),
             );
           }
         }
@@ -279,20 +327,45 @@ export function ScrollFxController() {
           set("--fx-mi", seg(p, 0.16, 0.5));
           set("--fx-mo", seg(p, 0.78, 0.98));
           set("--fx-flood", seg(p, 0.86, 1));
-          if (rect.bottom > -vh && rect.top < vh * 2) renderMorph(t.el, p);
+          if (morphParts.length > 0 && rect.bottom > -vh && rect.top < vh * 2) {
+            renderMorph(morphParts, p);
+          }
         }
       }
 
+      // Park the loop once every input has settled; listeners wake it.
+      if (dirty || Math.abs(vel) >= 0.092) {
+        raf = requestAnimationFrame(write);
+      } else {
+        running = false;
+      }
+    };
+
+    const wake = () => {
+      if (running) return;
+      running = true;
       raf = requestAnimationFrame(write);
     };
 
-    raf = requestAnimationFrame(write);
+    wake();
+
+    // Body-height changes (images, accordions, deferred sections) can move
+    // tracked elements without a scroll event — watch the layout too.
+    const layoutObserver = new ResizeObserver(wake);
+    layoutObserver.observe(document.body);
+
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("resize", wake);
+    window.addEventListener("pageshow", wake);
 
     return () => {
       cancelAnimationFrame(raf);
+      layoutObserver.disconnect();
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("resize", wake);
+      window.removeEventListener("pageshow", wake);
       root.classList.remove("fx-enhanced");
       root.style.removeProperty("--fx-progress");
-      root.style.removeProperty("--fx-vel");
     };
   }, []);
 

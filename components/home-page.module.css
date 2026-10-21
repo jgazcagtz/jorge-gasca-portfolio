@@ -402,18 +402,44 @@
   height: 100%;
 }
 
+/* Hover zoom is an animatable custom property so the pinned track can
+   compose parallax + zoom into ONE img transform while the zoom still
+   eases (a raw transform transition there would also lag the parallax). */
+@property --img-zoom {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
 .productMediaVisual img {
   display: block;
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  transition: transform 560ms var(--ease-out), opacity var(--motion-medium) ease;
+  transform: scale(calc(1 + var(--img-zoom, 0)));
+  transition:
+    --img-zoom 480ms var(--ease-out),
+    transform 560ms var(--ease-out),
+    opacity var(--motion-medium) ease;
 }
 
 .productCardLink:hover .productMediaVisual img,
 .productCardLink:focus-visible .productMediaVisual img {
-  transform: scale(1.025);
+  --img-zoom: 0.025;
+}
+
+/* Inside the pinned track the image carries the card parallax; this single
+   declaration (parallax + base zoom + eased hover zoom) replaces the base
+   transform, which would otherwise snap the parallax off on hover. */
+:global(html.fx-enhanced) [data-fx="track"] .productMediaVisual img {
+  transform: translate3d(calc(var(--fx-p, 0) * -2.5vw), 0, 0)
+    scale(calc(1.06 + var(--img-zoom, 0) * 0.8));
+  transition: --img-zoom 480ms var(--ease-out), opacity var(--motion-medium) ease;
+}
+
+:global(html.fx-enhanced) [data-fx="track"][data-fx-live] .productMediaVisual img {
+  will-change: transform;
 }
 
 .cardIndex,
