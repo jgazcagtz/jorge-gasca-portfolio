@@ -141,231 +141,275 @@ function meterState(p: number) {
   return "full";
 }
 
+const FINALE_VARS = [
+  "--fx-fa",
+  "--fx-fe",
+  "--fx-wa",
+  "--fx-we",
+  "--fx-mi",
+  "--fx-mo",
+  "--fx-flood",
+] as const;
+
 export function ScrollFxController() {
   useEffect(() => {
     const root = document.documentElement;
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !document.querySelector("[data-fx]")
-    ) {
-      return;
-    }
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    root.classList.add("fx-enhanced");
-
-    const byKey = new Map<Tracked["key"], HTMLElement>();
-    for (const el of document.querySelectorAll<HTMLElement>("[data-fx]")) {
-      const key = el.dataset.fx as Tracked["key"];
-      if (
-        [
-          "hero",
-          "track",
-          "scenes",
-          "meter",
-          "finale",
-          "contact",
-          "work",
-          "experience",
-          "automation",
-        ].includes(key)
-      ) {
-        byKey.set(key, el);
-      }
-    }
-
-    const tracked: Tracked[] = [];
-    const pinKeys = ["track", "scenes", "finale"] as const;
-    const exitKeys = ["hero"] as const;
-    const liveKeys = ["hero", "track", "finale"] as const;
-    for (const [key, el] of byKey) {
-      tracked.push({
-        key,
-        el,
-        kind: (pinKeys as readonly string[]).includes(key)
-          ? "pin"
-          : (exitKeys as readonly string[]).includes(key)
-            ? "exit"
-            : "enter",
-        p: -1,
-        live: false,
-      });
-    }
-
-    const scenesEl = byKey.get("scenes");
-    const steps = scenesEl
-      ? Array.from(
-          scenesEl.querySelectorAll<HTMLElement>("[data-fx-steps] > li"),
-        )
-      : [];
-    const sceneFrames = scenesEl
-      ? Array.from(
-          scenesEl.querySelectorAll<HTMLElement>(
-            "[data-fx-scene-stage] [data-scene]",
-          ),
-        )
-      : [];
-    const meterValueEl = byKey
-      .get("meter")
-      ?.querySelector<HTMLElement>("[data-fx-meter-value]");
-    const trackEl = byKey.get("track");
-    const morphParts = byKey.has("finale")
-      ? collectMorphParts(byKey.get("finale")!)
-      : [];
-
-    let lastY = window.scrollY;
-    let vel = 0;
-    let lastProgress = -1;
-    let lastVeln = 0;
-    let lastStep = -1;
-    let lastMeterState = "";
-    let lastMeterValue = -1;
-    let raf = 0;
-    let running = false;
-
-    const write = () => {
-      /* ---- read phase ---- */
-      const vh = window.innerHeight;
-      const maxScroll = Math.max(1, root.scrollHeight - vh);
-      const y = window.scrollY;
-      const progress = clamp(y / maxScroll);
-      const dy = y - lastY;
-      lastY = y;
-      vel += (dy - vel) * 0.14;
-
-      const frames = tracked.map((t) => ({
-        t,
-        rect: t.el.getBoundingClientRect(),
-      }));
-
-      /* ---- write phase ---- */
-      let dirty = dy !== 0;
-
-      if (Math.abs(progress - lastProgress) > 0.0004) {
-        lastProgress = progress;
-        dirty = true;
-        root.style.setProperty("--fx-progress", progress.toFixed(4));
-      }
-
-      // Velocity skew decays on its own cadence, independent of whether the
-      // track's progress is still moving (a clamped pin must not freeze skew).
-      // Below ~0.2% the skew is imperceptible — snap to zero so it fully settles.
-      const veln = Math.abs(vel / 46) < 0.002 ? 0 : clamp(vel / 46, -1, 1);
-      if (trackEl && Math.abs(veln - lastVeln) > 0.0004) {
-        lastVeln = veln;
-        dirty = true;
-        trackEl.style.setProperty("--fx-veln", veln.toFixed(4));
-      }
-
-      for (const { t, rect } of frames) {
-        const range =
-          t.kind === "pin"
-            ? Math.max(1, rect.height - vh)
-            : t.kind === "exit"
-              ? Math.max(1, rect.height)
-              : Math.max(1, vh * 0.9 + rect.height);
-        const p =
-          t.kind === "enter"
-            ? clamp((vh - rect.top) / range)
-            : clamp(-rect.top / range);
-        if (Math.abs(p - t.p) < 0.0006) continue;
-        t.p = p;
-        dirty = true;
-        t.el.style.setProperty("--fx-p", p.toFixed(4));
-
-        // Hold compositor layers only while the choreography is mid-flight;
-        // past either end the element releases them (data-fx-live in CSS).
-        if ((liveKeys as readonly string[]).includes(t.key)) {
-          const live = p > 0 && p < 1;
-          if (live !== t.live) {
-            t.live = live;
-            t.el.toggleAttribute("data-fx-live", live);
-          }
+    /** Enables the enhanced layer; returns its full teardown. */
+    const startFx = () => {
+        if (
+          motionQuery.matches ||
+          !document.querySelector("[data-fx]")
+        ) {
+          return () => {};
         }
 
-        if (t.key === "scenes" && steps.length > 0) {
-          const step = Math.min(
-            steps.length,
-            Math.max(1, Math.floor(p * steps.length) + 1),
-          );
-          if (step !== lastStep) {
-            lastStep = step;
-            t.el.setAttribute("data-fx-step", String(step));
-            steps.forEach((li, index) =>
-              li.toggleAttribute("data-active", index === step - 1),
+        root.classList.add("fx-enhanced");
+
+      const byKey = new Map<Tracked["key"], HTMLElement>();
+      for (const el of document.querySelectorAll<HTMLElement>("[data-fx]")) {
+        const key = el.dataset.fx as Tracked["key"];
+        if (
+          [
+            "hero",
+            "track",
+            "scenes",
+            "meter",
+            "finale",
+            "contact",
+            "work",
+            "experience",
+            "automation",
+          ].includes(key)
+        ) {
+          byKey.set(key, el);
+        }
+      }
+
+      const tracked: Tracked[] = [];
+      const pinKeys = ["track", "scenes", "finale"] as const;
+      const exitKeys = ["hero"] as const;
+      const liveKeys = ["hero", "track", "finale"] as const;
+      for (const [key, el] of byKey) {
+        tracked.push({
+          key,
+          el,
+          kind: (pinKeys as readonly string[]).includes(key)
+            ? "pin"
+            : (exitKeys as readonly string[]).includes(key)
+              ? "exit"
+              : "enter",
+          p: -1,
+          live: false,
+        });
+      }
+
+      const scenesEl = byKey.get("scenes");
+      const steps = scenesEl
+        ? Array.from(
+            scenesEl.querySelectorAll<HTMLElement>("[data-fx-steps] > li"),
+          )
+        : [];
+      const sceneFrames = scenesEl
+        ? Array.from(
+            scenesEl.querySelectorAll<HTMLElement>(
+              "[data-fx-scene-stage] [data-scene]",
+            ),
+          )
+        : [];
+      const meterValueEl = byKey
+        .get("meter")
+        ?.querySelector<HTMLElement>("[data-fx-meter-value]");
+      const trackEl = byKey.get("track");
+      const morphParts = byKey.has("finale")
+        ? collectMorphParts(byKey.get("finale")!)
+        : [];
+
+      let lastY = window.scrollY;
+      let vel = 0;
+      let lastProgress = -1;
+      let lastVeln = 0;
+      let lastStep = -1;
+      let lastMeterState = "";
+      let lastMeterValue = -1;
+      let raf = 0;
+      let running = false;
+
+      const write = () => {
+        /* ---- read phase ---- */
+        const vh = window.innerHeight;
+        const maxScroll = Math.max(1, root.scrollHeight - vh);
+        const y = window.scrollY;
+        const progress = clamp(y / maxScroll);
+        const dy = y - lastY;
+        lastY = y;
+        vel += (dy - vel) * 0.14;
+
+        const frames = tracked.map((t) => ({
+          t,
+          rect: t.el.getBoundingClientRect(),
+        }));
+
+        /* ---- write phase ---- */
+        let dirty = dy !== 0;
+
+        if (Math.abs(progress - lastProgress) > 0.0004) {
+          lastProgress = progress;
+          dirty = true;
+          root.style.setProperty("--fx-progress", progress.toFixed(4));
+        }
+
+        // Velocity skew decays on its own cadence, independent of whether the
+        // track's progress is still moving (a clamped pin must not freeze skew).
+        // Below ~0.2% the skew is imperceptible — snap to zero so it fully settles.
+        const veln = Math.abs(vel / 46) < 0.002 ? 0 : clamp(vel / 46, -1, 1);
+        if (trackEl && Math.abs(veln - lastVeln) > 0.0004) {
+          lastVeln = veln;
+          dirty = true;
+          trackEl.style.setProperty("--fx-veln", veln.toFixed(4));
+        }
+
+        for (const { t, rect } of frames) {
+          const range =
+            t.kind === "pin"
+              ? Math.max(1, rect.height - vh)
+              : t.kind === "exit"
+                ? Math.max(1, rect.height)
+                : Math.max(1, vh * 0.9 + rect.height);
+          const p =
+            t.kind === "enter"
+              ? clamp((vh - rect.top) / range)
+              : clamp(-rect.top / range);
+          if (Math.abs(p - t.p) < 0.0006) continue;
+          t.p = p;
+          dirty = true;
+          t.el.style.setProperty("--fx-p", p.toFixed(4));
+
+          // Hold compositor layers only while the choreography is mid-flight;
+          // past either end the element releases them (data-fx-live in CSS).
+          if ((liveKeys as readonly string[]).includes(t.key)) {
+            const live = p > 0 && p < 1;
+            if (live !== t.live) {
+              t.live = live;
+              t.el.toggleAttribute("data-fx-live", live);
+            }
+          }
+
+          if (t.key === "scenes" && steps.length > 0) {
+            const step = Math.min(
+              steps.length,
+              Math.max(1, Math.floor(p * steps.length) + 1),
             );
-            sceneFrames.forEach((scene) =>
-              scene.toggleAttribute(
-                "data-active",
-                Number(scene.dataset.scene) === step,
-              ),
-            );
+            if (step !== lastStep) {
+              lastStep = step;
+              t.el.setAttribute("data-fx-step", String(step));
+              steps.forEach((li, index) =>
+                li.toggleAttribute("data-active", index === step - 1),
+              );
+              sceneFrames.forEach((scene) =>
+                scene.toggleAttribute(
+                  "data-active",
+                  Number(scene.dataset.scene) === step,
+                ),
+              );
+            }
+          }
+
+          if (t.key === "meter") {
+            const fill = seg(p, 0.08, 0.62);
+            t.el.style.setProperty("--fx-meter", fill.toFixed(4));
+            const state = meterState(fill);
+            if (state !== lastMeterState) {
+              lastMeterState = state;
+              t.el.setAttribute("data-fx-state", state);
+            }
+            const value = Math.round(fill * 100);
+            if (value !== lastMeterValue && meterValueEl) {
+              lastMeterValue = value;
+              meterValueEl.textContent = String(value);
+            }
+          }
+
+          if (t.key === "finale") {
+            const set = (name: string, value: number) =>
+              t.el.style.setProperty(name, value.toFixed(4));
+            set("--fx-fa", seg(p, 0.02, 0.3));
+            set("--fx-fe", seg(p, 0.38, 0.82));
+            set("--fx-wa", seg(p, 0.12, 0.55));
+            set("--fx-we", seg(p, 0.6, 0.88));
+            set("--fx-mi", seg(p, 0.16, 0.5));
+            set("--fx-mo", seg(p, 0.78, 0.98));
+            set("--fx-flood", seg(p, 0.86, 1));
+            if (morphParts.length > 0 && rect.bottom > -vh && rect.top < vh * 2) {
+              renderMorph(morphParts, p);
+            }
           }
         }
 
-        if (t.key === "meter") {
-          const fill = seg(p, 0.08, 0.62);
-          t.el.style.setProperty("--fx-meter", fill.toFixed(4));
-          const state = meterState(fill);
-          if (state !== lastMeterState) {
-            lastMeterState = state;
-            t.el.setAttribute("data-fx-state", state);
-          }
-          const value = Math.round(fill * 100);
-          if (value !== lastMeterValue && meterValueEl) {
-            lastMeterValue = value;
-            meterValueEl.textContent = String(value);
-          }
+        // Park the loop once every input has settled; listeners wake it.
+        if (dirty || Math.abs(vel) >= 0.092) {
+          raf = requestAnimationFrame(write);
+        } else {
+          running = false;
         }
+      };
 
-        if (t.key === "finale") {
-          const set = (name: string, value: number) =>
-            t.el.style.setProperty(name, value.toFixed(4));
-          set("--fx-fa", seg(p, 0.02, 0.3));
-          set("--fx-fe", seg(p, 0.38, 0.82));
-          set("--fx-wa", seg(p, 0.12, 0.55));
-          set("--fx-we", seg(p, 0.6, 0.88));
-          set("--fx-mi", seg(p, 0.16, 0.5));
-          set("--fx-mo", seg(p, 0.78, 0.98));
-          set("--fx-flood", seg(p, 0.86, 1));
-          if (morphParts.length > 0 && rect.bottom > -vh && rect.top < vh * 2) {
-            renderMorph(morphParts, p);
-          }
-        }
-      }
-
-      // Park the loop once every input has settled; listeners wake it.
-      if (dirty || Math.abs(vel) >= 0.092) {
+      const wake = () => {
+        if (running) return;
+        running = true;
         raf = requestAnimationFrame(write);
-      } else {
-        running = false;
-      }
+      };
+
+      wake();
+
+      // Body-height changes (images, accordions, deferred sections) can move
+      // tracked elements without a scroll event — watch the layout too.
+      const layoutObserver = new ResizeObserver(wake);
+      layoutObserver.observe(document.body);
+
+      window.addEventListener("scroll", wake, { passive: true });
+      window.addEventListener("resize", wake);
+      window.addEventListener("pageshow", wake);
+
+      return () => {
+        cancelAnimationFrame(raf);
+        layoutObserver.disconnect();
+        window.removeEventListener("scroll", wake);
+        window.removeEventListener("resize", wake);
+        window.removeEventListener("pageshow", wake);
+        root.classList.remove("fx-enhanced");
+        root.style.removeProperty("--fx-progress");
+        // Drop every trace of the enhanced layer so toggling reduced motion
+        // never leaves half-driven vars or attributes behind.
+        for (const t of tracked) {
+          t.el.style.removeProperty("--fx-p");
+          t.el.removeAttribute("data-fx-live");
+          t.el.removeAttribute("data-fx-step");
+          t.el.removeAttribute("data-fx-state");
+          t.el.style.removeProperty("--fx-meter");
+          if (t.key === "track") t.el.style.removeProperty("--fx-veln");
+          if (t.key === "finale") {
+            for (const name of FINALE_VARS) t.el.style.removeProperty(name);
+          }
+        }
+        steps.forEach((li) => li.removeAttribute("data-active"));
+        sceneFrames.forEach((scene) => scene.removeAttribute("data-active"));
+      };
     };
 
-    const wake = () => {
-      if (running) return;
-      running = true;
-      raf = requestAnimationFrame(write);
+    // Reduced-motion can change mid-session: stop (and fully reset) or
+    // restart the enhanced layer to match. Cleanups are idempotent.
+    let stopFx = startFx();
+    const onMotionChange = (event: MediaQueryListEvent) => {
+      stopFx();
+      stopFx = event.matches ? () => {} : startFx();
     };
-
-    wake();
-
-    // Body-height changes (images, accordions, deferred sections) can move
-    // tracked elements without a scroll event — watch the layout too.
-    const layoutObserver = new ResizeObserver(wake);
-    layoutObserver.observe(document.body);
-
-    window.addEventListener("scroll", wake, { passive: true });
-    window.addEventListener("resize", wake);
-    window.addEventListener("pageshow", wake);
+    motionQuery.addEventListener("change", onMotionChange);
 
     return () => {
-      cancelAnimationFrame(raf);
-      layoutObserver.disconnect();
-      window.removeEventListener("scroll", wake);
-      window.removeEventListener("resize", wake);
-      window.removeEventListener("pageshow", wake);
-      root.classList.remove("fx-enhanced");
-      root.style.removeProperty("--fx-progress");
+      motionQuery.removeEventListener("change", onMotionChange);
+      stopFx();
     };
   }, []);
 

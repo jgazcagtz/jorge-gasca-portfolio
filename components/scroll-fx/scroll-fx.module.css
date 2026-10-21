@@ -268,6 +268,30 @@
   opacity: calc(1 - var(--fx-p, 0) * 3);
 }
 
+/* Phone heroes are taller than the viewport, so a cue pinned to the hero's
+   bottom edge would start below the fold. There it floats over the fold and
+   fades with the hero's exit progress; without JS or with reduced motion it
+   stays hidden, exactly like the old static rendering. */
+@media (max-width: 560px) {
+  .heroCue {
+    display: none;
+  }
+
+  :global(html.fx-enhanced) .heroCue {
+    position: fixed;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    left: auto;
+    right: max(14px, env(safe-area-inset-right, 0px));
+    display: grid;
+    transform: none;
+    z-index: 60;
+  }
+
+  :global(html.fx-enhanced) .heroCue::after {
+    height: 26px;
+  }
+}
+
 .heroCue::after {
   content: "";
   width: 1px;
@@ -367,9 +391,9 @@
     will-change: transform;
   }
 
-  /* leading panel marker inside the pinned viewport */
+  /* leading panel marker inside the pinned viewport (localized via attr) */
   :global(html.fx-enhanced) .workViewport::before {
-    content: "SIGNATURE WORLDS";
+    content: attr(data-track-label);
     position: absolute;
     top: calc(var(--header-height) + 14px);
     left: var(--page-gutter);
@@ -946,7 +970,7 @@
 }
 
 .meterStates span {
-  opacity: 0.4;
+  opacity: 0.55;
   transition: opacity 260ms ease, color 260ms ease;
 }
 
@@ -1081,6 +1105,7 @@
 .finaleWindowChrome {
   display: flex;
   gap: 6px;
+  align-items: center;
   padding: 10px 12px;
   border-bottom: 1px solid var(--rule-alpha);
 }
@@ -1096,9 +1121,66 @@
 .finaleWindowChrome i:nth-child(2) { background: var(--accent-orange); }
 .finaleWindowChrome i:nth-child(3) { background: var(--accent-cyan); }
 
+.finaleUrl {
+  margin-left: 10px;
+  padding: 3px 10px;
+  border: 1px solid var(--rule-alpha);
+  color: var(--text-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
 .finaleWindowBody {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 18px 22px;
   background:
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 46px 100%;
+}
+
+.finaleWindowBody strong {
+  color: var(--text-primary);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.05rem, 1.9vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.finaleWindowBody > span {
+  color: var(--text-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  font-weight: 760;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.finaleStats {
+  display: flex;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.finaleStats i {
+  color: var(--annotation-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 780;
+  letter-spacing: 0.16em;
+  font-style: normal;
+}
+
+.finaleStats i::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  background: var(--accent-coral);
+  vertical-align: 0.12em;
 }
 
 .finaleMonogram {
@@ -1150,7 +1232,22 @@
 
 /* ---------- heading FX responsive twin of SectionHeading ---------- */
 
-@media (max-width: 820px) {
+@media (max-width: 900px) {
+  .heroWatermark {
+    font-size: clamp(150px, 44vw, 240px);
+    right: -4%;
+  }
+
+  .giantWord {
+    font-size: clamp(64px, 18vw, 130px);
+  }
+
+  .meterReadout {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 560px) {
   .sectionHeadingFx {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -1164,11 +1261,6 @@
     max-width: 620px;
   }
 
-  .heroWatermark {
-    font-size: clamp(150px, 44vw, 240px);
-    right: -4%;
-  }
-
   .heroLayerPortrait {
     grid-column: 2;
     grid-row: 1;
@@ -1176,17 +1268,5 @@
 
   .heroLayerTrace {
     grid-row: 6;
-  }
-
-  .heroCue {
-    display: none;
-  }
-
-  .giantWord {
-    font-size: clamp(64px, 18vw, 130px);
-  }
-
-  .meterReadout {
-    font-size: 1.5rem;
   }
 }

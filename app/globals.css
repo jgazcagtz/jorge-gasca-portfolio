@@ -45,8 +45,8 @@
   --inverse-border: color-mix(in srgb, var(--text-inverse) 24%, transparent);
   --rule-alpha: color-mix(in srgb, var(--text-primary) 9%, transparent);
   --grid-line: color-mix(in srgb, var(--text-primary) 7%, transparent);
-  --annotation: #6f675c;
-  --annotation-ink: #57503f;
+  --annotation: #60584c;
+  --annotation-ink: #4a4433;
   --spec-glow: 0 24px 90px rgb(24 18 8 / 22%);
 }
 
@@ -159,8 +159,8 @@ video {
 .skipLink {
   position: fixed;
   z-index: 1000;
-  top: 12px;
-  left: 12px;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  left: max(12px, env(safe-area-inset-left, 0px));
   min-height: 44px;
   padding: 11px 16px;
   background: var(--text-primary);
@@ -356,7 +356,7 @@ video {
 .mobileNav nav {
   position: absolute;
   top: calc(100% + 10px);
-  right: 0;
+  right: env(safe-area-inset-right, 0px);
   display: grid;
   width: min(340px, calc(100vw - (var(--page-gutter) * 2)));
   padding: 10px;
@@ -663,11 +663,11 @@ body:has(.mobileNav > button[aria-expanded="true"]) .siteFooter {
 
 @media (max-width: 560px) {
   :root {
-    --page-gutter: 14px;
+    --page-gutter: max(14px, calc(env(safe-area-inset-left, 0px) + 8px), calc(env(safe-area-inset-right, 0px) + 8px));
   }
 
   .headerInner {
-    width: calc(100% - 28px);
+    width: calc(100% - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
   }
 
   .localeSwitch {

@@ -3,10 +3,27 @@ import styles from "./scroll-fx.module.css";
 /**
  * Approach "scene switcher" visuals — four tiny CSS/SVG dioramas, one per
  * method step (Discover / Design / Automate / Verify). Fully decorative
- * (aria-hidden); the real copy lives in the approach trace list.
+ * (aria-hidden); the real copy lives in the approach trace list. Scene tags
+ * are localized purely as set dressing.
  */
 
-export function ApproachScenes() {
+const sceneTags = {
+  en: {
+    discover: "STOREFRONT / MOMENT OF DOUBT",
+    design: "WIREFRAME / SEQUENCE",
+    automate: "PIPELINE / GUARDRAILS",
+    verify: "VERIFY / RELEASE",
+  },
+  es: {
+    discover: "VITRINA / MOMENTO DE DUDA",
+    design: "WIREFRAME / SECUENCIA",
+    automate: "PIPELINE / GUARDARRAILES",
+    verify: "VERIFICAR / LANZAMIENTO",
+  },
+} as const;
+
+export function ApproachScenes({ locale }: { locale: "en" | "es" }) {
+  const tags = sceneTags[locale];
   return (
     <div className={styles.sceneStage} aria-hidden="true" data-fx-scene-stage>
       <div className={styles.sceneFrame}>
@@ -39,7 +56,7 @@ export function ApproachScenes() {
               <circle cx="298" cy="152" r="4" />
             </g>
             <text className={styles.sceneTag} x="70" y="46">
-              STOREFRONT / MOMENT OF DOUBT
+              {tags.discover}
             </text>
           </svg>
         </div>
@@ -72,7 +89,7 @@ export function ApproachScenes() {
               <path d="M0 0 L0 16 L5 12 L9 20 L13 18 L9 10 L15 9 Z" />
             </g>
             <text className={styles.sceneTag} x="52" y="46">
-              WIREFRAME / SEQUENCE
+              {tags.design}
             </text>
           </svg>
         </div>
@@ -111,7 +128,7 @@ export function ApproachScenes() {
             <circle className={styles.packet} r="4" />
             <circle className={styles.packet} r="4" style={{ animationDelay: "1.5s" }} />
             <text className={styles.sceneTag} x="32" y="46">
-              PIPELINE / GUARDRAILS
+              {tags.automate}
             </text>
           </svg>
         </div>
@@ -146,7 +163,7 @@ export function ApproachScenes() {
               <path d="M252 128 L272 148" />
             </g>
             <text className={styles.sceneTag} x="96" y="40">
-              VERIFY / RELEASE
+              {tags.verify}
             </text>
           </svg>
         </div>

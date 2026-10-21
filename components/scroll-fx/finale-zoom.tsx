@@ -7,21 +7,49 @@ import styles from "./scroll-fx.module.css";
  * without JS the monogram simply rests in its letterform state.
  */
 
-export function FinaleZoom() {
+const labels = {
+  en: {
+    frame: "JG — SYSTEM PORTFOLIO",
+    url: "jgasca.io/work",
+    lineA: "Seven shipped systems. Zero handoffs lost.",
+    lineB: "Sales · CRM · AI workflows",
+    statA: "07 CASES",
+    statB: "2020—2026",
+  },
+  es: {
+    frame: "JG — PORTAFOLIO DE SISTEMAS",
+    url: "jgasca.io/work",
+    lineA: "Siete sistemas entregados. Cero traspasos perdidos.",
+    lineB: "Ventas · CRM · flujos de IA",
+    statA: "07 CASOS",
+    statB: "2020—2026",
+  },
+} as const;
+
+export function FinaleZoom({ locale }: { locale: "en" | "es" }) {
+  const t = labels[locale];
   return (
     <section className={styles.finale} data-fx="finale" aria-hidden="true">
       <div className={styles.finaleStage}>
         <div className={styles.finaleLayer} data-layer="frame">
           <span className={styles.finaleFrame} />
-          <span className={styles.finaleFrameLabel}>JG — SYSTEM PORTFOLIO</span>
+          <span className={styles.finaleFrameLabel}>{t.frame}</span>
         </div>
 
         <div className={styles.finaleLayer} data-layer="window">
           <span className={styles.finaleWindow}>
             <span className={styles.finaleWindowChrome}>
               <i /><i /><i />
+              <span className={styles.finaleUrl}>{t.url}</span>
             </span>
-            <span className={styles.finaleWindowBody} />
+            <span className={styles.finaleWindowBody}>
+              <strong>{t.lineA}</strong>
+              <span>{t.lineB}</span>
+              <span className={styles.finaleStats}>
+                <i>{t.statA}</i>
+                <i>{t.statB}</i>
+              </span>
+            </span>
           </span>
         </div>
 
