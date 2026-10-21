@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 const themeEvent = "jorge-theme-change";
 
@@ -27,6 +27,27 @@ export function ThemeToggle({ locale }: { locale: "en" | "es" }) {
     getThemeSnapshot,
     getServerThemeSnapshot,
   );
+
+  // Follow OS scheme changes while the visitor has not picked a theme
+  // themselves; an explicit choice always wins.
+  useEffect(() => {
+    const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const onSchemeChange = (event: MediaQueryListEvent) => {
+      let saved: string | null = null;
+      try {
+        saved = localStorage.getItem("jorge-theme");
+      } catch {
+        saved = null;
+      }
+      if (saved === "dark" || saved === "light") return;
+      const theme = event.matches ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+      window.dispatchEvent(new Event(themeEvent));
+    };
+    scheme.addEventListener("change", onSchemeChange);
+    return () => scheme.removeEventListener("change", onSchemeChange);
+  }, []);
 
   const label = locale === "en"
     ? `Switch to ${dark ? "light" : "dark"} theme`

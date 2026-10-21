@@ -26,7 +26,9 @@
   --step-3: clamp(2rem, 1.47rem + 2.18vw, 3.35rem);
   --step-4: clamp(2.1rem, 1.1rem + 4vw, 5.6rem);
   --step-5: clamp(2.4rem, 1.1rem + 5.8vw, 7.6rem);
-  --step-hero: clamp(3.2rem, 1.2rem + 8.6vw, 9.8rem);
+  /* vw growth capped by viewport height so the hero headline always fits
+     above the fold on short landscape/laptop viewports. */
+  --step-hero: clamp(3.2rem, min(1.2rem + 8.6vw, 9.4svh), 9.8rem);
   --motion-fast: 180ms;
   --motion-medium: 360ms;
   --motion-slow: 640ms;
@@ -43,8 +45,8 @@
   --inverse-border: color-mix(in srgb, var(--text-inverse) 24%, transparent);
   --rule-alpha: color-mix(in srgb, var(--text-primary) 9%, transparent);
   --grid-line: color-mix(in srgb, var(--text-primary) 7%, transparent);
-  --annotation: #6f675c;
-  --annotation-ink: #57503f;
+  --annotation: #60584c;
+  --annotation-ink: #4a4433;
   --spec-glow: 0 24px 90px rgb(24 18 8 / 22%);
 }
 
@@ -157,8 +159,8 @@ video {
 .skipLink {
   position: fixed;
   z-index: 1000;
-  top: 12px;
-  left: 12px;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  left: max(12px, env(safe-area-inset-left, 0px));
   min-height: 44px;
   padding: 11px 16px;
   background: var(--text-primary);
@@ -354,7 +356,7 @@ video {
 .mobileNav nav {
   position: absolute;
   top: calc(100% + 10px);
-  right: 0;
+  right: env(safe-area-inset-right, 0px);
   display: grid;
   width: min(340px, calc(100vw - (var(--page-gutter) * 2)));
   padding: 10px;
@@ -661,11 +663,11 @@ body:has(.mobileNav > button[aria-expanded="true"]) .siteFooter {
 
 @media (max-width: 560px) {
   :root {
-    --page-gutter: 14px;
+    --page-gutter: max(14px, calc(env(safe-area-inset-left, 0px) + 8px), calc(env(safe-area-inset-right, 0px) + 8px));
   }
 
   .headerInner {
-    width: calc(100% - 28px);
+    width: calc(100% - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
   }
 
   .localeSwitch {

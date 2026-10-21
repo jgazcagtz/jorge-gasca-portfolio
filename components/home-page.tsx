@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Fragment } from "react";
 import Image from "next/image";
 import { HomeStructuredData } from "@/app/_seo/structured-data";
 import {
@@ -64,6 +65,8 @@ const fieldLabels = {
     roleIndex: "01 / HIRING",
     projectIndex: "02 / PROJECTS",
     words: { work: "PROOF", automation: "SYSTEM", approach: "METHOD", experience: "TIMELINE" },
+    trace: ["DISCOVER", "DESIGN", "AUTOMATE", "VERIFY"],
+    trackLabel: "SIGNATURE WORLDS",
   },
   es: {
     top: "HUMANO / SISTEMAS",
@@ -77,6 +80,8 @@ const fieldLabels = {
     roleIndex: "01 / OPORTUNIDADES",
     projectIndex: "02 / PROYECTOS",
     words: { work: "EVIDENCIA", automation: "SISTEMA", approach: "MÉTODO", experience: "TRAYECTORIA" },
+    trace: ["DESCUBRIR", "DISEÑAR", "AUTOMATIZAR", "VERIFICAR"],
+    trackLabel: "MUNDOS DISTINTIVOS",
   },
 } as const;
 
@@ -115,55 +120,66 @@ function ProductCard({
       data-reveal
       style={cardStyle}
     >
-      <TrackedLink
-        className={styles.productCardLink}
-        href={localePath(locale, `/work/${study.slug}`)}
-        transitionTypes={["case-forward"]}
-        eventName="case_study_open"
-        eventData={{ slug: study.slug, locale, source: "home_card" }}
-      >
-        <div className={styles.productMedia}>
-          <EvidenceMedia
-            asset={study.media.desktop}
-            locale={locale}
-            role="card"
-            sizes={variant === "lead" ? "(max-width: 900px) 100vw, 64vw" : "(max-width: 800px) 100vw, 45vw"}
-            className={styles.productMediaVisual}
-            transitionName={`case-${study.slug}`}
-          />
-          <span className={styles.cardIndex} aria-hidden="true">
-            {String(study.sequence).padStart(2, "0")}
-          </span>
-          <span className={styles.cardStage}>{copy.stageLabel}</span>
-        </div>
+      <div className={styles.productMedia}>
+        <EvidenceMedia
+          asset={study.media.desktop}
+          locale={locale}
+          role="card"
+          sizes={variant === "lead" ? "(max-width: 900px) 100vw, 64vw" : "(max-width: 800px) 100vw, 45vw"}
+          className={styles.productMediaVisual}
+          transitionName={`case-${study.slug}`}
+        />
+        <span className={styles.cardIndex} aria-hidden="true">
+          {String(study.sequence).padStart(2, "0")}
+        </span>
+        <span className={styles.cardStage}>{copy.stageLabel}</span>
+      </div>
 
-        <div className={`${styles.productBody} ${fx.cardBodyFx}`}>
-          <div className={styles.cardRole}>
-            <span>{labels.role}</span>
-            <strong>{copy.role}</strong>
-          </div>
-          <h3>{copy.title}</h3>
-          <p className={styles.productSummary}>{copy.summary}</p>
-          {metrics.length > 0 ? (
-            <ul className={styles.cardMetrics} aria-label={labels.metrics}>
-              {metrics.map((metric) => (
-                <li key={metric.label[locale]}>
-                  <strong>{metric.value[locale]}</strong>
-                  <span>{metric.label[locale]}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <div className={styles.cardResult}>
-            <span>{labels.result}</span>
-            <p>{copy.cardResult}</p>
-          </div>
-          <span className={styles.textLink}>
-            {homeCopy[locale].work.viewCase}
-            <span aria-hidden="true">↗</span>
-          </span>
+      <div className={`${styles.productBody} ${fx.cardBodyFx}`}>
+        <div className={styles.cardRole}>
+          <span>{labels.role}</span>
+          <strong>{copy.role}</strong>
         </div>
-      </TrackedLink>
+        {/* The link wraps the title (and the CTA below) — not the whole
+            card — so its accessible name is the case study, not the card's
+            entire body copy. */}
+        <h3>
+          <TrackedLink
+            className={styles.productCardLink}
+            href={localePath(locale, `/work/${study.slug}`)}
+            transitionTypes={["case-forward"]}
+            eventName="case_study_open"
+            eventData={{ slug: study.slug, locale, source: "home_card" }}
+          >
+            {copy.title}
+          </TrackedLink>
+        </h3>
+        <p className={styles.productSummary}>{copy.summary}</p>
+        {metrics.length > 0 ? (
+          <ul className={styles.cardMetrics} aria-label={labels.metrics}>
+            {metrics.map((metric) => (
+              <li key={metric.label[locale]}>
+                <strong>{metric.value[locale]}</strong>
+                <span>{metric.label[locale]}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className={styles.cardResult}>
+          <span>{labels.result}</span>
+          <p>{copy.cardResult}</p>
+        </div>
+        <TrackedLink
+          className={styles.textLink}
+          href={localePath(locale, `/work/${study.slug}`)}
+          transitionTypes={["case-forward"]}
+          eventName="case_study_open"
+          eventData={{ slug: study.slug, locale, source: "home_card" }}
+        >
+          {homeCopy[locale].work.viewCase}
+          <span aria-hidden="true">↗</span>
+        </TrackedLink>
+      </div>
     </article>
   );
 }
@@ -244,7 +260,12 @@ export function HomePage({ locale }: { locale: Locale }) {
 
         <div className={fx.heroLayerTrace}>
           <div className={styles.heroSystemTrace} aria-hidden="true">
-            <span>DISCOVER</span><i /><span>DESIGN</span><i /><span>AUTOMATE</span><i /><span>VERIFY</span>
+            {labels.trace.map((word, index) => (
+              <Fragment key={word}>
+                {index > 0 ? <i /> : null}
+                <span>{word}</span>
+              </Fragment>
+            ))}
           </div>
         </div>
 
@@ -255,45 +276,48 @@ export function HomePage({ locale }: { locale: Locale }) {
 
       <section
         className={`${styles.workSection} ${fx.sectionFx}`}
-        id="work"
         aria-labelledby="work-title"
         data-fx="work"
       >
         <GiantWord text={labels.words.work} />
-        <SectionHeadingFx
-          eyebrow={copy.work.eyebrow}
-          title={copy.work.title}
-          body={copy.work.intro}
-          id="work-title"
-        />
+        {/* #work starts at the heading rather than the section's top padding,
+            so the deep link lands on content instead of whitespace. */}
+        <div id="work">
+          <SectionHeadingFx
+            eyebrow={copy.work.eyebrow}
+            title={copy.work.title}
+            body={copy.work.intro}
+            id="work-title"
+          />
 
-        <div className={styles.collectionHeader}>
-          <MetaLabel>{copy.work.featured}</MetaLabel>
-          <span aria-hidden="true">{rangeLabel(signature)}</span>
-        </div>
-        <div className={fx.workStage} data-fx="track">
-          <div className={fx.workViewport}>
-            <div className={`${styles.signatureGrid} ${fx.signatureTrack}`}>
-              {signature.map((study, index) => (
-                <ProductCard
-                  key={study.slug}
-                  study={study}
-                  locale={locale}
-                  variant={index === 0 ? "lead" : "standard"}
-                />
-              ))}
+          <div className={styles.collectionHeader}>
+            <MetaLabel>{copy.work.featured}</MetaLabel>
+            <span aria-hidden="true">{rangeLabel(signature)}</span>
+          </div>
+          <div className={fx.workStage} data-fx="track">
+            <div className={fx.workViewport} data-track-label={labels.trackLabel}>
+              <div className={`${styles.signatureGrid} ${fx.signatureTrack}`}>
+                {signature.map((study, index) => (
+                  <ProductCard
+                    key={study.slug}
+                    study={study}
+                    locale={locale}
+                    variant={index === 0 ? "lead" : "standard"}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.collectionHeader}>
-          <MetaLabel>{copy.work.labs}</MetaLabel>
-          <span aria-hidden="true">{rangeLabel(moreWork)}</span>
-        </div>
-        <div className={`${styles.moreGrid} ${fx.moreGridFx}`}>
-          {moreWork.map((study) => (
-            <ProductCard key={study.slug} study={study} locale={locale} variant="compact" />
-          ))}
+          <div className={styles.collectionHeader}>
+            <MetaLabel>{copy.work.labs}</MetaLabel>
+            <span aria-hidden="true">{rangeLabel(moreWork)}</span>
+          </div>
+          <div className={`${styles.moreGrid} ${fx.moreGridFx}`}>
+            {moreWork.map((study) => (
+              <ProductCard key={study.slug} study={study} locale={locale} variant="compact" />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -380,7 +404,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             </li>
           ))}
         </ol>
-        <ApproachScenes />
+        <ApproachScenes locale={locale} />
       </section>
 
       <section
@@ -466,7 +490,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <FinaleZoom />
+      <FinaleZoom locale={locale} />
 
       <section
         className={`${styles.contactSection} ${fx.contactSectionFx}`}
