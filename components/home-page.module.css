@@ -300,9 +300,44 @@
 .approachSection,
 .experienceSection {
   content-visibility: auto;
-  contain-intrinsic-block-size: auto 1200px;
   padding-block: clamp(86px, 11vw, 170px);
   border-top: 1px solid var(--rule-alpha);
+}
+
+/* Fallbacks sized from the real static layout (measured 1024–1440) so a
+   first-paint anchor landing in reduced-motion desktops barely shifts once
+   the section renders; after that the remembered `auto` size takes over. */
+.workSection {
+  contain-intrinsic-block-size: auto 4200px;
+}
+
+.automationSection {
+  contain-intrinsic-block-size: auto 560px;
+}
+
+.approachSection {
+  contain-intrinsic-block-size: auto 1500px;
+}
+
+.experienceSection {
+  contain-intrinsic-block-size: auto 1400px;
+}
+
+/* The tall sections dwarf any single estimate (3000px+ on phones), and a
+   materializing section shifts every anchor beneath it. On phone/tablet
+   widths they render normally — the heavy scene SVGs are desktop-only, so
+   the eager layout cost is small and anchor landings stay put. */
+@media (max-width: 900px) {
+  .workSection,
+  .automationSection,
+  .approachSection,
+  .experienceSection,
+  .partnerBand,
+  .faqSection,
+  .contactSection {
+    content-visibility: visible;
+    contain-intrinsic-block-size: none;
+  }
 }
 
 .collectionHeader {
@@ -721,7 +756,7 @@
 
 .partnerBand {
   content-visibility: auto;
-  contain-intrinsic-block-size: auto 360px;
+  contain-intrinsic-block-size: auto 240px;
   display: grid;
   grid-template-columns: minmax(150px, 0.45fr) minmax(0, 1fr) auto;
   gap: clamp(28px, 5vw, 84px);
@@ -777,7 +812,7 @@
 
 .contactSection {
   content-visibility: auto;
-  contain-intrinsic-block-size: auto 760px;
+  contain-intrinsic-block-size: auto 1050px;
   position: relative;
   margin-bottom: clamp(60px, 8vw, 120px);
   padding: clamp(40px, 6vw, 86px);
@@ -854,7 +889,7 @@
 
 .faqSection {
   content-visibility: auto;
-  contain-intrinsic-block-size: auto 640px;
+  contain-intrinsic-block-size: auto 1000px;
   padding-block: clamp(60px, 8vw, 120px);
   border-top: 1px solid var(--rule-alpha);
 }

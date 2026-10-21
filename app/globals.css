@@ -26,7 +26,9 @@
   --step-3: clamp(2rem, 1.47rem + 2.18vw, 3.35rem);
   --step-4: clamp(2.1rem, 1.1rem + 4vw, 5.6rem);
   --step-5: clamp(2.4rem, 1.1rem + 5.8vw, 7.6rem);
-  --step-hero: clamp(3.2rem, 1.2rem + 8.6vw, 9.8rem);
+  /* vw growth capped by viewport height so the hero headline always fits
+     above the fold on short landscape/laptop viewports. */
+  --step-hero: clamp(3.2rem, min(1.2rem + 8.6vw, 9.4svh), 9.8rem);
   --motion-fast: 180ms;
   --motion-medium: 360ms;
   --motion-slow: 640ms;

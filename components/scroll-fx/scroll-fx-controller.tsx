@@ -31,8 +31,14 @@ type Tracked = {
     | "experience"
     | "automation";
   el: HTMLElement;
-  /** pin = progress while the element scrolls past the viewport top. */
-  kind: "pin" | "enter";
+  /**
+   * pin = progress across a tall sticky stage (its height minus the viewport);
+   * exit = progress while the element itself scrolls out of the viewport —
+   *   used for the hero, whose height tracks the viewport (its `height - vh`
+   *   pin range would collapse to zero), so its real range is its own height;
+   * enter = progress from entering the bottom of the viewport.
+   */
+  kind: "pin" | "exit" | "enter";
   p: number;
 };
 
@@ -152,12 +158,17 @@ export function ScrollFxController() {
     }
 
     const tracked: Tracked[] = [];
-    const pinKeys = ["hero", "track", "scenes", "finale"] as const;
+    const pinKeys = ["track", "scenes", "finale"] as const;
+    const exitKeys = ["hero"] as const;
     for (const [key, el] of byKey) {
       tracked.push({
         key,
         el,
-        kind: (pinKeys as readonly string[]).includes(key) ? "pin" : "enter",
+        kind: (pinKeys as readonly string[]).includes(key)
+          ? "pin"
+          : (exitKeys as readonly string[]).includes(key)
+            ? "exit"
+            : "enter",
         p: -1,
       });
     }
@@ -176,6 +187,7 @@ export function ScrollFxController() {
     let lastY = window.scrollY;
     let vel = 0;
     let lastProgress = -1;
+    let lastVeln = 0;
     let lastStep = -1;
     let lastMeterState = "";
     let lastMeterValue = -1;
@@ -203,18 +215,30 @@ export function ScrollFxController() {
       }
       root.style.setProperty("--fx-vel", clamp(vel / 46, -1, 1).toFixed(4));
 
+      // Velocity skew decays on its own cadence, independent of whether the
+      // track's progress is still moving (a clamped pin must not freeze skew).
+      // Below ~0.2% the skew is imperceptible — snap to zero so it fully settles.
+      const trackEl = byKey.get("track");
+      const veln = Math.abs(vel / 46) < 0.002 ? 0 : clamp(vel / 46, -1, 1);
+      if (trackEl && Math.abs(veln - lastVeln) > 0.0004) {
+        lastVeln = veln;
+        trackEl.style.setProperty("--fx-veln", veln.toFixed(4));
+      }
+
       for (const { t, rect } of frames) {
-        const p =
+        const range =
           t.kind === "pin"
-            ? clamp(-rect.top / Math.max(1, rect.height - vh))
-            : clamp((vh - rect.top) / (vh * 0.9 + rect.height));
+            ? Math.max(1, rect.height - vh)
+            : t.kind === "exit"
+              ? Math.max(1, rect.height)
+              : Math.max(1, vh * 0.9 + rect.height);
+        const p =
+          t.kind === "enter"
+            ? clamp((vh - rect.top) / range)
+            : clamp(-rect.top / range);
         if (Math.abs(p - t.p) < 0.0006) continue;
         t.p = p;
         t.el.style.setProperty("--fx-p", p.toFixed(4));
-
-        if (t.key === "track") {
-          t.el.style.setProperty("--fx-veln", clamp(vel / 46, -1, 1).toFixed(4));
-        }
 
         if (t.key === "scenes" && steps.length > 0) {
           const step = Math.min(
