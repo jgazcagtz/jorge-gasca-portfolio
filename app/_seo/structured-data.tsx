@@ -38,7 +38,7 @@ function personNode(locale: Locale) {
     description: homeCopy[locale].hero.summary,
     email: CONTACT.email,
     telephone: CONTACT.phoneDisplay,
-    jobTitle: "Product Specialist",
+    jobTitle: "Product Specialist II",
     worksFor: {
       "@type": "Organization",
       name: "Apollo.io",
