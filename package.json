@@ -4,7 +4,7 @@
   "private": true,
   "description": "Bilingual portfolio for product UX, sales and CRM automation, AI workflows, and hands-on product delivery.",
   "engines": {
-    "node": "22.x"
+    "node": "22.23.4"
   },
   "scripts": {
     "dev": "next dev",
